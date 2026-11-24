@@ -1,0 +1,468 @@
+/* ───────── 관리자 틀 ───────── */
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--surface-page);
+}
+
+.admin-sidebar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: var(--space-1);
+  width: 240px;
+  height: 100vh;
+  padding: var(--space-6) var(--space-4);
+  box-shadow: inset -1px 0 0 var(--border-1);
+  background: var(--surface-card);
+}
+
+.admin-sidebar__brand {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  height: 52px;
+  padding: 0 var(--space-2);
+}
+
+.admin-sidebar__logo {
+  font-family: var(--font-display, inherit);
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: var(--fw-bold);
+}
+
+.admin-sidebar__brand .badge {
+  margin-top: 5px;
+}
+
+.admin-sidebar__nav {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.admin-sidebar__dot {
+  width: 6px;
+  height: 6px;
+  margin-left: auto;
+  border-radius: var(--radius-round);
+  background: var(--danger-500);
+}
+
+.admin-sidebar__back {
+  justify-content: flex-start;
+  color: var(--text-1);
+}
+
+.admin-layout__main {
+  flex: 1;
+  min-width: 0;
+  overflow-x: clip;
+}
+
+/* 사이드바(240)는 왼쪽 끝 그대로, 본문은 1440 - 240 = 1200까지만 늘고 가운데 */
+.admin-layout__main > * {
+  max-width: calc(var(--app-max-width) - 240px);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.admin-layout__message {
+  padding: var(--space-10);
+}
+
+/* 좁은 화면: 관리자 화면 대신 안내 */
+.admin-mobile {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .admin-layout {
+    display: none;
+  }
+
+  .admin-mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-4);
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: var(--space-6);
+    text-align: center;
+  }
+}
+
+.admin-mobile__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-round);
+  background: var(--surface-sunken);
+}
+
+.admin-mobile__title {
+  font-size: var(--fs-label);
+  line-height: 24px;
+  font-weight: var(--fw-bold);
+}
+
+.admin-mobile__desc {
+  font-size: 14px;
+  color: var(--text-2);
+}
+
+/* ───────── 공통: 도구 줄 · 두 칸 · 표 ───────── */
+.admin-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.admin-toolbar__select {
+  width: 160px;
+}
+
+.admin-toolbar__search {
+  width: 320px;
+}
+
+.admin-toolbar__grow {
+  flex: 1;
+}
+
+.admin-columns {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-6);
+}
+
+.admin-columns > .admin-table {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-table {
+  background: var(--surface-card);
+}
+
+.admin-table .data-table__head,
+.admin-table .data-table__row {
+  gap: var(--space-3);
+}
+
+button.admin-table__row {
+  width: 100%;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+
+.admin-table__row {
+  min-height: 44px;
+}
+
+.admin-table__row:active {
+  background: var(--surface-hover);
+}
+
+@media (hover: hover) {
+  .admin-table__row:hover {
+    background: var(--surface-hover);
+  }
+}
+
+.admin-table__row--selected,
+.admin-table__row--selected:hover,
+.admin-table__row--selected:active {
+  background: var(--action-tint);
+}
+
+.admin-items .admin-table__row {
+  cursor: pointer;
+}
+
+.admin-table__ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-table__sub {
+  display: block;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.admin-table__empty {
+  padding: var(--space-6);
+}
+
+.admin-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* 오른쪽 상세 칸(신고 상세 · 아이템 편집) */
+.admin-detail {
+  flex-shrink: 0;
+  width: 400px;
+}
+
+.admin-detail__rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.admin-detail__row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.admin-detail__row dt {
+  flex-shrink: 0;
+  width: 72px;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.admin-detail__row dd {
+  min-width: 0;
+  font-size: 14px;
+  line-height: 20px;
+  overflow-wrap: anywhere;
+}
+
+.admin-detail__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.admin-detail__label {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: var(--fw-bold);
+}
+
+.admin-detail__buttons {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.admin-detail__suspend {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--surface-subtle);
+}
+
+/* ───────── 신고 표 ───────── */
+.admin-reports__id {
+  flex-shrink: 0;
+  width: 56px;
+}
+
+.admin-reports__type {
+  flex-shrink: 0;
+  width: 72px;
+}
+
+.admin-reports__reporter,
+.admin-reports__date {
+  flex-shrink: 0;
+  width: 96px;
+}
+
+.admin-reports__status {
+  flex-shrink: 0;
+  width: 80px;
+}
+
+/* ───────── 정지 표 ───────── */
+.admin-suspensions__user {
+  flex-shrink: 0;
+  width: 314px;
+}
+
+.admin-suspensions__date {
+  flex-shrink: 0;
+  width: 96px;
+}
+
+.admin-suspensions__status {
+  flex-shrink: 0;
+  width: 80px;
+}
+
+.admin-suspensions__actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--space-2);
+  width: 200px;
+}
+
+/* ───────── 아이템 ───────── */
+.admin-items__thumb {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  background: var(--neutral-100);
+  color: var(--text-2);
+  overflow: hidden;
+}
+
+.data-table__head .admin-items__thumb {
+  height: auto;
+  background: none;
+}
+
+.admin-items__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.admin-items__type {
+  flex-shrink: 0;
+  width: 96px;
+}
+
+.admin-items__price {
+  flex-shrink: 0;
+  width: 88px;
+}
+
+.admin-items__sale {
+  flex-shrink: 0;
+  width: 64px;
+}
+
+.admin-item-preview {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.admin-item-preview__tile {
+  width: 140px;
+}
+
+.admin-item-preview__tile .item-tile {
+  width: 100%;
+}
+
+.admin-item-preview__upload {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+}
+
+/* ───────── 사용자 조회 ───────── */
+.admin-user {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.admin-user__info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.admin-user__name {
+  font-size: var(--fs-label);
+  line-height: 24px;
+  font-weight: var(--fw-bold);
+}
+
+.admin-user__meta {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.admin-user__stats {
+  display: flex;
+  gap: var(--space-6);
+}
+
+.admin-user__stats dt {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.admin-user__stats dd {
+  margin-top: var(--space-1);
+  font-size: var(--fs-label);
+  line-height: 24px;
+  font-weight: var(--fw-bold);
+}
+
+.admin-points__date {
+  flex-shrink: 0;
+  width: 140px;
+}
+
+.admin-points__amount {
+  flex-shrink: 0;
+  width: 100px;
+}
+
+.admin-points__action {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: flex-end;
+  width: 96px;
+}
+
+/* ───────── 모니터링: Grafana 대시보드를 화면 높이에 맞춰 ───────── */
+.admin-monitoring__frame {
+  width: 100%;
+  height: calc(100vh - 220px);
+  min-height: 600px;
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+}
+
+/* 아이템 이름 옆 "기본 지급" 표시 */
+.admin-items__name {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+/* 아이템 수정: 기본 지급 스위치 + 설명 */
+.admin-item-starter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}

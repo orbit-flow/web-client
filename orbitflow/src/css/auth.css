@@ -1,0 +1,417 @@
+/* 로그인·회원가입·온보딩 — src/components/auth, 인증 페이지 */
+
+/* ───────── 틀 ───────── */
+.auth-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: var(--space-6) var(--space-4);
+  background: var(--surface-page);
+}
+
+.auth-modal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  width: 350px;
+  max-width: 100%;
+  padding: var(--space-8) var(--space-6);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+}
+
+/* 모바일(767px 이하, 앱 모바일 구간과 같게): 카드 없이 흰 화면 전체. 폼은 폭 100%(넓으면 400까지 가운데) */
+@media (max-width: 767px) {
+  .auth-page {
+    align-items: flex-start;
+    padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+  }
+
+  .auth-modal {
+    width: 100%;
+    max-width: 400px;
+    border: 0;
+    border-radius: 0;
+  }
+
+  /* 사진 올리기 · 기본 이미지가 한 줄에 안 들어가면 다음 줄로 */
+  .photo-picker__buttons {
+    flex-wrap: wrap;
+  }
+}
+
+/* ───────── 머리 ───────── */
+.auth-header {
+  display: grid;
+  grid-template-columns: 48px 1fr 48px;
+  align-items: center;
+  height: 40px;
+}
+
+.auth-header__side {
+  display: flex;
+}
+
+.auth-header__title {
+  text-align: center;
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  letter-spacing: -0.1px;
+  font-weight: var(--fw-bold);
+}
+
+/* ───────── 제목 ───────── */
+.auth-title {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  text-align: center;
+}
+
+.auth-title__heading {
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  letter-spacing: var(--ls-h2);
+  font-weight: var(--fw-bold);
+}
+
+.auth-title__desc {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-2);
+  white-space: pre-line;
+}
+
+/* ───────── 단계 표시 ───────── */
+.auth-step {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.auth-step__label {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--action-bg);
+}
+
+/* 소셜 가입: "Google 계정으로 가입 중" */
+.provider-chip {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--surface-subtle);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  font-weight: var(--fw-bold);
+  color: var(--text-2);
+}
+
+/* ───────── 폼 ───────── */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.auth-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* 다른 화면에서 넘어올 때의 안내(휴면 해제·비밀번호 변경 완료 등) */
+.auth-notice {
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--action-tint);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-1);
+  text-align: center;
+}
+
+/* ───────── 정지 안내 ───────── */
+.suspension-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--danger-50);
+}
+
+.suspension-info__row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.suspension-info dt {
+  flex-shrink: 0;
+  width: 64px;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.suspension-info dd {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: var(--fw-bold);
+  color: var(--text-1);
+}
+
+.suspension-info .suspension-info__reason {
+  color: var(--danger-600);
+}
+
+.auth-terms {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.auth-actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.auth-actions__primary {
+  flex: 1;
+}
+
+/* ───────── 소셜 버튼 ───────── */
+.social-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.social-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  height: var(--control-lg);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-bold);
+  line-height: 1;
+  transition: filter var(--dur-fast) var(--ease-standard);
+}
+
+.social-button:active {
+  text-decoration: none;
+  filter: brightness(.95);
+}
+
+@media (hover: hover) {
+  .social-button:hover {
+    text-decoration: none;
+    filter: brightness(.95);
+  }
+}
+
+.social-button--google {
+  border-color: var(--border-2);
+  background: var(--surface-card);
+  color: var(--text-1);
+}
+
+/* 브랜드 색은 각 사 로그인 버튼 가이드 — 디자인 시스템 변수 밖 예외 */
+.social-button--kakao {
+  background: #FEE500;
+  color: #191919;
+}
+
+.social-button--naver {
+  background: #03C75A;
+  color: #FFFFFF;
+}
+
+.social-button--github {
+  background: #24292F;
+  color: #FFFFFF;
+}
+
+/* 아직 쓸 수 없는 로그인: 흑백 + 흐리게, 누를 수 없음(누름 · 올림 효과도 없음) */
+.social-button.social-button--disabled {
+  filter: grayscale(1);
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.social-button.social-button--disabled:active {
+  filter: grayscale(1);
+}
+
+@media (hover: hover) {
+  .social-button.social-button--disabled:hover {
+    filter: grayscale(1);
+  }
+}
+
+/* ───────── "또는" 구분선 ───────── */
+.or-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.or-divider::before,
+.or-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-1);
+}
+
+/* ───────── 인증 코드 ───────── */
+.auth-code {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.otp {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.otp__cell {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 56px;
+  padding: 0;
+  border: 1px solid var(--border-2);
+  border-radius: var(--radius-sm);
+  background: var(--surface-card);
+  text-align: center;
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  letter-spacing: -0.1px;
+  font-weight: var(--fw-bold);
+  color: var(--text-1);
+  caret-color: var(--action-bg);
+}
+
+.otp__cell:focus {
+  outline: none;
+  box-shadow: none;
+  border: 2px solid var(--action-bg);
+}
+
+.otp__cell--error,
+.otp__cell--error:focus {
+  border-color: var(--danger-500);
+}
+
+.auth-timer {
+  display: flex;
+  gap: var(--space-3);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-2);
+}
+
+.auth-timer__value {
+  font-weight: var(--fw-bold);
+  font-variant-numeric: tabular-nums;
+  color: var(--action-bg);
+}
+
+.auth-timer__value--expired {
+  color: var(--danger-600);
+}
+
+/* ───────── 아래 링크 ───────── */
+.auth-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-2);
+}
+
+.auth-footer--inline {
+  gap: var(--space-2);
+}
+
+.auth-footer__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: var(--fw-bold);
+  color: var(--text-2);
+}
+
+.auth-footer__link--accent {
+  color: var(--text-link);
+}
+
+.auth-footer__link:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.auth-footer__sep {
+  color: var(--text-3);
+}
+
+/* ───────── 프로필 사진 고르기 ───────── */
+.photo-picker {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.photo-picker__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.photo-picker__buttons {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* 높이는 lg(48), 글자는 md(16) — 피그마 그대로 */
+.photo-picker__upload {
+  padding: 0 var(--space-4);
+  font-size: var(--fs-label);
+}
+
+.photo-picker__note {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.photo-picker__note--error {
+  color: var(--danger-600);
+}

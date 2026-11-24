@@ -1,0 +1,179 @@
+/* ───────── 설정 ───────── */
+.settings-page {
+  --page-gap: var(--space-8);
+}
+
+.settings-page__columns {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-8);
+}
+
+.settings-page__nav {
+  position: sticky;
+  top: var(--space-8);
+  width: 200px;
+}
+
+.settings-page__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+/* 메뉴로 내려왔을 때 구역 위가 화면 끝에 붙지 않게 */
+.settings-page__body > .card {
+  scroll-margin-top: var(--space-8);
+}
+
+.settings-card__heading {
+  font-size: var(--fs-label);
+  line-height: 24px;
+  font-weight: var(--fw-bold);
+}
+
+.setting-list {
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.setting-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: 80px;
+  padding: var(--space-4) var(--space-5);
+}
+
+.setting-row + .setting-row {
+  border-top: 1px solid var(--border-1);
+}
+
+.setting-row__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.setting-row__title {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: var(--fw-bold);
+}
+
+.setting-row__desc {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+  overflow-wrap: anywhere;
+}
+
+/* 이메일·비밀번호 변경 · 회원 탈퇴 */
+.account-modal {
+  width: 400px;
+}
+
+.account-modal__form {
+  gap: var(--space-4);
+}
+
+.withdraw-modal {
+  width: 460px;
+}
+
+.withdraw-modal__deleted {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--danger-50);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.withdraw-modal__deleted strong {
+  color: var(--danger-600);
+}
+
+.withdraw-modal__deleted ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding-left: var(--space-4);
+}
+
+.withdraw-modal__teams {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4);
+}
+
+.withdraw-modal__teams strong {
+  font-size: 14px;
+  color: var(--text-1);
+}
+
+/* ───────── 모바일(767px 이하) ─────────
+   왼쪽 메뉴 없이 구역만(고른 구역은 그것만 — SettingsPage), 줄 여백을 줄인다 */
+@media (max-width: 767px) {
+  .settings-page {
+    --page-gap: var(--space-6);
+  }
+
+  .settings-page__columns {
+    display: block;
+  }
+
+  .settings-page__nav {
+    display: none;
+  }
+
+  .settings-card {
+    padding: var(--space-4);
+  }
+
+  .setting-row {
+    gap: var(--space-3);
+    min-height: 64px;
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .settings-page__withdraw {
+    color: var(--danger-600);
+  }
+
+  .account-modal,
+  .withdraw-modal {
+    width: calc(100vw - 32px);
+  }
+}
+
+/* ───────── 태블릿(768~1023px) ───────── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* 왼쪽 메뉴 대신 위쪽 탭(SettingsPage). 내려도 화면 위에 붙어 있다 */
+  .settings-page__tabs {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    margin: 0 calc(var(--space-6) * -1);
+    padding: 0 var(--space-6);
+    background: var(--surface-page);
+  }
+
+  /* 탭에 가리지 않게 탭 높이만큼 더 띄운다 */
+  .settings-page__body > .card {
+    scroll-margin-top: calc(var(--control-lg) + var(--space-6));
+  }
+
+  .settings-page__withdraw {
+    color: var(--danger-600);
+  }
+}

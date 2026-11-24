@@ -1,0 +1,784 @@
+/* ───────── 공통: 머리 오른쪽 묶음 · 확인창 아이콘 · 지난 출석 칸 ───────── */
+.page__header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.dialog--compact {
+  width: 360px;
+}
+
+.dialog--compact .dialog__actions > * {
+  flex: 1;
+}
+
+.dialog__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-sunken);
+  color: var(--text-1);
+}
+
+.dialog__icon--danger {
+  background: var(--danger-50);
+  color: var(--danger-500);
+}
+
+.attendance__cell--missed {
+  border-color: var(--border-1);
+  background: var(--surface-subtle);
+}
+
+/* ───────── 아바타 그림 · 아이템 칸 ───────── */
+.avatar-preview {
+  position: relative;
+  aspect-ratio: 1;
+  width: 100%;
+  border-radius: var(--radius-md);
+  background: var(--neutral-100);
+  overflow: hidden;
+}
+
+/* tinted-image(relative)보다 앞서도록 두 클래스로 */
+.avatar-preview .avatar-preview__layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* 회색 명암 이미지를 색 단계 필터로 바꿔 칠한다(필터 정의는 같은 칸 안의 크기 0 svg) */
+.tinted-image {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.tinted-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* display: none이면 필터가 동작하지 않는 브라우저가 있어 크기만 0으로 */
+.tinted-image__filter {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.avatar-preview__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  height: 100%;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.item-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 150px);
+  gap: var(--space-4);
+}
+
+.item-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-md);
+  background: var(--surface-card);
+  color: var(--text-1);
+  text-align: left;
+  transition: border-color var(--dur-fast) var(--ease-standard);
+}
+
+.item-tile:active {
+  border-color: var(--neutral-300);
+}
+
+@media (hover: hover) {
+  .item-tile:hover {
+    border-color: var(--neutral-300);
+  }
+}
+
+.item-tile--active,
+.item-tile--active:hover,
+.item-tile--active:active {
+  border-color: var(--action-bg);
+}
+
+.item-tile__image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 122px;
+  border: 1px dashed var(--neutral-300);
+  border-radius: var(--radius-sm);
+  background: var(--neutral-100);
+  color: var(--text-3);
+  overflow: hidden;
+}
+
+.item-tile__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.item-tile__name {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: var(--fw-bold);
+}
+
+.item-tile__status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.item-tile__status--equipped {
+  font-weight: var(--fw-bold);
+  color: var(--action-outline-fg);
+}
+
+.item-tile__status--price {
+  font-weight: var(--fw-bold);
+  color: var(--text-1);
+}
+
+/* ───────── 아바타(옷장) ───────── */
+.avatar-page,
+.shop-page,
+.points-page {
+  --page-gap: var(--space-8);
+}
+
+.wardrobe {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-6);
+}
+
+.wardrobe__preview {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: stretch;
+  gap: var(--space-4);
+  width: 360px;
+  padding: var(--space-5);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+}
+
+.wardrobe__avatar {
+  width: 312px;
+  align-self: center;
+}
+
+.wardrobe__preview > .btn {
+  align-self: center;
+}
+
+.wardrobe__equipped {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.wardrobe__label {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-2);
+}
+
+.wardrobe__none {
+  font-size: 14px;
+  color: var(--text-3);
+}
+
+.wardrobe__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.wardrobe__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  height: var(--control-lg);
+  padding: 0 var(--space-1) 0 10px;
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-medium);
+}
+
+.wardrobe__chip button {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-xs);
+  background: none;
+  color: var(--text-2);
+  font-size: var(--fs-label);
+}
+
+.wardrobe__chip button:active:not(:disabled) {
+  background: var(--surface-hover);
+}
+
+@media (hover: hover) {
+  .wardrobe__chip button:hover:not(:disabled) {
+    background: var(--surface-hover);
+  }
+}
+
+.wardrobe__inventory {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.wardrobe__hint {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+/* 부위 탭(전체 + 10개)이 폭을 넘으면 글자를 줄이지 않고 가로로 밀어서 본다(모든 화면 크기) */
+.wardrobe__inventory .tabs,
+.shop__catalog .tabs {
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+/* ───────── 상점 ───────── */
+.shop {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-6);
+}
+
+.shop__catalog {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+/* 아이템이 없으면 목록 자리 가운데에 */
+.shop__empty {
+  padding: var(--space-14) 0;
+  text-align: center;
+}
+
+.shop__options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;
+}
+
+.shop__count {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-2);
+}
+
+.shop__try-on {
+  flex-shrink: 0;
+  width: 320px;
+}
+
+.shop__try-title {
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.shop__avatar {
+  width: 272px;
+  align-self: center;
+}
+
+.shop__price-row,
+.shop__after-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--fs-caption);
+  color: var(--text-2);
+}
+
+.shop__price-row strong {
+  font-size: var(--fs-label);
+  line-height: 24px;
+  color: var(--text-1);
+}
+
+.shop__after-row strong {
+  font-size: var(--fs-caption);
+  color: var(--text-1);
+}
+
+.shop__after-row strong.shop__short {
+  color: var(--danger-500);
+}
+
+/* ───────── 포인트 ───────── */
+.points-page__top {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-6);
+}
+
+.points-balance {
+  flex-shrink: 0;
+  align-items: flex-start;
+  width: 360px;
+}
+
+.points-balance__label {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-2);
+}
+
+.points-balance__month {
+  display: flex;
+  gap: var(--space-6);
+}
+
+.points-balance__month dt {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.points-balance__month dd {
+  margin-top: var(--space-1);
+  font-size: var(--fs-label);
+  line-height: 24px;
+  font-weight: var(--fw-bold);
+}
+
+.points-balance__month .points-balance__plus {
+  color: var(--success-700);
+}
+
+.points-attendance {
+  flex: 1;
+  min-width: 0;
+}
+
+.points-charge__packages {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: start;
+  gap: var(--space-4);
+}
+
+.package-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+/* 고른 칸은 포인트 색(검정 계열)으로. 테두리 2px만큼 커진다(피그마와 같음) */
+.package-card--selected {
+  border: 2px solid var(--point-500);
+  background: var(--point-50);
+}
+
+.package-card--selected .radio__input:checked + .radio__control {
+  border-color: var(--point-500);
+}
+
+.package-card__price {
+  font-size: var(--fs-caption);
+  line-height: 20px;
+  color: var(--text-3);
+}
+
+.points-charge__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.points-charge__label {
+  font-size: 14px;
+  color: var(--text-2);
+}
+
+.points-charge__total {
+  font-size: var(--fs-label);
+  line-height: 24px;
+}
+
+.points-history {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.history-list {
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  overflow: hidden;
+}
+
+.history-list__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 44px;
+  padding: var(--space-3) var(--space-4);
+}
+
+.history-list__row + .history-list__row {
+  border-top: 1px solid var(--border-1);
+}
+
+.history-list__date {
+  flex-shrink: 0;
+  width: 56px;
+  font-size: var(--fs-caption);
+  color: var(--text-3);
+}
+
+.history-list__label {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.history-list__amount {
+  font-size: 14px;
+  font-weight: var(--fw-bold);
+}
+
+.history-list__amount--plus {
+  color: var(--success-700);
+}
+
+.payment-modal {
+  width: 440px;
+}
+
+.payment-done-modal {
+  align-items: center;
+  width: 400px;
+  text-align: center;
+}
+
+.payment-done-modal .summary-box,
+.payment-done-modal .modal__actions {
+  align-self: stretch;
+}
+
+.payment-done-modal__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-round);
+  background: var(--surface-sunken);
+}
+
+.payment-done-modal__title {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.payment-done-modal__amount {
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  font-weight: var(--fw-bold);
+}
+
+.summary-box {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--surface-subtle);
+}
+
+.summary-box__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: 14px;
+  line-height: 20px;
+  text-align: left;
+}
+
+.summary-box__row dt {
+  flex-shrink: 0;
+  color: var(--text-2);
+}
+
+.summary-box__row dd {
+  min-width: 0;
+  font-weight: var(--fw-bold);
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.summary-box__row dd.summary-box__small {
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-regular);
+  color: var(--text-3);
+}
+
+.summary-box__row--total {
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-1);
+}
+
+.summary-box__row--total dd {
+  font-size: var(--fs-label);
+}
+
+/* ───────── 모바일(767px 이하) ───────── */
+/* 입어 보기 닫기는 모바일 시트에서만 */
+.shop__try-close {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .avatar-page,
+  .shop-page,
+  .points-page {
+    --page-gap: var(--space-6);
+  }
+
+  .wardrobe,
+  .shop,
+  .points-page__top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* 옷장: 미리보기 위 · 보유 아이템 4열 */
+  .wardrobe__preview {
+    width: auto;
+    padding: var(--space-4);
+  }
+
+  .wardrobe__avatar {
+    width: min(260px, 100%);
+  }
+
+  .wardrobe .item-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-2);
+  }
+
+  .wardrobe .item-tile {
+    gap: var(--space-1);
+    padding: var(--space-1);
+  }
+
+  .wardrobe .item-tile__image {
+    height: auto;
+    aspect-ratio: 1;
+  }
+
+  /* 착용 중은 파란 테두리로 보이므로 아래 줄은 빼고, 이름은 한 줄 */
+  .wardrobe .item-tile__status {
+    display: none;
+  }
+
+  .wardrobe .item-tile__name {
+    width: 100%;
+    overflow: hidden;
+    font-size: var(--fs-caption);
+    line-height: var(--lh-caption);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .item-grid--shop {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .item-grid--shop .item-tile__image {
+    height: auto;
+    aspect-ratio: 1;
+  }
+
+  /* 입어 보기: 아이템을 고르면 하단 탭 위 시트 */
+  .shop__try-on {
+    display: none;
+  }
+
+  .shop__try-on--open {
+    position: fixed;
+    right: 0;
+    bottom: calc(56px + env(safe-area-inset-bottom));
+    left: 0;
+    z-index: 45;
+    display: flex;
+    width: auto;
+    max-height: 70vh;
+    padding: var(--space-4);
+    border-bottom: 0;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    box-shadow: var(--shadow-dialog);
+    overflow-y: auto;
+  }
+
+  .shop__try-close {
+    display: inline-flex;
+    width: 44px;
+    height: 44px;
+    margin-left: auto;
+  }
+
+  .shop__avatar {
+    width: 180px;
+  }
+
+  /* 포인트: 잔액 · 출석 위아래, 충전 2열 */
+  .points-balance {
+    width: auto;
+  }
+
+  .points-charge__packages {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .points-charge__footer {
+    flex-wrap: wrap;
+  }
+
+  /* 고정 폭 창은 화면 안으로 */
+  .dialog--compact,
+  .payment-modal,
+  .payment-done-modal {
+    width: calc(100vw - 32px);
+  }
+}
+
+/* ───────── 태블릿(768~1023px) ───────── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .wardrobe,
+  .points-page__top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* 옷장: 미리보기 카드를 위 한 줄로 — 왼쪽 그림, 오른쪽 피부색·레벨·착용 중 */
+  .wardrobe__preview {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    grid-template-rows: repeat(3, auto) 1fr;
+    align-items: start;
+    gap: var(--space-4) var(--space-6);
+    width: auto;
+  }
+
+  .wardrobe__avatar {
+    grid-row: 1 / -1;
+    width: 100%;
+    align-self: start;
+  }
+
+  .wardrobe__preview > .btn {
+    align-self: start;
+    justify-self: start;
+  }
+
+  .wardrobe__chip button {
+    width: 36px;
+    height: 36px;
+  }
+
+  .wardrobe .item-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  /* 상점: 목록을 넓게(3~4열), 입어 보기는 아이템을 고르면 오른쪽에서 열리는 패널 */
+  .item-grid--shop {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+
+  .item-grid--shop .item-tile__image {
+    height: 140px;
+  }
+
+  .shop__try-on {
+    display: none;
+  }
+
+  .shop__try-on--open {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 45;
+    display: flex;
+    width: 360px;
+    border-right: 0;
+    border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+    box-shadow: var(--shadow-dialog);
+    overflow-y: auto;
+  }
+
+  .shop__try-close {
+    display: inline-flex;
+    width: 44px;
+    height: 44px;
+    margin-left: auto;
+  }
+
+  /* 포인트: 잔액 · 출석 위아래, 충전 2열 */
+  .points-balance {
+    width: auto;
+  }
+
+  .points-charge__packages {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

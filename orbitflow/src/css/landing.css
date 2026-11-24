@@ -1,0 +1,348 @@
+/* 랜딩 — src/pages/LandingPage, src/components/landing */
+
+.landing {
+  background: var(--surface-page);
+}
+
+/* ───────── 머리 ───────── */
+.landing-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+  padding: 0 var(--space-10);
+  border-bottom: 1px solid var(--border-1);
+}
+
+.landing-header__logo {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  letter-spacing: -0.1px;
+  font-weight: var(--fw-bold);
+}
+
+.landing-header__actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+/* ───────── 공통 글자 ───────── */
+.landing-eyebrow {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  letter-spacing: 0.08em;
+  font-weight: var(--fw-bold);
+  color: var(--action-bg);
+  text-transform: uppercase;
+}
+
+.landing-lead {
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--text-2);
+}
+
+.landing-section-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: center;
+}
+
+.landing-section-heading__title {
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  letter-spacing: var(--ls-h2);
+  font-weight: var(--fw-bold);
+}
+
+/* ───────── 첫 화면 ───────── */
+.landing-hero {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-20) var(--space-10);
+}
+
+.landing-hero__copy {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-6);
+  min-width: 0;
+  padding-left: var(--space-10);
+}
+
+.landing-hero__headline {
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-display);
+  font-weight: 900;
+}
+
+.landing-hero__cta {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.landing-hero__note {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: var(--fw-bold);
+  color: var(--text-3);
+}
+
+.landing-hero__visual {
+  display: flex;
+  flex: 1 1 0;
+  justify-content: center;
+  min-width: 0;
+}
+
+/* 앱 화면 미리보기 카드(보여 주기만, 조작 불가) */
+.app-preview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 440px;
+  max-width: 100%;
+  padding: var(--space-5);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-pop);
+}
+
+.app-preview__status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.app-preview__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-preview__label {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: var(--fw-bold);
+}
+
+.app-preview__label--gap {
+  margin-top: var(--space-3);
+}
+
+/* ───────── 기능 소개 ───────── */
+.landing-features {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-10);
+  padding: var(--space-20) var(--space-10);
+}
+
+.landing-features__cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+  width: 100%;
+}
+
+.feature-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-8);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+}
+
+.feature-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  background: var(--action-tint);
+  color: var(--action-bg);
+}
+
+.feature-card__title {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  letter-spacing: -0.1px;
+  font-weight: var(--fw-bold);
+}
+
+.feature-card__desc {
+  font-size: var(--fs-label);
+  line-height: 24px;
+  color: var(--text-2);
+}
+
+/* ───────── 출석·레벨·아바타 ───────── */
+.landing-level {
+  display: flex;
+  align-items: center;
+  gap: var(--space-20);
+  padding: var(--space-20);
+  background: var(--surface-subtle);
+}
+
+.landing-level__showcase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  gap: var(--space-4);
+  padding: var(--space-8);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+}
+
+.landing-level__showcase .attendance {
+  width: 372px;
+}
+
+.landing-level__badges {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.landing-level__copy {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+/* ───────── 바닥 ───────── */
+.landing-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-8) var(--space-10);
+  border-top: 1px solid var(--border-1);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.landing-footer__links {
+  display: flex;
+  gap: var(--space-6);
+}
+
+.landing-footer__links a {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  color: var(--text-2);
+}
+
+/* ───────── 태블릿: 위아래로 쌓기 ───────── */
+@media (max-width: 1023px) {
+  .landing-header,
+  .landing-footer {
+    padding-right: var(--space-6);
+    padding-left: var(--space-6);
+  }
+
+  .landing-hero {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-10);
+    padding: 64px var(--space-6);
+  }
+
+  .landing-features {
+    padding-right: var(--space-6);
+    padding-left: var(--space-6);
+  }
+
+  .landing-features__cards {
+    grid-template-columns: 1fr;
+  }
+
+  .landing-level {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-10);
+    padding: 64px var(--space-6);
+  }
+
+  .landing-level__showcase {
+    align-self: center;
+  }
+}
+
+/* ───────── 모바일 ───────── */
+@media (max-width: 599px) {
+  .landing-header {
+    padding: 0 var(--space-4);
+  }
+
+  .landing-hero__copy {
+    padding-left: 0;
+  }
+
+  .landing-hero,
+  .landing-features,
+  .landing-level {
+    padding-right: var(--space-4);
+    padding-left: var(--space-4);
+  }
+
+  .landing-hero__headline {
+    font-size: 36px;
+    line-height: 44px;
+  }
+
+  .landing-level__showcase {
+    align-self: stretch;
+    padding: var(--space-6) var(--space-4);
+  }
+
+  .landing-level__showcase .attendance {
+    width: 100%;
+  }
+
+  /* 미리보기 카드: 레벨 막대를 한 줄 다 쓰고 포인트는 그 아래로 */
+  .app-preview {
+    padding: var(--space-4);
+  }
+
+  .app-preview__status {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .app-preview__status .point-balance {
+    align-self: flex-start;
+  }
+
+  /* 랜딩의 출석 줄은 누를 수 없는 그림이라 좁은 화면에서는 칸이 48px보다 줄어도 된다(7칸 × 48 + 간격 = 372px) */
+  .landing .attendance {
+    gap: var(--space-1);
+  }
+
+  .landing .attendance__cell {
+    min-width: 0;
+  }
+
+  .landing-footer {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+}

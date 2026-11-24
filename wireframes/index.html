@@ -1,0 +1,1068 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OrbitFlow Wireframes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  /* 디자인 시스템 규격(크기·간격·모서리·글자)만 따르고 색은 회색 와이어 톤으로 둔다 */
+  :root{
+    --w:#FFFFFF; --s1:#F7F7F7; --s2:#EFEFEF; --s3:#E2E2E2; --b1:#E2E2E2; --b2:#C9C9C9;
+    --t1:#1C1C1C; --t2:#575757; --t3:#7A7A7A; --t4:#A3A3A3; --act:#3F3F3F; --act-h:#2A2A2A; --tint:#ECECEC;
+    --r-xs:4px; --r-sm:8px; --r-md:12px; --r-lg:16px;
+    --sans:"Figtree","Noto Sans KR",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{font:15px/24px var(--sans);color:var(--t1);background:#E6E6E6;display:flex;word-break:keep-all;-webkit-font-smoothing:antialiased}
+
+  /* ---------- viewer ---------- */
+  .index{width:260px;flex:none;height:100vh;overflow:auto;background:var(--w);border-right:1px solid var(--b2);padding:16px 10px}
+  .index h1{font-size:15px;line-height:22px;margin:0 8px 2px}
+  .index .sub{color:var(--t3);font-size:12px;line-height:16px;margin:0 8px 14px}
+  .index h2{font-size:11px;line-height:16px;letter-spacing:.08em;color:var(--t3);margin:16px 8px 4px;font-weight:700}
+  .index a{display:flex;justify-content:space-between;gap:8px;padding:6px 8px;border-radius:6px;cursor:pointer;color:var(--t1);text-decoration:none;font-size:13px;line-height:20px}
+  .index a small{color:var(--t4);font-family:var(--mono);font-size:10.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .index a:hover{background:var(--s2)}
+  .index a.on{background:var(--t1);color:#fff}
+  .index a.on small{color:var(--b2)}
+  .stage{flex:1;height:100vh;overflow:auto;padding:20px 24px 40px;display:flex;gap:20px;align-items:flex-start}
+  .stage-main{flex:1;min-width:0}
+  .stage-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+  .stage-head h3{margin:0;font-size:20px;line-height:28px}
+  .stage-head code{color:var(--t3);font-size:12px}
+  .stage-head .r{margin-left:auto;display:flex;gap:10px;align-items:center}
+  .hint{color:var(--t3);font-size:11px}
+  .fit{position:relative}
+  .frame{background:var(--w);border:1px solid var(--b2);border-radius:8px;overflow:hidden;transform-origin:0 0;position:absolute;top:0;left:0;filter:grayscale(1)}
+  .frame.desk{width:1440px}
+  .frame.mob{width:max-content;background:transparent;border:0;display:flex;gap:40px;padding:4px}
+  .notes{width:300px;flex:none;background:var(--w);border:1px solid var(--b2);border-radius:8px;padding:14px 16px;position:sticky;top:0}
+  .notes h4{margin:0 0 8px;font-size:13px}
+  .notes ol{margin:0;padding:0;list-style:none}
+  .notes li{display:flex;gap:8px;margin:0 0 10px;font-size:12.5px;line-height:18px}
+  .notes li .n{flex:none;margin-top:1px}
+  .notes code{font-size:11px;color:var(--t3);display:block;margin-top:2px;word-break:break-all}
+  .notes .q{margin-top:14px;padding-top:12px;border-top:1px dashed var(--b2)}
+  .notes .q b{display:block;font-size:12px;margin-bottom:4px}
+  .notes .q p{margin:0 0 6px;font-size:12px;line-height:18px;color:var(--t2)}
+  @media (max-width:1250px){.stage{flex-direction:column}.notes{width:100%;position:static}.stage-main{width:100%}}
+
+  /* ---------- primitives (DS 규격) ---------- */
+  .n{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:#111;color:#fff;font:700 10.5px/1 var(--sans);font-style:normal;vertical-align:middle;margin:0 4px;flex:none}
+  .ph{position:relative;background:repeating-linear-gradient(135deg,var(--s2) 0 6px,var(--s1) 6px 12px);border:1px dashed var(--b2);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;overflow:hidden;color:var(--t3);font-size:12px;line-height:16px;text-align:center}
+  .ln{height:10px;background:var(--s3);border-radius:var(--r-xs);margin:6px 0}
+  .ln.d{background:var(--b2)}
+  .ic{display:inline-block;flex:none;border-radius:var(--r-xs);background:var(--s3);vertical-align:middle}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 16px;border:1px solid var(--b2);border-radius:var(--r-sm);background:var(--w);font-size:15px;font-weight:600;white-space:nowrap;color:var(--t1)}
+  .btn.p{background:var(--act);border-color:var(--act);color:#fff}
+  .btn.s{background:transparent;border-color:var(--act);color:var(--act)}
+  .btn.g{border-color:transparent;background:transparent}
+  .btn.d{background:#5a5a5a;border-color:#5a5a5a;color:#fff}
+  .btn.sm{height:32px;padding:0 12px;font-size:13px;gap:6px}
+  .btn.lg{height:48px;padding:0 20px;font-size:16px}
+  .btn.w{width:100%}
+  .btn.dash{border-style:dashed;color:var(--t3);font-weight:500}
+  .ibtn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:var(--r-sm);position:relative;flex:none;color:var(--t2);font-size:16px}
+  .ibtn.sm{width:32px;height:32px;font-size:14px}
+  .ibtn.o{border:1px solid var(--b2);background:var(--w)}
+  .ibtn i.dotb{position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:999px;background:#555}
+  .inp{height:40px;border:1px solid var(--b2);border-radius:var(--r-sm);background:var(--w);display:flex;align-items:center;gap:8px;padding:0 12px;color:var(--t4);font-size:15px;white-space:nowrap;overflow:hidden}
+  .inp.sm{height:32px;font-size:13px}
+  .inp.lg{height:48px}
+  .inp.ta{height:auto;min-height:96px;align-items:flex-start;padding-top:10px}
+  .lbl{font-size:13px;line-height:20px;font-weight:600;margin:12px 0 6px}
+  .hnt{font-size:12px;line-height:16px;color:var(--t3);margin-top:6px}
+  .av{position:relative;display:inline-flex;flex:none;align-items:center;justify-content:center;border-radius:var(--r-sm);background:repeating-linear-gradient(135deg,var(--s2) 0 6px,var(--s1) 6px 12px);border:1px dashed var(--b2)}
+  .av.big{border-radius:var(--r-md)}
+  .av .lv{position:absolute;right:-4px;bottom:-4px;min-width:20px;height:16px;padding:0 4px;border-radius:var(--r-xs);background:var(--act);color:#fff;font:800 10px/16px var(--sans);text-align:center;box-shadow:0 0 0 2px #fff}
+  .av.big .lv{min-width:28px;height:20px;font-size:11px;line-height:20px}
+  .badge{display:inline-flex;align-items:center;gap:4px;height:22px;padding:0 8px;border-radius:var(--r-xs);background:var(--s2);color:var(--t2);font-size:12px;font-weight:700;white-space:nowrap;line-height:1}
+  .badge.sm{height:18px;padding:0 6px;font-size:11px}
+  .badge.solid{background:var(--act);color:#fff}
+  .cnt{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--act);color:#fff;font:700 11px/1 var(--sans);font-style:normal}
+  .tag{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 10px;border:1px solid var(--b1);border-radius:var(--r-sm);background:var(--w);font-size:13px;font-weight:500;white-space:nowrap}
+  .tag.sm{height:24px;font-size:12px;padding:0 8px}
+  .tag.on{border-color:var(--act);background:var(--tint)}
+  .cdot{display:inline-block;width:8px;height:8px;border-radius:var(--r-xs);background:var(--t4);flex:none}
+  .cb{display:inline-block;width:20px;height:20px;border:1.5px solid var(--t4);border-radius:6px;flex:none;background:var(--w)}
+  .cb.on{background:var(--act);border-color:var(--act)}
+  .cb.s{width:16px;height:16px;border-radius:5px}
+  .cb.dash{border-style:dashed}
+  .rad{display:inline-block;width:20px;height:20px;border:1.5px solid var(--t4);border-radius:50%;flex:none}
+  .rad.on{border:6px solid var(--act)}
+  .sw{display:inline-block;width:44px;height:26px;border-radius:var(--r-sm);background:var(--b2);position:relative;flex:none}
+  .sw::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:var(--r-xs);background:#fff}
+  .sw.on{background:var(--act)}.sw.on::after{left:21px}
+  .segc{display:inline-flex;gap:2px;padding:2px;background:var(--s2);border-radius:var(--r-sm)}
+  .segc span{white-space:nowrap;height:36px;padding:0 14px;display:inline-flex;align-items:center;justify-content:center;border-radius:var(--r-xs);font-size:13px;font-weight:500;color:var(--t2);cursor:pointer}
+  .segc span.on{background:var(--w);color:var(--t1);font-weight:700;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+  .segc.full{display:flex}.segc.full span{flex:1}
+  .segc.sm span{height:28px;font-size:12px}
+  .tabs{display:flex;gap:20px;border-bottom:1px solid var(--b1)}
+  .tabs span{height:44px;display:inline-flex;align-items:center;gap:6px;font-size:15px;font-weight:500;color:var(--t2);border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap}
+  .tabs span.on{color:var(--t1);font-weight:700;border-color:var(--t1)}
+  .tabs span em{font-style:normal;font-size:12px;font-weight:700;color:var(--t3)}
+  .prog{height:6px;border-radius:var(--r-xs);background:var(--s3);overflow:hidden}
+  .prog i{display:block;height:100%;background:var(--act);border-radius:var(--r-xs)}
+  .proglbl{display:flex;justify-content:space-between;font-size:12px;line-height:16px;font-weight:600;margin-bottom:6px}
+  .card{background:var(--w);border:1px solid var(--b1);border-radius:var(--r-md);padding:20px}
+  .card.sub{background:var(--s1);border-color:transparent}
+  .card-h{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+  .card-h b{font-size:15px}
+  .card-h .r{margin-left:auto;display:flex;gap:6px;align-items:center}
+  .row{display:flex;gap:8px;align-items:center}
+  .col{display:flex;flex-direction:column;gap:8px}
+  .f1{flex:1;min-width:0}
+  .sp{flex:1}
+  .muted{color:var(--t3)}
+  .t2{color:var(--t2)}
+  .small{font-size:13px;line-height:20px}
+  .cap{font-size:12px;line-height:16px}
+  .over{font-size:11px;line-height:16px;letter-spacing:.08em;font-weight:700;color:var(--t3)}
+  .hr{height:1px;background:var(--b1);margin:16px 0}
+  .g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .center{display:flex;align-items:center;justify-content:center}
+  .x{text-decoration:line-through;color:var(--t3)}
+  table.t{width:100%;border-collapse:collapse;font-size:13px;line-height:20px}
+  table.t th{text-align:left;color:var(--t3);font-weight:600;padding:10px 12px;border-bottom:1px solid var(--b2);background:var(--s1)}
+  table.t td{padding:10px 12px;border-bottom:1px solid var(--b1)}
+  .h1{font-size:26px;line-height:34px;font-weight:700;letter-spacing:-.01em;margin:0}
+  .h3{font-size:20px;line-height:28px;font-weight:700;margin:0}
+  .list{border:1px solid var(--b1);border-radius:var(--r-md);overflow:hidden;background:var(--w)}
+  .lrow{display:flex;align-items:center;gap:12px;padding:8px 16px;min-height:56px;border-bottom:1px solid var(--b1)}
+  .lrow:last-child{border-bottom:0}
+  .lrow .tt{font-size:15px;line-height:22px;font-weight:500}
+  .lrow .ds{font-size:13px;line-height:18px;color:var(--t2)}
+  .lrow .val{font-size:14px;color:var(--t2)}
+  .chev{color:var(--t4)}
+
+  /* TaskItem (+ 하위 할 일) */
+  .task{display:flex;gap:12px;align-items:flex-start;padding:12px 16px;border-bottom:1px solid var(--b1);background:var(--w)}
+  .task:last-child{border-bottom:0}
+  .task .tm{width:44px;flex:none;font:600 13px/20px var(--mono);color:var(--t1)}
+  .task .tm small{display:block;font-weight:500;color:var(--t3)}
+  .task .tb{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+  .task .tt1{font-size:15px;line-height:22px;font-weight:500}
+  .task .meta{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;line-height:16px;color:var(--t2)}
+  .task .meta span{display:inline-flex;align-items:center;gap:4px}
+  .task.pv{background:var(--s1)}
+  .task.pv .tt1{color:var(--t2)}
+  .kids{border-left:2px solid var(--b1);padding-left:10px;display:flex;flex-direction:column}
+  .kids-h{font-size:12px;line-height:16px;font-weight:600;color:var(--t2);padding:2px 0;cursor:pointer}
+  .kid{display:flex;align-items:center;gap:8px;height:30px;font-size:13px}
+  .kid .hd{color:var(--b2);font-size:10px;letter-spacing:-2px}
+  .kid.add{color:var(--t3)}
+
+  /* desktop shell */
+  .app{display:flex;min-height:820px}
+  .side{width:232px;flex:none;background:var(--s1);border-right:1px solid var(--b1);padding:16px 12px;display:flex;flex-direction:column;gap:2px}
+  .logo{font-weight:800;font-size:17px;padding:4px 8px 16px;display:flex;align-items:center;gap:8px}
+  .logo i{width:22px;height:22px;border-radius:50%;border:3px solid var(--t2);flex:none}
+  .fold{margin-left:auto;width:28px;height:28px;border:1px solid var(--b2);border-radius:var(--r-sm);display:inline-flex;align-items:center;justify-content:center;font-size:12px;color:var(--t2);background:var(--w);cursor:pointer;flex:none}
+  .navi{display:flex;align-items:center;gap:12px;height:40px;padding:0 12px;border-radius:var(--r-sm);color:var(--t2);font-size:15px;font-weight:500;cursor:pointer}
+  .navi:hover{background:var(--s2)}
+  .navi.on{background:var(--s3);color:var(--t1);font-weight:700}
+  .navi .cnt{margin-left:auto}
+  .side .grp{padding:16px 12px 4px}
+  .side-pt{display:flex;gap:8px;align-items:center;padding:12px 8px 0;border-top:1px solid var(--b1);margin-top:8px}
+  .side-pt+.me{border-top:0;margin-top:0}
+  .frame.tab .ndrop{left:76px!important}
+  .me{display:flex;gap:10px;align-items:center;padding:12px 8px 0;border-top:1px solid var(--b1);margin-top:8px;cursor:pointer}
+  .app.mini .side{width:64px;padding:16px 10px;align-items:center}
+  .app.mini .lt{display:none}
+  .app.mini .logo{flex-direction:column;gap:12px;padding:4px 0 16px}
+  .app.mini .fold{margin-left:0}
+  .app.mini .navi{justify-content:center;position:relative;padding:0;width:44px}
+  .app.mini .navi .cnt{position:absolute;top:2px;right:0;margin:0}
+  .app.mini .grp{font-size:0;height:1px;background:var(--b1);padding:0;margin:12px 4px;width:36px}
+  .app.mini .me{padding:12px 0 0;justify-content:center}
+  .main{flex:1;min-width:0;display:flex;flex-direction:column}
+  .top{height:64px;border-bottom:1px solid var(--b1);display:flex;align-items:center;gap:8px;padding:0 40px}
+  .pbal{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 4px 0 10px;border-radius:var(--r-sm);background:var(--s2);font-size:14px;font-weight:800}
+  .pbal .coin{width:16px;height:16px;border-radius:50%;border:2px solid var(--t1)}
+  .pbal .add{width:24px;height:24px;border-radius:var(--r-xs);background:var(--act);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:14px}
+  .pbal.na{padding-right:10px}
+  .body-row{display:flex;flex:1;min-height:0}
+  .content{position:relative;flex:1;min-width:0;padding:24px 40px 40px;background:var(--w)}
+  .pg-h{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+  .pg-h .r{margin-left:auto;display:flex;gap:8px;align-items:center}
+  .rpanel{width:340px;flex:none;border-left:1px solid var(--b1);background:var(--s1);display:flex;flex-direction:column}
+  .rp-h{display:flex;align-items:flex-end;gap:8px;padding:8px 16px 0;border-bottom:1px solid var(--b1);background:var(--w)}
+  .rp-h .tabs{border:0}
+  .rp-h .fold{margin-bottom:8px}
+  .rp-b{padding:12px 0;display:flex;flex-direction:column;gap:12px}
+  .rpanel.closed{width:52px;align-items:center;padding:16px 0;gap:16px}
+  .vt{writing-mode:vertical-rl;display:flex;align-items:center;gap:6px;color:var(--t2);font-size:13px;font-weight:600;cursor:pointer}
+  .vt.on{color:var(--t1);font-weight:800}
+  .grp-h{display:flex;align-items:center;gap:8px;padding:0 16px;font-size:13px;font-weight:700;height:28px}
+
+  /* dashboard */
+  .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center}
+  .cal .w{font-size:11px;color:var(--t3);font-weight:600;line-height:20px}
+  .cd{height:32px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:var(--r-sm);font-size:13px;gap:2px;font-weight:500}
+  .cd i{display:block;width:4px;height:4px;border-radius:50%;background:var(--t4)}
+  .cd i.no{visibility:hidden}
+  .cd.out{color:var(--b2)}
+  .cd.inwk{background:var(--s2);border-radius:0}
+  .cd.on{background:var(--act);color:#fff;border-radius:var(--r-sm)}.cd.on i{background:#fff}
+  .cd.today{box-shadow:inset 0 0 0 1.5px var(--t2)}
+  .wk{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+  .wk-col{border:1px solid var(--b1);border-radius:var(--r-md);background:var(--s1);min-height:420px;display:flex;flex-direction:column;min-width:0}
+  .wk-col.on{border-color:var(--act);box-shadow:inset 0 0 0 1px var(--act)}
+  .wk-h{padding:8px 10px;border-bottom:1px solid var(--b1);display:flex;align-items:baseline;gap:6px;cursor:pointer}
+  .wk-h b{font-size:17px}
+  .wk-b{padding:6px;display:flex;flex-direction:column;gap:6px}
+  .mini{background:var(--w);border:1px solid var(--b1);border-radius:var(--r-sm);padding:6px 8px;font-size:12px;line-height:16px}
+  .mini.pv{background:var(--s1);border-style:dashed}
+  .mini .tm{font:600 11px/16px var(--mono);color:var(--t2)}
+  .mini .kc{font-size:11px;color:var(--t3);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .month{display:grid;grid-template-columns:repeat(7,1fr);border-top:1px solid var(--b1);border-left:1px solid var(--b1);border-radius:var(--r-md);overflow:hidden}
+  .month>div{border-right:1px solid var(--b1);border-bottom:1px solid var(--b1);min-height:100px;padding:6px;display:flex;flex-direction:column;gap:3px;font-size:11px;min-width:0;cursor:pointer}
+  .month>.mh{min-height:0;text-align:center;color:var(--t3);background:var(--s1);padding:6px;cursor:default;font-weight:600}
+  .month .dn{font-weight:700;font-size:12px}
+  .month>.out{background:var(--s1);color:var(--b2)}
+  .month>.sel{box-shadow:inset 0 0 0 2px var(--act)}
+  .mc{display:block;background:var(--s2);border-radius:var(--r-xs);padding:1px 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mc.done{color:var(--t3);text-decoration:line-through}
+  .mc.pv{background:transparent;border:1px dashed var(--b2)}
+
+  /* overlays */
+  .scrim{position:absolute;inset:0;background:rgba(20,20,20,.48)}
+  .drawer{position:absolute;top:0;right:0;bottom:0;width:480px;background:var(--w);border-left:1px solid var(--b2);padding:20px 24px;display:flex;flex-direction:column;overflow:hidden}
+  .dialog{position:absolute;background:var(--w);border-radius:var(--r-md);box-shadow:0 2px 6px rgba(0,0,0,.08),0 16px 40px rgba(0,0,0,.18);overflow:hidden}
+  .toast{display:flex;align-items:center;gap:10px;padding:10px 12px 10px 14px;border-radius:var(--r-sm);background:rgba(255,255,255,.9);border:1px solid var(--b1);box-shadow:0 1px 2px rgba(0,0,0,.06),0 6px 16px rgba(0,0,0,.1);font-size:14px;line-height:20px}
+
+  /* 인증: 흰 바탕 전체 화면 모달. .state = 와이어에서 여러 단계를 나란히 펼칠 때의 구분선 */
+  .state{border:1px dashed var(--b2);border-radius:var(--r-md);padding:24px}
+  .aform{width:100%;max-width:400px;margin:0 auto}
+  .astates{display:flex;flex-wrap:wrap;gap:24px;justify-content:center;align-items:flex-start}
+  .astates>.state{width:450px;max-width:100%}
+  /* chat */
+  .bubble{max-width:70%;padding:8px 12px;border-radius:var(--r-md);background:var(--s2);font-size:15px;line-height:22px}
+  .bubble .ln{max-width:100%}
+  .bubble.me{background:var(--act);color:#fff;margin-left:auto}
+  .bubble.me .ln{background:#777}
+  .dmsg{display:flex;gap:12px;padding:4px 20px}
+  .dmsg .meta{display:flex;gap:8px;align-items:baseline}
+  .dmsg .meta b{font-size:15px}
+  .dmsg.cont{padding-left:72px}
+  .divider{display:flex;align-items:center;gap:10px;color:var(--t3);font-size:12px;margin:12px 20px}
+  .divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--b1)}
+  .chan{display:flex;align-items:center;gap:8px;height:36px;padding:0 10px;border-radius:var(--r-sm);color:var(--t2);font-size:15px}
+  .chan.on{background:var(--s3);color:var(--t1);font-weight:700}
+  .chan .cnt{margin-left:auto}
+
+  /* auth */
+  .otp{display:flex;gap:8px}
+  .otp span{width:44px;height:52px;border:1px solid var(--b2);border-radius:var(--r-sm);background:var(--w)}
+
+  /* mobile */
+  .phone-wrap{display:flex;flex-direction:column;gap:10px;align-items:center}
+  .phone-cap{font-size:13px;font-weight:700;color:var(--t2)}
+  .phone{position:relative;width:375px;height:812px;border-radius:44px;overflow:hidden;background:var(--w);box-shadow:0 0 0 10px #1c1c1c,0 0 0 11px #4a4a4a;display:flex;flex-direction:column;margin:11px}
+  .sbar{height:47px;flex:none;display:flex;align-items:flex-end;justify-content:space-between;padding:0 28px 6px;font-size:15px;font-weight:700}
+  .sbar i{display:inline-block;width:56px;height:12px;border-radius:3px;background:var(--b2)}
+  .mtop{flex:none;display:flex;align-items:center;gap:4px;min-height:52px;padding:0 8px 0 16px}
+  .mtop h1{margin:0;flex:1;font-size:17px;line-height:24px;font-weight:700}
+  .mtop.lg h1{font-size:26px;line-height:34px;letter-spacing:-.01em}
+  .mtop.back{padding-left:4px}
+  .mbody{flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column}
+  .mpad{padding:0 16px}
+  .tabbar{position:absolute;left:0;right:0;bottom:0;height:84px;padding-bottom:20px;background:rgba(255,255,255,.86);border-top:1px solid var(--b1);display:flex}
+  .tabbar span{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:11px;font-weight:500;color:var(--t3);position:relative}
+  .tabbar span .ic{width:24px;height:24px}
+  .tabbar span.on{color:var(--t1);font-weight:700}
+  .tabbar span.on .ic{background:var(--t2)}
+  .tabbar span i.dotb{position:absolute;top:10px;left:calc(50% + 8px);width:8px;height:8px;border-radius:999px;background:#555}
+  .fab{position:absolute;right:16px;bottom:100px;z-index:3;box-shadow:0 1px 2px rgba(0,0,0,.06),0 6px 16px rgba(0,0,0,.18)}
+  .sheet{position:absolute;left:0;right:0;bottom:0;background:var(--w);border-radius:var(--r-lg) var(--r-lg) 0 0;padding:8px 16px 36px;box-shadow:0 -8px 40px rgba(0,0,0,.18);display:flex;flex-direction:column}
+  .grab{width:36px;height:5px;border-radius:3px;background:var(--b2);margin:0 auto 12px}
+  .mstrip{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+  .mstrip div{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;border-radius:var(--r-sm);font-size:11px;color:var(--t3)}
+  .mstrip div b{font-size:15px;color:var(--t1)}
+  .mstrip div.on{background:var(--act);color:#ddd}.mstrip div.on b{color:#fff}
+  .mstrip i{width:4px;height:4px;border-radius:50%;background:var(--t4)}
+  .mstrip div.on i{background:#fff}
+  .desk-only{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:40px;text-align:center}
+
+  /* tablet (768–1023): 6열 · 거터/마진 24 */
+  .frame.tab{width:768px}
+  .main{position:relative}
+  .frame.tab .content{padding:24px 24px 40px}
+  .frame.tab .top{padding:0 24px}
+  .frame.tab .g3,.frame.tab .g4{grid-template-columns:repeat(2,1fr)}
+  .frame.tab .g4.t3{grid-template-columns:repeat(3,1fr)}
+  .frame.tab .g2.stk{grid-template-columns:1fr}
+  .frame.tab .split{flex-direction:column;align-items:stretch!important}
+  .frame.tab .split>*{width:auto!important;max-width:none!important}
+  .frame.tab .split>.first{order:-1}
+  .frame.tab .tab-hide{display:none!important}
+  .tab-only{display:none}
+  .frame.tab .tab-only{display:block}
+  .frame.tab .chat-list{width:239px!important}
+  .frame.tab .chatwrap{margin:-24px -24px -40px!important}
+  .frame.tab .lp{padding-left:24px!important;padding-right:24px!important}
+  .frame.tab .lpm{margin-left:24px!important;margin-right:24px!important}
+  .frame.tab .dialog.cdlg{left:50%!important;transform:translateX(-50%)}
+  .frame.tab .postwrap{height:1260px!important}
+  .frame.tab .dialog.pd{left:24px!important;right:24px;width:auto!important}
+  .frame.tab .dialog.pc{left:184px!important;top:700px!important;width:400px!important}
+  .rpanel.ov{position:absolute;right:0;top:0;bottom:0;z-index:6;box-shadow:-8px 0 32px rgba(0,0,0,.16)}
+  .frame.tab .gridov{left:24px;right:24px;grid-template-columns:repeat(6,1fr);column-gap:24px}
+  /* 열 단위 배치: 데스크톱 sN/stN · 태블릿 tsN/tstN · 모바일 msN, 중첩 그리드는 nN/tnN/mnN */
+  .gr{--n:12;display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));column-gap:24px;row-gap:24px;align-items:start}
+  .gr>*{min-width:0;grid-column-end:span var(--n)}
+  .frame.tab .gr{--n:6}
+  .frame.tab .gr>*{grid-column-start:auto;grid-column-end:span var(--n)}
+  .phone .gr{--n:4;column-gap:16px;row-gap:16px}
+  .phone .gr>*{grid-column-start:auto;grid-column-end:span var(--n)}
+  .frame.tab .gr>.first{order:-1}
+  .gr.n1{--n:1} .gr>.s1{grid-column-end:span 1} .gr>.st1{grid-column-start:1}
+  .gr.n2{--n:2} .gr>.s2{grid-column-end:span 2} .gr>.st2{grid-column-start:2}
+  .gr.n3{--n:3} .gr>.s3{grid-column-end:span 3} .gr>.st3{grid-column-start:3}
+  .gr.n4{--n:4} .gr>.s4{grid-column-end:span 4} .gr>.st4{grid-column-start:4}
+  .gr.n5{--n:5} .gr>.s5{grid-column-end:span 5} .gr>.st5{grid-column-start:5}
+  .gr.n6{--n:6} .gr>.s6{grid-column-end:span 6} .gr>.st6{grid-column-start:6}
+  .gr.n7{--n:7} .gr>.s7{grid-column-end:span 7} .gr>.st7{grid-column-start:7}
+  .gr.n8{--n:8} .gr>.s8{grid-column-end:span 8} .gr>.st8{grid-column-start:8}
+  .gr.n9{--n:9} .gr>.s9{grid-column-end:span 9} .gr>.st9{grid-column-start:9}
+  .gr.n10{--n:10} .gr>.s10{grid-column-end:span 10} .gr>.st10{grid-column-start:10}
+  .gr.n11{--n:11} .gr>.s11{grid-column-end:span 11} .gr>.st11{grid-column-start:11}
+  .gr.n12{--n:12} .gr>.s12{grid-column-end:span 12} .gr>.st12{grid-column-start:12}
+  .frame.tab .gr.tn1{--n:1} .frame.tab .gr>.ts1{grid-column-end:span 1} .frame.tab .gr>.tst1{grid-column-start:1}
+  .frame.tab .gr.tn2{--n:2} .frame.tab .gr>.ts2{grid-column-end:span 2} .frame.tab .gr>.tst2{grid-column-start:2}
+  .frame.tab .gr.tn3{--n:3} .frame.tab .gr>.ts3{grid-column-end:span 3} .frame.tab .gr>.tst3{grid-column-start:3}
+  .frame.tab .gr.tn4{--n:4} .frame.tab .gr>.ts4{grid-column-end:span 4} .frame.tab .gr>.tst4{grid-column-start:4}
+  .frame.tab .gr.tn5{--n:5} .frame.tab .gr>.ts5{grid-column-end:span 5} .frame.tab .gr>.tst5{grid-column-start:5}
+  .frame.tab .gr.tn6{--n:6} .frame.tab .gr>.ts6{grid-column-end:span 6} .frame.tab .gr>.tst6{grid-column-start:6}
+  .phone .gr.mn1{--n:1} .phone .gr>.ms1{grid-column-end:span 1}
+  .phone .gr.mn2{--n:2} .phone .gr>.ms2{grid-column-end:span 2}
+  .phone .gr.mn3{--n:3} .phone .gr>.ms3{grid-column-end:span 3}
+  .phone .gr.mn4{--n:4} .phone .gr>.ms4{grid-column-end:span 4}
+  /* grid overlay (G) */
+  .gridov{position:absolute;top:0;bottom:0;left:40px;right:40px;display:grid;grid-template-columns:repeat(12,1fr);column-gap:24px;pointer-events:none;z-index:50}
+  .gridov i{background:rgba(70,70,70,.08);border-left:1px solid rgba(70,70,70,.25);border-right:1px solid rgba(70,70,70,.25)}
+  .phone .gridov{left:16px;right:16px;grid-template-columns:repeat(4,1fr);column-gap:16px}
+  /* layout rules page */
+  .bp{border:1px solid var(--b2);border-radius:var(--r-md);overflow:hidden;background:var(--w);display:flex;flex-direction:column}
+  .bp-h{padding:10px 14px;border-bottom:1px solid var(--b1);font-weight:700;font-size:13px;background:var(--s1)}
+  .zone{border:1px dashed var(--b2);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--t2);text-align:center;background:var(--s1)}
+</style>
+</head>
+<body>
+<nav class="index" id="index"></nav>
+<div class="stage">
+  <div class="stage-main">
+    <div class="stage-head"><h3 id="title"></h3><code id="path"></code>
+      <span class="r"><span class="segc sm" id="mode"><span data-mode="d" class="on">데스크톱 1440</span><span data-mode="t">태블릿 768</span><span data-mode="m">모바일 375</span></span><span class="btn sm" id="gridbtn">그리드</span><span class="hint">← → 페이지 · D/T/M 크기 · G 그리드</span></span></div>
+    <div class="fit" id="fit"><div class="frame desk" id="frame"></div></div>
+  </div>
+  <aside class="notes" id="notes"></aside>
+</div>
+
+<script>
+/* ===== primitives ===== */
+const ph=(label='',h=80,st='')=>`<div class="ph" style="height:${h}px;${st}">${label}</div>`;
+const ln=(w='100%',cls='')=>`<div class="ln ${cls}" style="width:${w}"></div>`;
+const lns=(...ws)=>ws.map(w=>ln(w)).join('');
+const ic=(s=20,st='')=>`<span class="ic" style="width:${s}px;height:${s}px;${st}"></span>`;
+// k: p 주요 · s 보조(외곽선) · g 고스트 · d 위험 · sm/lg 크기 · w 가득 · dash 점선
+const btn=(t,k='')=>`<span class="btn ${k}">${t}</span>`;
+const ibtn=(g='',k='',dot)=>`<span class="ibtn ${k}">${g||ic(20)}${dot?'<i class="dotb"></i>':''}</span>`;
+const inp=(t,k='',st='')=>`<div class="inp ${k}" style="${st}">${t}</div>`;
+const n=k=>`<i class="n">${k}</i>`;
+const av=(s=40,lv,st='')=>`<span class="av ${s>=64?'big':''}" style="width:${s}px;height:${s}px;${st}">${lv!=null?`<i class="lv">${lv}</i>`:''}</span>`;
+const badge=(t,k='')=>`<span class="badge ${k}">${t}</span>`;
+const cnt=t=>`<i class="cnt">${t}</i>`;
+const tag=(t,on,k='',dot=true)=>`<span class="tag ${on?'on':''} ${k}">${dot?'<i class="cdot"></i>':''}${t}</span>`;
+const cb=(on,k='')=>`<span class="cb ${on?'on':''} ${k}"></span>`;
+const rad=on=>`<span class="rad ${on?'on':''}"></span>`;
+const sw=on=>`<span class="sw ${on?'on':''}"></span>`;
+const segc=(arr,on=0,k='',go=[])=>`<span class="segc ${k}">${arr.map((t,i)=>`<span class="${i===on?'on':''}" ${go[i]?`data-go="${go[i]}"`:''}>${t}</span>`).join('')}</span>`;
+const tabs=(arr,on=0,go=[],st='')=>`<div class="tabs" style="${st}">${arr.map((t,i)=>{const [l,c]=Array.isArray(t)?t:[t];return `<span class="${i===on?'on':''}" ${go[i]?`data-go="${go[i]}"`:''}>${l}${c!=null?` <em>${c}</em>`:''}</span>`}).join('')}</div>`;
+const prog=(pct,label,val)=>`${label?`<div class="proglbl"><span>${label}</span><span>${val||''}</span></div>`:''}<div class="prog"><i style="width:${pct}%"></i></div>`;
+const card=(body,o={})=>`<section class="card ${o.k||''}" style="${o.st||''}">${o.title?`<div class="card-h"><b>${o.title}</b>${o.right?`<span class="r">${o.right}</span>`:''}</div>`:''}${body}</section>`;
+// 그리드 컨테이너와 칸: G('n8 tn6', ...), C('s4 ts3', ...)
+const G=(cls,inner,st='')=>`<div class="gr ${cls}" style="${st}">${inner}</div>`;
+const C=(cls,inner,st='')=>`<div class="${cls}" style="${st}">${inner}</div>`;
+const field=(l,t,hint,k='')=>`<div class="lbl">${l}</div>${inp(t,k)}${hint?`<div class="hnt">${hint}</div>`:''}`;
+const select=(l,t,k='')=>(l?`<div class="lbl">${l}</div>`:'')+inp(`<span class="f1" style="color:var(--t1)">${t}</span><span class="muted">▾</span>`,k);
+const rep=(k,f)=>Array.from({length:k},(_,i)=>f(i)).join('');
+const lrow=(title,o={})=>`<div class="lrow" ${o.go?`data-go="${o.go}"`:''}>${o.ic===false?'':ic(22)}<div class="f1"><div class="tt">${title}</div>${o.ds?`<div class="ds">${o.ds}</div>`:''}</div>${o.val?`<span class="val">${o.val}</span>`:''}${o.trail!=null?o.trail:'<span class="chev">›</span>'}</div>`;
+const pbal=(amt='1,250',add=true)=>`<span class="pbal ${add?'':'na'}"><i class="coin"></i>${amt}${add?'<span class="add">＋</span>':''}</span>`;
+const levelBadge=(lv=7,cur=26,req=34)=>`<div class="f1" style="min-width:0"><div class="row" style="gap:8px">${badge('Lv.'+lv,'solid')}<span class="small" style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">다음 레벨까지 ${req-cur} EXP</span></div><div style="margin-top:8px">${prog(Math.round(cur/req*100))}</div><div class="cap muted" style="margin-top:4px">${cur} / ${req} EXP</div></div>`;
+
+/* 할 일 (TaskItem + 하위 할 일) */
+const kidsBlock=(k=[],open)=>{
+  if(!k.length) return `<div class="kids"><div class="kid add">＋ 하위 할 일</div></div>`;
+  const d=k.filter(x=>x[1]).length;
+  return `<div class="kids"><div class="kids-h">${open?'▾':'▸'} 하위 할 일 ${d}/${k.length}</div>${open?k.map(([t,dn])=>`<div class="kid"><span class="hd">⋮⋮</span>${cb(dn,'s')}<span class="${dn?'x':''}">${t}</span></div>`).join('')+'<div class="kid add">＋ 하위 할 일</div>':''}</div>`;
+};
+// o: {t, done, time:[시작,끝], due, cat, rep, remind, kids, open, pv, who}
+const task=o=>`<div class="task ${o.pv?'pv':''}" data-go="todo">
+  ${o.time?`<div class="tm">${o.time[0]}<small>${o.time[1]||''}</small></div>`:''}
+  ${o.pv?cb(false,'dash'):cb(o.done)}
+  <div class="tb"><div class="tt1 ${o.done?'x':''}">${o.t}</div>
+    <div class="meta">${o.due?`<span>${ic(13)} ${o.due}</span>`:''}${o.cat?`<span><i class="cdot"></i>${o.cat}</span>`:''}${o.rep?`<span>↻ ${o.rep}</span>`:''}${o.remind?`<span>⏰ ${o.remind}</span>`:''}${o.pv?'<span>반복 미리보기 · 체크하면 생성</span>':''}</div>
+    ${o.pv?'':kidsBlock(o.kids,o.open)}</div>
+  ${o.who?av(24):''}</div>`;
+
+/* ===== desktop shell ===== */
+const NAV=[['dashboard','대시보드'],['categories','카테고리 · 반복'],['timeline','타임라인'],['teams','팀'],['chat','채팅',4],['notifications','알림',3]];
+const NAV2=[['avatar','아바타'],['shop','상점'],['points','포인트']];
+const navItem=([id,t,b],active)=>`<a class="navi ${id===active?'on':''}" data-go="${id}">${ic(20)}<span class="lt">${t}</span>${b?cnt(b):''}</a>`;
+// o.mini 좌측 접힘 · o.right 우측 패널 · o.mark 접기 버튼 번호
+const TAB=()=>mode==='t';
+function shell(active,body,o={}){
+  if(TAB()) o={...o,mini:true};
+  return `<div class="app ${o.mini?'mini':''}">
+  <aside class="side">
+    <div class="logo"><i></i><span class="lt">OrbitFlow</span><span class="fold">${o.mini?'»':'«'}</span>${o.mark?n(1):''}</div>
+    ${NAV.map(x=>navItem(x,active)).join('')}
+    <div class="grp over lt">꾸미기</div>
+    ${NAV2.map(x=>navItem(x,active)).join('')}
+    <div class="sp"></div>
+    ${navItem(['settings','설정'],active)}
+    <div class="side-pt lt">${pbal()}<span class="sp"></span>${btn('출석','sm')}</div>
+    <div class="me" data-go="profile">${av(36,7)}<div class="f1 lt"><div class="small" style="font-weight:700">홍길동</div><div class="cap muted">내 프로필</div></div></div>
+  </aside>
+  <div class="main">
+    <div class="body-row"><div class="content">${body}</div>${o.right||''}</div>
+  </div></div>`;
+}
+// 인증 화면: 흰 바탕 전체 화면 모달 (상단 로고 · ✕ 닫기). h = 여러 단계를 펼쳐 보일 때의 높이
+const authModal=body=>`<div style="min-height:820px;background:var(--w);display:flex;flex-direction:column"><div class="row lp" style="height:64px;padding:0 40px"><div class="logo" style="padding:0"><i></i>OrbitFlow</div><span class="sp"></span>${ibtn('✕')}</div><div class="lp" style="padding:56px 40px 40px">${body}</div></div>`;
+const mcard=(title,body)=>`<div><h2 class="h1" style="margin-bottom:4px">${title}</h2>${body}</div>`;
+/* 인증 폼: 폭 400 고정(좁으면 100%) 컴포넌트 하나를 데스크톱 · 태블릿 · 모바일이 같이 쓴다 */
+const LOGIN=()=>mcard('로그인',`<div class="small muted">다시 만나서 반가워요</div>
+  ${n(1)}${field('이메일','name@example.com','','lg')}${field('비밀번호','••••••••','','lg')}
+  <div class="row small" style="margin:12px 0 20px"><span class="sp"></span><span class="t2" data-go="account">비밀번호를 잊었어요 ${n(2)}</span></div>
+  ${btn('로그인','p lg w')}
+  <div class="row cap muted" style="margin:20px 0"><div class="hr f1" style="margin:0"></div>또는 ${n(3)}<div class="hr f1" style="margin:0"></div></div>
+  <div class="col">${['Google','Kakao','Naver','GitHub'].map(p=>btn(ic(18)+' '+p+'로 계속하기','lg w')).join('')}</div>
+  <div class="center small" style="margin-top:20px;gap:6px"><span class="muted">계정이 없나요?</span><b data-go="signup">회원가입</b></div>`);
+const SIGNUP=[
+  ()=>mcard('회원가입',`<div style="margin:12px 0 4px">${prog(33)}</div><div class="over" style="margin-top:12px">1 / 3 · 이메일 인증 ${n(1)}</div>
+    <div class="lbl">이메일</div><div class="row">${inp('name@example.com','lg','flex:1;min-width:0')}${btn('코드 받기','s lg')}</div>
+    <div class="lbl">인증 코드 6자리</div><div class="otp">${rep(6,()=>'<span></span>')}</div>
+    <div class="row cap muted" style="margin:8px 0 20px">남은 시간 04:59<span class="sp"></span>다시 보내기</div>${btn('인증하기','p lg w')}
+    <div class="center small" style="margin-top:16px;gap:6px"><span class="muted">이미 계정이 있나요?</span><b data-go="login">로그인</b></div>`),
+  ()=>mcard('회원가입',`<div style="margin:12px 0 4px">${prog(66)}</div><div class="over" style="margin-top:12px">2 / 3 · 계정 정보 ${n(2)}</div>
+    ${field('이메일','name@example.com ✓','','lg')}${field('닉네임','','2~50자','lg')}${field('비밀번호','','8~20자 · 대문자 · 소문자 · 숫자 · 특수문자(@$!%*?&) 각 1개 이상','lg')}${field('비밀번호 확인','','','lg')}
+    <div class="row" style="margin-top:20px">${btn('이전','g lg')}<span class="sp"></span>${btn('다음','p lg')}</div>`),
+  ()=>mcard('회원가입',`<div style="margin:12px 0 4px">${prog(100)}</div><div class="over" style="margin-top:12px">3 / 3 · 약관 동의 ${n(3)}</div>
+    <div class="list" style="margin:16px 0">${lrow('[필수] 이용약관 · 개인정보 수집 동의',{ic:false,trail:cb(true)})}</div>
+    <div class="row small t2">${cb(false)} 약관 전문 보기</div>
+    <div class="row" style="margin-top:20px">${btn('이전','g lg')}<span class="sp"></span>${btn('가입 완료','p lg')}</div>`),
+];
+const ACCOUNT=[
+  ['소셜 가입',()=>mcard('소셜 가입',`<div class="cap muted">/oauth/signup ${n(1)}</div><div class="row" style="margin:16px 0 0">${av(48)}<div class="small muted">Google 계정으로 가입 중</div></div>${field('닉네임 (미리 채움)','홍길동','','lg')}${field('이메일 (미리 채움)','gil@gmail.com','','lg')}<div class="row small" style="margin:16px 0">${cb(true)}[필수] 이용약관 · 개인정보 동의</div>${btn('가입하고 시작하기','p lg w')}`)],
+  ['재설정 메일',()=>mcard('비밀번호 재설정',`<div class="cap muted">/password/forgot ${n(2)}</div><div class="small muted" style="margin-top:8px">가입한 이메일로 재설정 링크를 보내요</div>${field('이메일','name@example.com','','lg')}<div style="margin-top:16px">${btn('재설정 링크 보내기','p lg w')}</div><div class="toast" style="margin-top:16px">${ic(18)}메일을 보냈어요. 링크를 확인해 주세요</div>`)],
+  ['새 비밀번호',()=>mcard('새 비밀번호',`<div class="cap muted">/password/reset?token=… ${n(3)}</div>${field('새 비밀번호','','8~20자 · 대/소문자 · 숫자 · 특수문자','lg')}${field('새 비밀번호 확인','','','lg')}<div style="margin-top:16px">${btn('변경하고 로그인','p lg w')}</div>`)],
+  ['휴면 해제',()=>mcard('휴면 계정이에요',`<div class="cap muted">/dormant ${n(4)}</div><div class="small t2" style="margin-top:8px">오랫동안 로그인하지 않아 휴면 상태가 됐어요. 이메일 인증으로 다시 쓸 수 있어요.</div><div class="lbl">이메일</div><div class="row">${inp('name@example.com','lg','flex:1;min-width:0')}${btn('코드 받기','s lg')}</div><div class="lbl">인증 코드</div><div class="otp">${rep(6,()=>'<span></span>')}</div><div style="margin-top:16px">${btn('휴면 해제','p lg w')}</div>`)],
+  ['정지 안내',()=>mcard('이용이 정지됐어요',`<div class="cap muted">/suspended ${n(5)}</div><div class="lbl">정지 기간</div><div class="small">2026.10.20 – 2026.10.27</div><div class="lbl">사유</div>${lns('90%','60%')}<div style="margin-top:16px">${btn('확인','lg w')}</div>`)],
+  ['소셜 로그인 처리',()=>mcard('로그인하는 중…',`<div class="cap muted">/oauth/callback ${n(6)}</div><div class="center col" style="height:160px">${ic(36)}</div>`)],
+];
+// 데스크톱 · 태블릿: 흰 바탕 전체 화면 가운데에 폼 / 와이어에서 여러 단계는 점선으로 나란히
+const authOne=f=>authModal(`<div class="aform">${f()}</div>`);
+const authStates=list=>authModal(`<div class="astates">${list.map(f=>`<div class="state"><div class="aform">${f()}</div></div>`).join('')}</div>`);
+// 모바일: 같은 폼을 폭 100%로
+const mAuth=(f,back)=>mscreen(`<div class="mpad" style="padding-top:8px"><div class="aform">${f()}</div></div>`,{title:'<span class="logo" style="padding:0;font-size:17px"><i></i>OrbitFlow</span>',back,right:ibtn('✕')});
+const pgh=(title,right='',mark='')=>`<div class="pg-h"><h2 class="h1">${title}</h2>${mark}${right?`<span class="r">${right}</span>`:''}</div>`;
+
+/* ===== mobile shell ===== */
+const TABS=[['dashboard','홈'],['timeline','타임라인'],['teams','팀'],['chat','채팅',1],['me','나']];
+const tabbar=on=>`<div class="tabbar">${TABS.map(([id,t,d])=>`<span class="${id===on?'on':''}" data-go="${id==='me'?'settings':id}">${ic(24)}${t}${d?'<i class="dotb"></i>':''}</span>`).join('')}</div>`;
+// o: {title, lg, back, right, tab(하단 탭 강조, null이면 탭바 없음), over(시트·다이얼로그 HTML)}
+const mscreen=(body,o={})=>`<div class="sbar"><span>9:41</span><i></i></div>
+  ${o.title!=null?`<div class="mtop ${o.lg?'lg':''} ${o.back?'back':''}">${o.back?ibtn('‹'):''}<h1>${o.title}</h1>${o.right||''}</div>`:''}
+  <div class="mbody">${body}</div>${o.tab?tabbar(o.tab):''}${o.over||''}`;
+const phone=(cap,html)=>`<div class="phone-wrap"><div class="phone-cap">${cap}</div><div class="phone">${html}</div></div>`;
+const deskOnly=()=>[['데스크톱 전용',mscreen(`<div class="desk-only">${ic(48)}<b>관리자 화면은 데스크톱에서만 지원해요</b><span class="small muted">모바일에서 /admin 접근 시 이 안내 + 서비스로 돌아가기</span>${btn('서비스로 돌아가기','s')}</div>`,{title:'관리자'})]];
+
+/* ===== 대시보드 데이터 ===== */
+const WD='월화수목금토일'.split('');
+const RUN={time:['07:00','08:00'],t:'아침 러닝',cat:'운동',rep:'매일',kids:[['스트레칭',1],['5km',1]]};
+const MEET={time:['10:00','11:30'],t:'캡스톤 회의',cat:'졸업 프로젝트',remind:'10분 전',kids:[['안건 정리',1],['회의록 공유',0]]};
+const GYM={time:['13:00','15:00'],t:'헬스장',cat:'운동',rep:'월 · 수 · 금',kids:[['하체',0],['유산소 20분',0],['단백질',0]]};
+const ENG={time:['19:00','20:00'],t:'영어 스터디',cat:'공부',rep:'화 · 목',kids:[['단어 30개',0]]};
+const DIARY={time:['22:00','22:30'],t:'일기 쓰기',cat:'개인',kids:[]};
+const DAY=[{...RUN,done:1},{...MEET,open:1},GYM,{...ENG,pv:1},DIARY];
+const WEEK=[
+  [{...RUN,done:1},{...MEET,done:1,kids:[['안건 정리',1],['회의록 공유',1]]},{...GYM,done:1,kids:[['상체',1],['유산소',1]]}],
+  [{...RUN,done:1},{...ENG,done:1,kids:[['단어 30개',1]]}],
+  [{...RUN,done:1},{...MEET,done:1,kids:[['안건 정리',1],['회의록 공유',1]]},GYM],
+  [{...RUN,done:1},{...MEET,open:1},GYM,{...ENG,pv:1},DIARY],
+  [{...RUN,pv:1},{...MEET,pv:1},{...GYM,pv:1}],
+  [{time:['11:00'],t:'친구 약속',kids:[['선물 사기',0]]}],
+  [{...RUN,pv:1}],
+];
+const BL=[
+  ['졸업 프로젝트',1,[
+    {t:'API 문서 정리',due:'10/20 – 10/24 · D-2',kids:[['인증 섹션',1],['팀 섹션',0],['채팅 섹션',0]],open:1},
+    {t:'프론트 와이어프레임',due:'~ 10/22 · 오늘 마감',kids:[['대시보드',1],['채팅',1],['설정',0]]},
+    {t:'ERD 리뷰',due:'10/15 – 10/21',done:1,kids:[['FK 확인',1]]}]],
+  ['공부',1,[
+    {t:'알고리즘 3문제',due:'10/19 – 10/26 · D-4',kids:[['DP',1],['그래프',0],['구현',0]]},
+    {t:'토익 단어',rep:'매일',pv:1}]],
+  ['집안일',0,[{t:'우유 사기'},{t:'분리수거'}]],
+];
+const blList=(range,pad=true)=>`
+  <div class="row cap muted" style="padding:0 16px">${range} · 기간이 걸친 백로그 7<span class="sp"></span>${btn('＋ 백로그','sm')}</div>
+  ${BL.map(([c,open,items])=>`<div><div class="grp-h">${open?'▾':'▸'} <i class="cdot"></i>${c}<span class="muted" style="font-weight:500">${items.length}</span><span class="sp"></span><span class="muted">＋</span></div>${open?`<div style="border-top:1px solid var(--b1);border-bottom:1px solid var(--b1);margin-top:4px">${items.map(task).join('')}</div>`:''}</div>`).join('')}
+  <div style="padding:0 16px">${btn('＋ 카테고리','dash w sm')}</div>`;
+const POSTS=[['알고리즘 3문제','공부',3,12,3],['헬스장','운동',1,8,0],['캡스톤 회의','졸업 프로젝트',0,5,2]];
+const postsList=()=>`
+  <div class="row cap muted" style="padding:0 16px">내가 쓴 게시글<span class="sp"></span>${btn('＋ 글 쓰기','sm')}</div>
+  ${POSTS.map(([todo,cat,img,like,cmt])=>`<div style="padding:12px 16px;border-top:1px solid var(--b1);background:var(--w)" data-go="post">
+    <div class="row cap t2">${cb(true,'s')} ${todo} · <i class="cdot"></i>${cat}<span class="sp"></span><span class="muted">10/2x</span></div>
+    <div style="margin-top:6px">${lns('95%','60%')}</div>
+    ${img?`<div class="row" style="gap:4px;margin-top:8px">${rep(img,()=>ph('',64,'flex:1'))}</div>`:''}
+    <div class="row cap" style="margin-top:8px;gap:12px"><span>♡ ${like}</span><span>💬 ${cmt}</span></div></div>`).join('')}`;
+function rpanel(tab=0,closed=false,range='',ov=false){
+  if(closed) return `<aside class="rpanel closed">${n(6)}<span class="fold" data-go="dashboard-week">«</span><div class="vt on">백로그 ${cnt(7)}</div><div class="vt">내 글</div></aside>`;
+  return `${ov?'<div class="scrim" style="z-index:5"></div>':''}<aside class="rpanel ${ov?'ov':''}"><div class="rp-h">${n(6)}${tabs([['백로그',7],'내 글'],tab,['dashboard','dashboard-posts'])}<span class="sp"></span><span class="fold" data-go="dashboard-collapsed">»</span></div>
+  <div class="rp-b">${tab?postsList():blList(range)}</div></aside>`;
+}
+const calDays=()=>Array.from({length:35},(_,i)=>{const dt=new Date(2026,8,28+i);return {i,d:dt.getDate(),m:dt.getMonth(),wd:i%7}});
+const avatarCard=()=>card(`<div class="row" style="gap:20px;align-items:center">${n(2)}
+  ${av(TAB()?72:120,7,'flex:none')}
+  <div class="f1 col" style="gap:12px">
+    <div class="row"><b style="font-size:20px">홍길동</b><span class="sp"></span>${btn('꾸미기','sm')}</div>
+    ${levelBadge()}
+    <div class="row">${pbal('1,250',false)}<span class="sp"></span>${btn(TAB()?'✓ 출석':'✓ 출석 체크 · 1P · 10 EXP','sm p')}</div>
+    <div class="hr" style="margin:0"></div>
+    ${prog(62,'오늘 진행','5 / 8')}
+  </div></div>`,{st:`height:100%;${TAB()?'padding:16px':''}`});
+const miniCal=v=>card(`<div class="row" style="margin-bottom:8px">${n(3)}${ibtn('‹','sm o')}<b class="f1" style="text-align:center">2026년 10월</b>${ibtn('›','sm o')}${btn('오늘','sm')}</div>
+  <div class="cal">${WD.map(x=>`<div class="w">${x}</div>`).join('')}${calDays().map(({i,d,m})=>`<div class="cd ${m!==9?'out':''} ${v===1&&i>=21&&i<28?'inwk':''} ${m===9&&d===22?(v===2?'today':'on'):''}">${d}<i class="${(i*5)%3?'':'no'}"></i></div>`).join('')}</div>`,{st:'height:100%;padding:16px'});
+const DVIEWS=[['dashboard','일간'],['dashboard-week','주간'],['dashboard-month','월간']];
+const dashTop=v=>`${pgh('대시보드')}
+  ${G('',C('s8 ts3',avatarCard())+C('s4 ts3',miniCal(v)),'align-items:stretch')}
+  <div class="center" style="margin:20px 0 16px;gap:8px">${n(4)}${segc(DVIEWS.map(x=>x[1]),v,'',DVIEWS.map(x=>x[0]))}</div>`;
+const viewHead=(title,sub)=>`<div class="row" style="margin-bottom:12px">${n(5)}<b style="font-size:17px">${title}</b><span class="small muted">${sub}</span><span class="sp"></span>${btn('＋ 할 일','p sm')}</div>`;
+const miniTask=o=>`<div class="mini ${o.pv?'pv':''}" data-go="todo"><div class="row" style="gap:4px">${o.pv?cb(false,'s dash'):cb(o.done,'s')}<span class="tm">${o.time[0]}</span></div><div class="${o.done?'x':''}" style="margin-top:2px;font-weight:500">${o.t}</div>${o.kids&&o.kids.length?`<div class="kc">${o.open?'▾':'▸'} 하위 ${o.kids.filter(x=>x[1]).length}/${o.kids.length}</div>${o.open?o.kids.map(([t,d])=>`<div class="kc">· <span class="${d?'x':''}">${t}</span></div>`).join(''):''}`:''}</div>`;
+const dayView=()=>viewHead('10월 22일 (목)','일정 5')+`<div class="list">${DAY.map(task).join('')}</div>`;
+const weekView=()=>viewHead('10월 19일 – 25일','일정 17')+`<div class="wk">${WEEK.map((list,i)=>`<div class="wk-col ${i===3?'on':''}"><div class="wk-h" data-go="dashboard"><span class="cap muted">${WD[i]}</span><b>${19+i}</b></div><div class="wk-b">${list.map(miniTask).join('')}${btn('＋','sm dash')}</div></div>`).join('')}</div>`;
+const monthCells=()=>calDays().map(({d,m,wd})=>{
+  const ev=[['07:00','러닝','2/2']];
+  if(wd===0||wd===2) ev.push(['10:00','캡스톤 회의','1/2']);
+  if(wd===0||wd===2||wd===4) ev.push(['13:00','헬스장','0/3']);
+  if(wd===1||wd===3) ev.push(['19:00','영어','0/1']);
+  if(m===9&&d===24) ev.push(['11:00','친구 약속','0/1',1]);
+  return {d,m,ev,past:m<9||(m===9&&d<22),future:m>9||(m===9&&d>22)};
+});
+const monthView=()=>viewHead('2026년 10월','날짜 클릭 → 일간')+`<div class="month">${WD.map(x=>`<div class="mh">${x}</div>`).join('')}${monthCells().map(({d,m,ev,past,future})=>`<div class="${m!==9?'out':''} ${m===9&&d===22?'sel':''}" data-go="dashboard"><span class="dn">${d}</span>${ev.slice(0,3).map(([tm,t,k,once])=>`<span class="mc ${past?'done':''} ${future&&!once?'pv':''}">${tm} ${t} · ${k}</span>`).join('')}${ev.length>3?`<span class="muted">+${ev.length-3}개</span>`:''}</div>`).join('')}</div>`;
+const DRANGE=['10/22 (목)','10/19 – 10/25','10월 (9/28 – 11/1)'];
+const dashPage=(v,o={})=>shell('dashboard',dashTop(v)+[dayView,weekView,monthView][v](),{mark:1,mini:o.mini,right:TAB()&&!o.tab?rpanel(0,true):rpanel(o.tab||0,o.closed,DRANGE[v],TAB())});
+
+/* 모바일 대시보드 */
+const mDashHead=()=>`<div class="mpad row" style="gap:14px;margin:4px 0 16px">${av(64,7)}${levelBadge()}</div>
+  <div class="mpad row" style="margin-bottom:12px">${btn('✓ 출석 체크 · 1P','sm p')}<span class="sp"></span>${prog(62,'','')}</div>`;
+const mStrip=()=>`<div class="mpad"><div class="row" style="margin-bottom:6px"><b class="f1">10월 3주</b>${ibtn('‹','sm')}${ibtn('›','sm')}${btn('오늘','sm g')}${ibtn('▦','sm')}</div>
+  <div class="mstrip">${WD.map((w,i)=>`<div class="${i===3?'on':''}">${w}<b>${19+i}</b><i></i></div>`).join('')}</div></div>`;
+const mDashTabs=on=>tabs(['일정',['백로그',7],'내 글'],on,['dashboard','dashboard-week','dashboard-posts'],'padding:0 16px;margin-top:12px');
+const mDash=(which)=>{
+  const top={title:'대시보드',lg:1,right:pbal('1,250',false)+ibtn('','',1),tab:'dashboard'};
+  if(which==='day') return mscreen(`${mDashHead()}${mStrip()}${mDashTabs(0)}
+    <div class="mpad" style="margin:12px 0 4px">${segc(['일간','주간','월간'],0,'full')}</div>
+    <div style="border-top:1px solid var(--b1);margin-top:8px">${DAY.slice(0,4).map(task).join('')}</div>`,{...top,over:`<div class="fab">${btn('＋ 할 일 추가','p lg')}</div>`});
+  if(which==='backlog') return mscreen(`${mStrip()}${mDashTabs(1)}<div style="padding-top:12px" class="col">${blList('10/22 (목)')}</div>`,{...top});
+  if(which==='month') return mscreen(`${mDashTabs(0)}<div class="mpad" style="margin:12px 0">${segc(['일간','주간','월간'],2,'full')}</div>
+    <div class="mpad"><div class="row" style="margin-bottom:6px"><b class="f1">2026년 10월</b>${ibtn('‹','sm')}${ibtn('›','sm')}${btn('오늘','sm g')}</div>
+    <div class="cal">${WD.map(x=>`<div class="w">${x}</div>`).join('')}${calDays().map(({i,d,m})=>`<div class="cd ${m!==9?'out':''} ${m===9&&d===22?'on':''}">${d}<i class="${(i*5)%3?'':'no'}"></i></div>`).join('')}</div></div>
+    <div class="cap muted mpad" style="margin:12px 0 4px">10월 22일 (목) · 일정 5</div>
+    <div style="border-top:1px solid var(--b1)">${DAY.slice(0,3).map(o=>task({...o,open:0})).join('')}</div>`,{...top});
+  if(which==='week') return mscreen(`${mDashTabs(0)}<div class="mpad" style="margin:12px 0">${segc(['일간','주간','월간'],1,'full')}</div>
+    <div class="mpad row" style="margin-bottom:8px"><b class="f1">10월 19일 – 25일</b>${ibtn('‹','sm')}${ibtn('›','sm')}</div>
+    ${WEEK.slice(2,5).map((list,i)=>`<div class="grp-h" style="background:var(--s1);border-top:1px solid var(--b1)">${WD[i+2]} ${21+i}${i===1?badge('오늘','sm solid'):''}<span class="sp"></span><span class="muted" style="font-weight:500">${list.length}</span></div>${list.slice(0,2).map(o=>task({...o,open:0})).join('')}`).join('')}`,{...top});
+  return mscreen(`${mStrip()}${mDashTabs(2)}<div style="padding-top:12px" class="col">${postsList()}</div>`,{...top});
+};
+
+/* ===== pages ===== */
+const PAGES=[
+/* ---------------- 공통 ---------------- */
+{g:'공통',id:'layout',name:'레이아웃 · 반응형 규칙',path:'전체',
+ d:()=>`<div class="lp" style="padding:32px 40px 48px">${pgh('레이아웃 · 반응형 규칙')}
+  ${G('',`
+   ${C('s4 ts6',`<div class="bp"><div class="bp-h">${n(1)}데스크톱 · 1024px 이상</div><div style="padding:14px;display:flex;gap:6px;height:280px">
+     <div class="zone" style="width:56px">좌측 메뉴<br>232<br>(접으면 64)</div><div class="col f1" style="gap:6px"><div class="zone f1">본문 12열<br>거터 24 · 마진 40<br>최대 1440</div></div><div class="zone" style="width:56px">우측 패널<br>340</div></div></div>`)}
+   ${C('s4 ts3',`<div class="bp"><div class="bp-h">${n(2)}태블릿 · 768 – 1023px</div><div style="padding:14px;display:flex;gap:6px;height:280px">
+     <div class="zone" style="width:28px">64</div><div class="col f1" style="gap:6px"><div class="zone f1">본문 6열<br>거터 24<br>마진 24</div></div><div class="zone" style="width:28px;border-style:dotted">52</div></div></div>`)}
+   ${C('s4 ts3',`<div class="bp"><div class="bp-h">${n(3)}모바일 · 320 – 767px</div><div style="padding:14px;display:flex;justify-content:center;height:280px"><div class="col" style="width:150px;gap:6px"><div class="zone" style="height:30px">상단바 52</div><div class="zone f1">본문 4열<br>거터 16<br>마진 16<br>기준 375</div><div class="zone" style="height:34px">하단 탭바</div></div></div></div>`)}
+   ${C('s6 ts6',card(`<table class="t"><tr><th>항목</th><th>규격</th></tr>
+     <tr><td>그리드</td><td>데스크톱 12열 · 24 · 40 · 최대 1440 / 태블릿 6열 · 24 · 24 / 모바일 4열 · 16 · 16</td></tr>
+     <tr><td>그리드 범위</td><td>본문 영역. 좌측 메뉴 · 우측 패널 · 채팅 패널 · 드로어/모달처럼 화면 끝에 붙거나 떠 있는 요소는 예외</td></tr>
+     <tr><td>폭 지정</td><td>본문 안 카드 · 목록 · 패널은 열 단위로만 (고정 px 폭 없음)</td></tr><tr><td>예외 · 짧은 폼</td><td>로그인 · 회원가입 · 계정 안내는 폭 400 고정 폼 하나를 가운데 정렬로 세 크기 공통 사용 (모바일은 100%)</td></tr>
+     <tr><td>글자</td><td>Figtree + Noto Sans KR · 본문 15/24 · 13/20 · 캡션 12/16 · 제목 26/34 · 소제목 20/28</td></tr>
+     <tr><td>컨트롤 · 모서리</td><td>높이 32/40/48 · 터치 44 · 모서리 4/8/12/16</td></tr></table>`,{title:'규격 '+n(4)}))}
+   ${C('s6 ts6',card(`<table class="t"><tr><th>쓰는 곳</th><th>컴포넌트</th></tr>
+     <tr><td>할 일 행</td><td>TaskItem + 하위 할 일 블록(확장)</td></tr>
+     <tr><td>보기 전환 · 탭</td><td>SegmentedControl · Tabs · 모바일 TabBar</td></tr>
+     <tr><td>레벨 · 포인트</td><td>LevelBadge · PointBalance · AvatarSlot</td></tr>
+     <tr><td>목록 · 설정</td><td>ListRow · Switch · Checkbox · Radio · Select</td></tr>
+     <tr><td>알림 · 확인</td><td>Toast · Dialog</td></tr>
+     <tr><td>새로 필요</td><td>달력 · 주/월 그리드 · 사이드 메뉴 · 드로어/바텀시트 · 말풍선/메시지 행 · 게시글 카드 · 댓글 · 테이블 · OTP · 이미지 업로드</td></tr></table>`,{title:'컴포넌트 '+n(5)}))}
+  `)}</div>`,
+ m:()=>[['모바일 골격',mscreen(`<div class="mpad col" style="gap:10px;padding-top:8px">${ph('본문 (스크롤)',560)}</div>`,{title:'큰 제목',lg:1,right:ibtn('')+ibtn('','',1),tab:'dashboard',over:`<div class="fab">${btn('＋ 주요 동작','p lg')}</div>`})],
+   ['바텀시트',mscreen(`<div class="mpad">${ph('',600)}</div>`,{title:'화면',tab:'dashboard',over:`<div class="scrim"></div><div class="sheet" style="height:420px"><div class="grab"></div><div class="row"><b class="h3 f1">시트 제목</b>${ibtn('✕')}</div>${ph('내용',240,'margin-top:12px')}<div style="margin-top:auto">${btn('확인','p lg w')}</div></div>`})]],
+ notes:[['데스크톱 1024~','본문 12열 · 거터 24 · 마진 40 · 최대 1440 (전체 폭 요소 제외). 좌측 메뉴 232(접으면 64) · 상단바 없음(알림 · 포인트 · 출석 · 프로필은 좌측 메뉴) · 대시보드 우측 패널 340. 1280 미만이면 우측 패널 기본 접힘'],['태블릿 768–1023','6열 · 거터/마진 24. 좌측 레일 고정, 우측 패널 접힘'],['모바일 320–767 (기준 375)','4열 · 거터/마진 16','하단 탭: 홈 · 타임라인 · 팀 · 채팅 · 나. 알림은 상단 벨, 아바타·상점·포인트·설정은 "나" 안으로'],['규격','색은 와이어라 회색. 크기·모서리·글자는 디자인 시스템, 그리드는 위 규칙 (디자인 시스템의 최대 폭 1120 대신 1440)'],['컴포넌트','디자인 시스템 26개 + 새로 만들 것 목록']],
+ q:['디자인 시스템 데모의 친구/공유 할 일, 할 일 완료 XP, 출석 보상 10~50P, 방해 금지 시간 등은 API에 없어서 와이어에서 뺐어요']},
+
+/* ---------------- 공개 · 인증 ---------------- */
+{g:'공개 · 인증',id:'landing',name:'랜딩',path:'/',
+ d:()=>`<div style="min-height:820px">
+  <div class="row lp" style="height:64px;padding:0 40px;border-bottom:1px solid var(--b1)"><div class="logo" style="padding:0"><i></i>OrbitFlow</div><span class="sp"></span>${btn('로그인','g')}${btn('시작하기','p')}</div>
+  <div class="lp" style="padding:72px 40px 48px">${G('',`
+    ${C('s6 ts6',`${n(1)}<h1 style="font-size:48px;line-height:58px;letter-spacing:-.02em;margin:16px 0">미뤄둔 일까지,<br>한 궤도에.</h1>${lns('80%','60%')}<div class="row" style="margin-top:28px">${btn('지금 시작하기','p lg')}${btn('로그인','lg')}</div>`)}
+    ${C('s6 ts6',ph('대시보드 화면 이미지',360))}`)}</div>
+  <div class="lp" style="padding:0 40px 48px">${n(2)}${G('',['할 일 · 일정 · 백로그','팔로우 · 타임라인','팀 · 역할 · 채팅'].map(t=>C('s4 ts2',card(`${ic(40)}<b style="display:block;margin:16px 0 8px;font-size:17px">${t}</b>${lns('95%','75%')}`))).join(''),'margin-top:12px')}</div>
+  <div class="lp" style="padding:0 40px">${G('',C('s12',`<div class="row card sub" style="gap:24px;padding:32px">${n(3)}${av(112,1)}<div class="f1"><b style="font-size:20px">출석하고 레벨업, 포인트로 아바타 꾸미기</b>${lns('70%','45%')}</div>${btn('시작하기','p')}</div>`))}</div>
+  <div class="row cap muted lp" style="padding:32px 40px">© OrbitFlow 2026 · 이용약관 · 개인정보처리방침</div></div>`,
+ m:()=>[['랜딩',mscreen(`<div class="mpad col" style="gap:16px;padding-top:24px">${ph('대시보드 화면 이미지',240)}<h1 style="font-size:34px;line-height:44px;margin:8px 0 0;letter-spacing:-.015em">미뤄둔 일까지,<br>한 궤도에.</h1>${lns('90%','70%')}
+   ${['할 일 · 일정 · 백로그','팔로우 · 타임라인','팀 · 역할 · 채팅'].map(t=>`<div class="row">${ic(32)}<b class="small">${t}</b></div>`).join('')}</div>
+   <div class="mpad col" style="margin-top:auto;padding-bottom:40px">${btn('시작하기','p lg w')}${btn('이미 계정이 있어요','g lg w')}</div>`,{})]],
+ notes:[['히어로 + CTA','시작하기 → 회원가입 모달 · 로그인 → 로그인 모달'],['기능 소개 3개',''],['아바타 · 레벨 소개','']],
+ q:['로그인 상태로 / 접근 시 /dashboard로 리다이렉트']},
+
+{g:'공개 · 인증',id:'login',name:'로그인',path:'/login · 전체 화면 모달',
+ d:()=>authOne(LOGIN),
+ m:()=>[['로그인',mAuth(LOGIN)]],
+ notes:[['이메일 · 비밀번호','POST /api/auth/login · 에러는 폼 아래 한 줄'],['비밀번호 찾기','→ 계정 안내 화면'],['소셜 4종','GET /oauth2/authorization/{google|kakao|naver|github}']],
+ q:['폼 컴포넌트 하나(폭 400 고정, 좁으면 100%)를 데스크톱 · 태블릿 · 모바일이 그대로 같이 씀','흰 바탕 전체 화면 모달: 상단 로고 + ✕. 열릴 때 페이드/슬라이드로 페이지가 바뀐 느낌, ✕ · 뒤로가기 = 직전 페이지. /login 직접 접근·새로고침도 같은 화면','"로그인 유지" 체크는 API에 없어서 뺐어요 (refresh token으로 자동 유지)','휴면 → 휴면 해제 모달, 정지 → 정지 안내 모달로 전환']},
+
+{g:'공개 · 인증',id:'signup',name:'회원가입',path:'/signup · 전체 화면 모달',
+ d:()=>authStates(SIGNUP),
+ m:()=>SIGNUP.map((f,i)=>[`${i+1}. ${['이메일 인증','계정 정보','약관 동의'][i]}`,mAuth(f,i>0)]),
+ notes:[['이메일 OTP','POST /api/auth/email/sendcode → /verify (emailVerifyToken)'],['계정 정보','POST /api/users — nickname 2~50 · password 8~20 규칙'],['약관 동의','termsAgreed 하나(필수)뿐 — 선택 동의 항목 없음']],
+ q:['폭 400 고정 폼 하나를 세 크기에서 공통으로. 모달 하나 안에서 3단계 전환 (와이어는 단계별로 펼쳐 보여줌)','입력 중에 바깥 클릭 · ✕로 닫으면 "작성 중인 내용이 사라져요" 확인']},
+
+{g:'공개 · 인증',id:'account',name:'계정 안내 모달들',path:'모달 · /oauth/signup 외',
+ d:()=>authStates(ACCOUNT.map(x=>x[1])),
+ m:()=>ACCOUNT.slice(1,5).map(([c,f])=>[c,mAuth(f)]),
+ notes:[['소셜 가입','GET → POST /api/auth/oauth/signup'],['재설정 메일','POST /api/auth/password/reset-mail'],['새 비밀번호','POST /api/auth/password/reset (링크 토큰)'],['휴면 해제','POST /api/auth/dormant/release'],['정지 안내','GET /api/auth/suspension-notice'],['OAuth 콜백','성공 시 /dashboard']],
+ q:['로그인과 같은 폭 400 고정 폼. 모두 흰 바탕 전체 화면 모달 (점선은 와이어에서 상태를 나란히 보이려는 구분). 메일 링크(/password/reset?token=…)·OAuth 리다이렉트로 들어와도 같은 화면','소셜 로그인 처리 중 화면은 ✕ 없음']},
+
+/* ---------------- 할 일 ---------------- */
+{g:'할 일',id:'dashboard',name:'대시보드 · 일간',path:'/dashboard',
+ d:()=>dashPage(0),
+ m:()=>[['일정 · 일간',mDash('day')],['백로그 탭',mDash('backlog')],['일정 · 월간',mDash('month')]],
+ notes:[['좌측 메뉴 접기','« → 64px 아이콘 레일. 상태는 localStorage'],['아바타 카드','GET /api/avatars/me — Lv · currentExp/requiredExp · point. 출석 POST /api/points/attendance (1P · 10 EXP), 오늘 여부 GET .../attendance/today'],['달력 (‹ › 오늘)','월 이동 · 날짜 = 기준일. 점 = 할 일 있는 날 (달 범위 schedules 조회)'],['일간 / 주간 / 월간','SegmentedControl. from~to를 하루 / 월~일 / 달력 화면(최대 42일)으로'],['일정','GET /api/todos/dashboard/schedules + previews. TaskItem 행 + 하위 할 일. 미리보기 회차 체크 = POST /api/routines/{id}/occurrences 후 완료'],['우측 패널: 백로그 | 내 글','백로그 = 같은 범위와 기간이 겹치는 것 (/dashboard/backlogs). 모바일은 상단 탭으로']],
+ q:['"오늘 진행"은 그날 일정·백로그 완료 수로 FE 계산']},
+
+{g:'할 일',id:'dashboard-week',name:'대시보드 · 주간',path:'/dashboard?view=week',
+ d:()=>dashPage(1),
+ m:()=>[['일정 · 주간',mDash('week')]],
+ notes:[['좌측 메뉴 접기',''],['아바타 카드',''],['달력','선택 주가 한 줄로 강조'],['주간','from=월 · to=일'],['요일 7칸','카드에 하위 진행 ▸ 1/3. 모바일은 요일별로 묶은 세로 목록'],['우측 백로그','그 주와 겹치는 백로그']]},
+
+{g:'할 일',id:'dashboard-month',name:'대시보드 · 월간',path:'/dashboard?view=month',
+ d:()=>dashPage(2),
+ m:()=>[['일정 · 월간',mDash('month')]],
+ notes:[['좌측 메뉴 접기',''],['아바타 카드',''],['미니 달력','월간일 땐 월 이동만'],['월간','from=9/28 · to=11/1 (35일)'],['월 그리드','칸마다 최대 3개 + "+N개", 일정마다 하위 진행 수. 모바일은 점 달력 + 선택일 목록'],['우측 백로그','그 달과 겹치는 백로그']],
+ q:['월간일 때 위 미니 달력이 중복 — 숨길지?']},
+
+{g:'할 일',id:'dashboard-posts',name:'대시보드 · "내 글" 탭',path:'/dashboard (패널 탭)',
+ d:()=>dashPage(0,{tab:1}),
+ m:()=>[['내 글 탭',mDash('posts')]],
+ notes:[['',''],['',''],['',''],['',''],['',''],['우측 패널 "내 글"','GET /api/users/{내 uuid}/posts — 연결된 할 일 · 사진 · 좋아요/댓글 수. 클릭 → 게시글 상세']]},
+
+{g:'할 일',id:'dashboard-collapsed',name:'대시보드 · 양쪽 접힘',path:'/dashboard',
+ d:()=>dashPage(1,{mini:1,closed:1}),
+ m:()=>[['(모바일은 해당 없음)',mDash('week')]],
+ notes:[['좌측 접힘 = 아이콘 레일',''],['',''],['',''],['',''],['본문이 넓어짐',''],['우측 접힘 = 세로 탭 레일','"백로그 7" / "내 글" — 누르면 그 탭으로 펼침']]},
+
+{g:'할 일',id:'todo',name:'할 일 편집',path:'드로어 · 바텀시트',
+ d:()=>`<div style="position:relative">${dashPage(0)}<div class="scrim"></div>
+  <div class="drawer">
+   <div class="row"><b class="h3 f1">할 일</b>${ibtn('⋯')}${ibtn('✕')}</div>
+   <div class="row" style="margin:16px 0 0">${n(1)}${segc(['백로그','일정'],1)}<span class="sp"></span><span class="row small">${cb(false)}완료</span></div>
+   ${field('이름','캡스톤 회의','최대 100자')}
+   <div class="g2" style="gap:12px"><div>${select('카테고리','졸업 프로젝트')}</div><div>${select('담당자 (팀 할 일만)','나')}</div></div>
+   <div class="lbl">날짜 · 시간</div><div class="row">${inp('10/22 (목)','','flex:1')}${inp('10:00','','width:80px')}<span class="muted">–</span>${inp('11:30','','width:80px')}</div>
+   <div class="row" style="margin-top:16px">${n(2)}<b class="small f1">반복</b>${sw(true)}</div>
+   <div class="row" style="margin-top:8px">${inp('<span style="color:var(--t1)">매주</span> ▾','','width:110px')}${inp('1','','width:56px')}<span class="small muted">주마다</span><span class="sp"></span>${inp('종료 없음 ▾','','width:130px')}</div>
+   <div class="row" style="margin-top:8px;gap:6px">${WD.map((d,i)=>tag(d,i===0||i===2||i===4,'sm',false)).join('')}</div>
+   ${select('리마인드','10분 전')}
+   <div class="row" style="margin-top:16px">${n(3)}<b class="small">하위 할 일</b><span class="cap muted">1 / 2</span></div>
+   <div style="margin-top:4px">${kidsBlock([['안건 정리',1],['회의록 공유',0]],1)}</div>
+   <div class="row" style="margin-top:16px">${n(4)}<b class="small f1">이 할 일의 게시글</b>${btn('글 쓰기','sm')}</div>
+   <div class="row" style="margin-top:8px">${ph('',48,'width:48px')}<div class="f1">${lns('80%','40%')}</div></div>
+   <div class="sp"></div>
+   <div class="row" style="border-top:1px solid var(--b1);padding-top:16px">${btn('삭제','g')}<span class="sp"></span>${btn('취소')}${btn('저장','p')}</div>
+  </div></div>`,
+ m:()=>[['편집 시트',mscreen(`<div class="mpad">${ph('',300)}</div>`,{title:'대시보드',lg:1,tab:'dashboard',over:`<div class="scrim"></div><div class="sheet" style="top:60px"><div class="grab"></div><div class="row"><b class="h3 f1">할 일</b>${ibtn('⋯')}${ibtn('✕')}</div>
+    <div style="margin-top:12px">${segc(['백로그','일정'],1,'full')}</div>${field('이름','캡스톤 회의','','lg')}${select('카테고리','졸업 프로젝트','lg')}
+    <div class="lbl">날짜 · 시간</div><div class="row">${inp('10/22 (목)','lg','flex:1')}${inp('10:00','lg','width:76px')}${inp('11:30','lg','width:76px')}</div>
+    <div class="list" style="margin-top:16px">${lrow('반복',{val:'매주 월·수·금',ic:false})}${lrow('리마인드',{val:'10분 전',ic:false})}</div>
+    <div class="row" style="margin-top:16px"><b class="small">하위 할 일</b><span class="cap muted">1 / 2</span></div><div style="margin-top:4px">${kidsBlock([['안건 정리',1],['회의록 공유',0]],1)}</div>
+    <div class="row" style="margin-top:auto;gap:8px">${btn('삭제','g lg')}<span class="sp"></span>${btn('저장','p lg')}</div></div>`})],
+   ['반복 수정 범위',mscreen(`<div class="mpad">${ph('',600)}</div>`,{title:'대시보드',lg:1,tab:'dashboard',over:`<div class="scrim"></div><div class="dialog" style="left:16px;right:16px;top:280px;padding:24px"><div class="row" style="align-items:flex-start;gap:12px">${ic(44)}<div class="f1"><b class="h3">반복 일정 수정</b><div class="small t2" style="margin-top:6px">어느 회차까지 바꿀까요?</div></div></div>
+    <div class="col" style="margin:16px 0;gap:12px"><div class="row small">${rad(true)}완료한 회차까지 전부 (ALL)</div><div class="row small">${rad(false)}미완료 회차만 (INCOMPLETE)</div></div><div class="row" style="justify-content:flex-end">${btn('취소','g')}${btn('저장','p')}</div></div>`})]],
+ notes:[['백로그(날짜) / 일정(시각)','백로그면 시간 입력 숨김. POST /api/categories/{id}/todos · PUT /api/todos/{id}'],['반복','켜면 루틴: 주기 DAY·WEEK·MONTH·MONTH_END·YEAR, 간격 1~365, WEEK면 요일, 종료일. 수정 시 범위 다이얼로그 (ALL / INCOMPLETE)'],['하위 할 일 (1단계)','⋮⋮ 드래그 = PATCH /api/todos/{id}/children/order'],['이 할 일의 게시글','GET /api/todos/{id}/posts · 글 쓰기 → 작성 모달']],
+ q:['리마인드: 0~10080분 중 선택지(없음·정각·10분·30분·1시간·1일 전)로 단순화']},
+
+{g:'할 일',id:'categories',name:'카테고리 · 반복',path:'/categories',
+ d:()=>shell('categories',`${pgh('카테고리 · 반복',btn('＋ 카테고리','p'))}
+  ${G('',`
+   ${C('s4 ts6',`<div class="list">${n(1)}
+    ${[['졸업 프로젝트','팔로워'],['공부','전체 공개'],['운동','전체 공개'],['집안일','나만'],['일기','나만']].map(([t,v],i)=>`<div class="lrow" style="${i===0?'background:var(--s2)':''}"><i class="cdot" style="width:12px;height:12px"></i><div class="f1 tt">${t}</div>${badge(v)}</div>`).join('')}</div>`)}
+   ${C('s8 ts6',`<div class="col" style="gap:24px">
+    ${card(`<div class="g2"><div>${field('이름','졸업 프로젝트')}</div><div><div class="lbl">색상</div><div class="row">${inp('3D7BF0','','flex:1;min-width:0')}${ph('',40,'width:40px;flex:none')}</div><div class="hnt">6자리 HEX · 글자색은 대비로 자동(흰/검)</div></div></div>
+      <div class="lbl">공개 범위</div><div class="row" style="gap:20px"><span class="row small">${rad(false)}전체 공개</span><span class="row small">${rad(true)}팔로워</span><span class="row small">${rad(false)}나만 보기</span></div>
+      <div class="row" style="margin-top:20px">${btn('카테고리 삭제','g')}<span class="cap muted">할 일까지 영구 삭제</span><span class="sp"></span>${btn('저장','p')}</div>`,{title:'카테고리 편집 '+n(2)})}
+    ${card(`<table class="t"><tr><th>이름</th><th>유형</th><th>반복</th><th>시간</th><th></th></tr>
+      ${[['아침 러닝','일정','매일','07:00–08:00'],['캡스톤 회의','일정','월·수·금','10:00–11:30'],['주간 회고','백로그','매주 일','—']].map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}<td>${btn('편집','sm')}</td></tr>`).join('')}</table>`,{title:'반복 일정 '+n(3),right:btn('＋ 반복','sm')})}
+    ${card(`<div class="list">${[{t:'API 문서 정리',due:'10/24',kids:[['인증 섹션',1],['팀 섹션',0]]},{t:'ERD 리뷰',due:'10/21',done:1,kids:[]}].map(task).join('')}</div>`,{title:'할 일 '+n(4)})}
+   </div>`)}`)}`),
+ m:()=>[['카테고리 목록',mscreen(`<div class="list" style="border-radius:0;border-left:0;border-right:0">${[['졸업 프로젝트','팔로워'],['공부','전체 공개'],['운동','전체 공개'],['집안일','나만'],['일기','나만']].map(([t,v])=>`<div class="lrow"><i class="cdot" style="width:12px;height:12px"></i><div class="f1 tt">${t}</div>${badge(v)}<span class="chev">›</span></div>`).join('')}</div>
+    <div class="over mpad" style="margin:20px 0 8px">반복 일정</div><div class="list" style="border-radius:0;border-left:0;border-right:0">${lrow('아침 러닝',{ds:'매일 · 07:00–08:00',ic:false})}${lrow('캡스톤 회의',{ds:'매주 월·수·금 · 10:00',ic:false})}</div>`,{title:'카테고리',lg:1,back:1,right:ibtn('＋')})],
+   ['카테고리 편집',mscreen(`<div class="mpad">${field('이름','졸업 프로젝트','','lg')}<div class="lbl">색상</div><div class="row">${inp('3D7BF0','lg','flex:1')}${ph('',48,'width:48px')}</div><div class="hnt">6자리 HEX</div>
+    <div class="lbl">공개 범위</div><div class="list">${lrow('전체 공개',{ic:false,trail:rad(false)})}${lrow('팔로워',{ic:false,trail:rad(true)})}${lrow('나만 보기',{ic:false,trail:rad(false)})}</div></div>
+    <div class="mpad col" style="margin-top:auto;padding-bottom:40px">${btn('저장','p lg w')}${btn('카테고리 삭제','g lg w')}</div>`,{title:'카테고리 편집',back:1})]],
+ notes:[['내 카테고리','GET /api/categories/me'],['이름 · 색(HEX 6자리) · 공개 범위','POST /api/categories · PUT/DELETE /api/categories/{id}. 색은 사용자 입력 → 글자색 자동'],['반복 일정','GET /api/routines/me (카테고리로 FE 필터)'],['카테고리의 할 일','GET /api/categories/{id}/todos — parentTodoId로 묶어 표시']],
+ q:['진행 중/완료 필터는 API에 없어서 뺐어요','색 선택 UI: HEX 입력 + 컬러 피커 (프리셋 팔레트는 옵션)']},
+
+/* ---------------- 소셜 ---------------- */
+{g:'소셜',id:'timeline',name:'타임라인',path:'/timeline',
+ d:()=>shell('timeline',`${pgh('타임라인',n(1))}${G('',`
+   ${C('s8 ts6',[[3,12,3,1],[0,5,0,0],[1,8,2,1]].map(([img,like,cmt,done],k)=>card(`${k===0?n(2):''}
+      <div class="row">${av(40,9)}<div class="f1"><b class="small">서준</b><div class="cap muted">1시간 전</div></div>${ibtn('⋯','sm')}</div>
+      <div class="row cap t2" style="margin:12px 0;padding:8px 12px;background:var(--s1);border-radius:var(--r-sm)">${cb(done,'s')}<b>알고리즘 3문제</b> · <i class="cdot"></i>공부 · 10/22 13:00–15:00</div>
+      ${lns('95%','70%')}
+      ${img?`<div style="display:grid;gap:6px;margin-top:12px;grid-template-columns:repeat(${img},1fr)">${rep(img,()=>ph('사진',img===1?300:160))}</div>`:''}
+      <div class="row small" style="margin-top:12px;gap:16px">${k===0?n(3):''}<span>♡ ${like}</span><span data-go="post">💬 ${cmt}</span></div>`,{st:'margin-bottom:24px'})).join('')+'<div class="center small muted" style="padding:16px">스크롤하면 다음 페이지</div>')}
+   ${C('s4 ts6 first',card(rep(2,()=>`<div class="row" style="padding:8px 0">${av(36)}<div class="f1">${ln('60%','d')}</div>${btn('수락','sm p')}${btn('거절','sm')}</div>`),{title:'팔로우 요청 '+n(4),right:'<span class="cap muted">모두 보기</span>'}))}`)}`),
+ m:()=>[['타임라인',mscreen(`<div style="border-top:1px solid var(--b1)">${[[2,12,3],[0,5,0]].map(([img,like,cmt])=>`<div style="padding:16px;border-bottom:1px solid var(--b1)"><div class="row">${av(40,9)}<div class="f1"><b class="small">서준</b><div class="cap muted">1시간 전</div></div>${ibtn('⋯','sm')}</div>
+    <div class="row cap t2" style="margin:12px 0;padding:8px 12px;background:var(--s1);border-radius:var(--r-sm)">${cb(true,'s')}<b>알고리즘 3문제</b> · 공부</div>${lns('95%','60%')}
+    ${img?`<div class="row" style="gap:6px;margin-top:10px">${rep(img,()=>ph('',150,'flex:1'))}</div>`:''}<div class="row small" style="margin-top:10px;gap:16px"><span>♡ ${like}</span><span>💬 ${cmt}</span></div></div>`).join('')}</div>`,{title:'타임라인',lg:1,right:`<span class="row">${ibtn('')}${cnt(2)}</span>`,tab:'timeline'})]],
+ notes:[['게시글만 모아 봄','GET /api/timeline — ACCEPTED로 팔로우한 사람의 개인 카테고리 게시글(PUBLIC·FOLLOWER)만. 내 글·팀 글 제외'],['게시글 카드','작성자 · 연결된 할 일(이름 · 카테고리 · 완료 여부 · 시간) · 본문 · 사진 0~3'],['좋아요 · 댓글','POST /api/posts/{id}/likes · 댓글 → 게시글 상세'],['받은 팔로우 요청','GET /api/follows/requests · 모바일은 상단 아이콘']],
+ q:['"○○님이 완료했어요" 같은 완료 전용 카드는 타임라인 API에 없어서 뺐어요 (완료 소식은 알림 TODO_COMPLETED로)']},
+
+{g:'소셜',id:'post',name:'게시글 상세 · 작성',path:'모달 · 전체 화면',
+ d:()=>`<div class="postwrap" style="position:relative;height:860px">${shell('timeline','')}<div class="scrim"></div>
+  <div class="dialog pd" style="left:56px;top:56px;width:780px;height:600px;display:flex">
+   <div style="flex:1.1;position:relative">${n(1)}${ph('사진 1 / 3',600,'border:0;border-radius:0')}</div>
+   <div style="flex:1;display:flex;flex-direction:column;padding:16px">
+    <div class="row">${av(36,9)}<b class="f1 small">서준</b>${ibtn('⋯','sm')}</div>
+    <div class="row cap t2" style="margin:10px 0">${cb(true,'s')}<b>알고리즘 3문제</b> · 공부</div>${lns('95%','60%')}
+    <div class="hr"></div>
+    <div class="f1 col" style="gap:12px">${n(2)}
+     ${rep(2,()=>`<div class="row" style="align-items:flex-start">${av(28)}<div class="f1">${ln('35%','d')}${ln('85%')}<span class="cap muted">답글 달기 · 답글 3개 보기</span></div>${ibtn('⋯','sm')}</div>`)}
+     <div class="row" style="align-items:flex-start;padding-left:36px">${av(24)}<div class="f1">${ln('30%','d')}${ln('70%')}</div></div>
+    </div>
+    <div class="row small" style="border-top:1px solid var(--b1);padding-top:12px">${n(3)}<span>♡ 12</span><span class="cap muted">좋아요한 사람</span></div>
+    <div class="row" style="margin-top:8px">${inp('댓글 달기…','','flex:1')}${btn('게시','p')}</div>
+   </div></div>
+  <div class="dialog pc" style="left:880px;top:56px;width:360px;padding:24px">
+   <div class="row"><b class="h3 f1">게시글 작성</b>${n(4)}${ibtn('✕')}</div>
+   <div class="lbl">연결된 할 일</div><div class="row cap t2">${cb(true,'s')}<b>알고리즘 3문제</b></div>
+   <div class="lbl">내용</div><div class="inp ta" style="min-height:120px">오늘 한 일 공유하기…</div>
+   <div class="lbl">사진 (최대 3장)</div><div class="row">${ph('',88,'width:88px')}${ph('',88,'width:88px')}${ph('＋',88,'width:88px')}</div>
+   <div class="row" style="margin-top:20px;justify-content:flex-end">${btn('취소','g')}${btn('올리기','p')}</div></div></div>`,
+ m:()=>[['게시글 상세',mscreen(`${ph('사진 1 / 3',300,'border-radius:0;border-left:0;border-right:0')}<div class="mpad" style="padding-top:12px"><div class="row">${av(36,9)}<b class="f1 small">서준</b><span class="cap muted">1시간 전</span></div><div class="row cap t2" style="margin:10px 0">${cb(true,'s')}<b>알고리즘 3문제</b> · 공부</div>${lns('95%','60%')}<div class="row small" style="margin:10px 0;gap:16px"><span>♡ 12</span><span>💬 3</span></div><div class="hr" style="margin:8px 0"></div>
+    ${rep(2,()=>`<div class="row" style="align-items:flex-start;margin-top:10px">${av(28)}<div class="f1">${ln('35%','d')}${ln('85%')}<span class="cap muted">답글 달기 · 답글 3개</span></div></div>`)}</div>
+    <div class="row" style="margin-top:auto;padding:8px 12px 30px;border-top:1px solid var(--b1)">${inp('댓글 달기…','','flex:1')}${btn('게시','p')}</div>`,{title:'게시글',back:1,right:ibtn('⋯')})],
+   ['게시글 작성',mscreen(`<div class="mpad"><div class="row cap t2" style="padding:10px 12px;background:var(--s1);border-radius:var(--r-sm)">${cb(true,'s')}<b>알고리즘 3문제</b></div><div class="inp ta" style="min-height:200px;margin-top:12px;border:0;padding:0">오늘 한 일 공유하기…</div><div class="lbl">사진 (최대 3장)</div><div class="row">${ph('',96,'width:96px')}${ph('＋',96,'width:96px')}</div></div>`,{title:'게시글 작성',back:1,right:btn('올리기','p sm')})]],
+ notes:[['사진','GET /api/posts/{id}'],['댓글 · 답글 (1단계)','GET /api/posts/{id}/comments · GET /api/comments/{id}/replies · ⋯ 수정/삭제/신고(COMMENT)'],['좋아요 · 좋아요한 사람','GET /api/posts/{id}/likes'],['작성 (할 일에서 진입)','POST /api/todos/{todoId}/posts · 사진 3장까지']],
+ q:['⋯ 메뉴: 내 글 = 수정 · 삭제 / 남의 글 = 신고(POST)']},
+
+{g:'소셜',id:'profile',name:'사용자 프로필',path:'/u/:uuid',
+ d:()=>shell('',G('',`
+   ${C('s12',`<div class="row" style="gap:24px;align-items:flex-start">${n(1)}${av(112,12)}
+    <div class="f1"><div class="row"><h2 class="h1">서준</h2><span class="sp"></span>${n(2)}${btn('팔로우','p')}${btn('메시지')}${ibtn('⋯','o')}</div>
+     <div class="row small" style="gap:20px;margin:12px 0"><span><b>180</b> 팔로워</span><span><b>96</b> 팔로잉</span></div>${lns('60%','40%')}</div></div>`)}
+   ${C('s12',tabs(['게시글','카테고리','팔로워','팔로잉'],0)+n(3))}
+   ${rep(6,()=>C('s4 ts2',ph('게시글',260)))}
+   ${C('s12',card(`<div class="center col">${n(4)}${ic(28)}<b>비공개 계정이에요</b><span class="small muted">팔로우 요청이 수락되면 볼 수 있어요</span></div>`,{k:'sub'}))}`)),
+ m:()=>[['프로필',mscreen(`<div class="mpad row" style="gap:16px;margin:4px 0 16px">${av(80,12)}<div class="f1"><div class="row small" style="gap:16px"><span><b>180</b> 팔로워</span><span><b>96</b> 팔로잉</span></div>${lns('90%','60%')}</div></div>
+    <div class="mpad row">${btn('팔로우','p w')}${btn('메시지','w')}</div>${tabs(['게시글','카테고리','팔로워','팔로잉'],0,[],'padding:0 16px;margin-top:12px')}
+    <div class="g3" style="gap:2px;margin-top:2px">${rep(6,()=>ph('',128,'border-radius:0'))}</div>`,{title:'서준',back:1,right:ibtn('⋯'),tab:'timeline'})]],
+ notes:[['프로필 헤더','GET /api/users/{uuid} (팔로워·팔로잉 수, followState) + GET /api/users/{uuid}/avatar (레벨)'],['팔로우 버튼 상태','NOT_FOLLOW = 팔로우 · PENDING = 요청됨 · ACCEPTED = 팔로잉. ⋯ = 활동 알림 끄기 · 차단 · 신고(USER)'],['탭','게시글 /users/{uuid}/posts · 카테고리 /users/{uuid}/categories · 팔로워/팔로잉 목록'],['비공개 계정 빈 상태','']],
+ q:['게시글 수는 응답에 없어서 뺐어요','내 프로필도 같은 화면 + "프로필 편집" 버튼']},
+
+/* ---------------- 팀 ---------------- */
+{g:'팀',id:'teams',name:'팀 목록 · 찾기',path:'/teams',
+ d:()=>shell('teams',`${pgh('팀',btn('＋ 팀 만들기','p'))}${G('',`
+  ${C('s12',card(rep(2,()=>`<div class="row" style="padding:8px 0">${av(40)}<div class="f1">${ln('25%','d')}<span class="cap muted">○○님이 초대했어요</span></div>${btn('수락','sm p')}${btn('거절','sm')}</div>`),{title:'받은 초대 '+n(1)}))}
+  ${C('s12','<div class="row"><b>내 팀</b>'+n(2)+'</div>')}
+  ${[['졸업 프로젝트 팀','멤버',6,3,1],['알고리즘 스터디','관리자',12,2,0],['헬스 크루','소유자',5,0,0]].map(([t,r,m,todo,od])=>C('s4 ts3',`<div data-go="team">${card(`<div class="row">${av(48)}<div class="f1"><b>${t}</b><div class="cap muted">구성원 ${m} · ${r}</div></div></div><div class="row cap" style="margin-top:16px;gap:12px"><span>내 할 일 <b>${todo}</b></span>${od?`<span>마감 지남 <b>${od}</b></span>`:''}</div>`)}</div>`)).join('')}
+  ${C('s12',card(`${inp('⌕  팀 이름으로 검색')}${rep(3,()=>`<div class="row" style="padding:12px 0;border-bottom:1px solid var(--b1)">${av(44)}<div class="f1">${ln('30%','d')}${ln('55%')}</div><span class="cap muted">구성원 12</span>${btn('가입 신청','sm s')}</div>`)}`,{title:'공개 팀 찾기 '+n(3)}))}
+  ${C('s12',`<div class="small muted">${n(4)}삭제한 팀 복구 (30일 이내) ›</div>`)}`)}`),
+ m:()=>[['팀 목록',mscreen(`<div class="mpad">${inp('⌕  공개 팀 검색','lg')}</div>
+    <div class="over mpad" style="margin:20px 0 8px">받은 초대 1</div><div class="list" style="border-radius:0;border-left:0;border-right:0">${lrow('알고리즘 스터디',{ds:'○○님이 초대했어요',trail:btn('수락','sm p')})}</div>
+    <div class="over mpad" style="margin:20px 0 8px">내 팀</div><div class="list" style="border-radius:0;border-left:0;border-right:0">${[['졸업 프로젝트 팀','구성원 6 · 내 할 일 3'],['알고리즘 스터디','구성원 12 · 내 할 일 2'],['헬스 크루','구성원 5']].map(([t,d])=>`<div class="lrow" data-go="team">${av(44)}<div class="f1"><div class="tt">${t}</div><div class="ds">${d}</div></div><span class="chev">›</span></div>`).join('')}</div>`,{title:'팀',lg:1,right:ibtn('＋'),tab:'teams'})]],
+ notes:[['받은 초대','GET /api/team-invitations · accept / reject'],['내 팀','GET /api/teams — 아이콘(없으면 identicon) · 구성원 수 · 내 대표 역할 · 내 남은 할 일 · 마감 지남'],['공개 팀 검색 + 가입 신청','GET /api/teams/search · POST /api/teams/{uuid}/join-requests'],['삭제한 팀 복구','GET /api/teams/deleted · POST .../restore']],
+ q:['팀 만들기 = 이름 · 아이콘 · 소개 · 비공개 여부 다이얼로그']},
+
+{g:'팀',id:'team',name:'팀 메인',path:'/teams/:uuid',
+ d:()=>shell('teams',G('',`
+  ${C('s12',`<div class="row" style="gap:16px">${n(1)}${av(64)}<div class="f1"><h2 class="h1">졸업 프로젝트 팀</h2><div class="small muted">2026 캡스톤 · 구성원 6 · 비공개 팀 · 내 역할 멤버</div></div><span data-go="team-chat">${btn('채팅')}</span>${btn('팀 설정')}</div>`)}
+  ${[['내 남은 할 일','3'],['마감 지남','1'],['이번 주 배정','4'],['팀 할 일','28']].map(([l,v])=>C('s3 ts3',card(`<div class="cap muted">${l}</div><div style="font-size:28px;font-weight:800;margin-top:4px">${v}</div>`,{st:'padding:16px'}))).join('')}
+  ${C('s12',tabs(['홈','카테고리','구성원','채팅방'],0))}
+  ${C('s4 ts6',`<div class="col" style="gap:16px"><div class="row"><b>오늘 일정</b>${n(2)}<span class="sp"></span>${ibtn('‹','sm')}<span class="small">10/22</span>${ibtn('›','sm')}</div>
+    <div class="list">${[{...MEET,t:'주간 스탠드업',who:1,kids:[['어제 한 일',1],['오늘 할 일',0]]},{time:['14:00','16:00'],t:'API 연동',cat:'개발',who:1,kids:[['인증',1],['팀',0],['채팅',0]]}].map(task).join('')}</div>
+    ${card([['개발',72],['디자인',40],['문서',90]].map(([t,p])=>`<div style="margin-top:12px">${prog(p,'<span class="row" style="gap:6px"><i class="cdot"></i>'+t+'</span>',p+'%')}</div>`).join(''),{title:'카테고리 완료율 '+n(3)})}</div>`)}
+  ${C('s8 ts6',`<div class="row" style="margin-bottom:12px"><b>백로그</b>${n(4)}<span class="sp"></span>${segc(['전체','내 담당'],0,'sm')}${btn('＋ 할 일','p sm')}</div>
+    <div class="list">
+     <div class="grp-h" style="background:var(--s1);border-bottom:1px solid var(--b1)">▾ <i class="cdot"></i>개발 <span class="muted" style="font-weight:500">3</span></div>
+     ${[{t:'로그인 페이지',due:'~ 10/24 · 지민',who:1,kids:[['폼',1],['소셜 버튼',0]],open:1},{t:'대시보드 API 연동',due:'~ 10/27 · 서준',who:1,kids:[]},{t:'배포 스크립트',due:'완료',done:1,who:1,kids:[['도커',1]]}].map(task).join('')}
+     <div class="grp-h" style="background:var(--s1);border-bottom:1px solid var(--b1)">▸ <i class="cdot"></i>디자인 <span class="muted" style="font-weight:500">2</span></div>
+    </div>`)}`)),
+ m:()=>[['팀 홈',mscreen(`<div class="mpad row" style="gap:12px;margin-bottom:12px">${av(56)}<div class="f1"><div class="small muted">구성원 6 · 비공개 · 멤버</div></div></div>
+    <div class="mpad">${G('',[['내 남은 할 일','3'],['마감 지남','1']].map(([l,v])=>C('ms2',card(`<div class="cap muted">${l}</div><b style="font-size:22px">${v}</b>`,{st:'padding:12px'}))).join(''))}</div>
+    ${tabs(['홈','카테고리','구성원','채팅방'],0,[],'padding:0 16px;margin-top:12px')}
+    <div class="over mpad" style="margin:16px 0 8px">오늘 일정</div><div style="border-top:1px solid var(--b1)">${task({...MEET,t:'주간 스탠드업',who:1,kids:[['어제 한 일',1],['오늘 할 일',0]]})}</div>
+    <div class="over mpad" style="margin:16px 0 8px">백로그 · 개발</div><div style="border-top:1px solid var(--b1)">${task({t:'로그인 페이지',due:'~ 10/24 · 지민',who:1,kids:[['폼',1],['소셜 버튼',0]]})}</div>`,{title:'졸업 프로젝트 팀',back:1,right:ibtn('')+ibtn(''),tab:'teams'})]],
+ notes:[['팀 헤더 · 숫자','GET /api/teams/{uuid} — myRemainingTodos · overdueCount · assignedThisWeek · teamTodoCount. 내 권한 GET .../members/me 로 버튼 활성화'],['팀 일정 (담당자 표시)','GET /api/teams/{uuid}/dashboard/schedules'],['카테고리 완료율','GET /api/teams/{uuid}/categories/{id}/progress'],['팀 백로그','GET /api/teams/{uuid}/dashboard/backlogs · 담당자 변경 PATCH /api/todos/{id}/assignee']],
+ q:['비구성원(공개 팀)이면 PUBLIC 카테고리만 + 가입 신청/취소 버튼(joinRequested)']},
+
+{g:'팀',id:'team-settings',name:'팀 설정 · 역할',path:'/teams/:uuid/settings',
+ d:()=>shell('teams',`${pgh('팀 설정','<span class="small muted">졸업 프로젝트 팀</span>')}${G('',`
+  ${C('s12 tab-only',tabs(['일반','구성원','역할 · 권한','초대 · 가입','블랙리스트','팀 프로필'],2))}
+  ${C('s2 tab-hide',`<div class="col" style="gap:2px">${n(1)}${['일반','구성원','역할 · 권한','초대 · 가입 신청','블랙리스트','내 팀 프로필','위험 구역'].map((t,i)=>`<div class="navi ${i===2?'on':''}">${t}</div>`).join('')}</div>`)}
+  ${C('s3 ts6',`<div class="list">${n(2)}
+    ${[['소유자','1'],['관리자','2'],['멤버 · 기본','3'],['디자이너','1']].map(([t,c],i)=>`<div class="lrow" style="min-height:44px;${i===1?'background:var(--s2)':''}"><span class="muted">⋮⋮</span><i class="cdot"></i><span class="f1 small" style="font-weight:600">${t}</span><span class="cap muted">${c}</span></div>`).join('')}
+    <div style="padding:8px">${btn('＋ 역할','dash w sm')}</div></div>`)}
+  ${C('s7 ts6',`<div class="col" style="gap:24px">
+    ${card(`<div class="g2"><div>${field('역할 이름','관리자','최대 50자')}</div><div><div class="lbl">색상</div>${inp('6B8AFD')}</div></div>
+     <div class="row small" style="margin-top:12px">${cb(false)}가입할 때 자동으로 주는 기본 역할</div>
+     <div class="lbl">팀 권한 ${n(3)}</div>
+     <div class="list">${[['팀 관리','팀 정보 · 초대 · 추방 · 역할'],['카테고리 관리','모든 팀 카테고리 열람·수정·삭제'],['할 일 만들기 · 수정','볼 수 있는 카테고리에서'],['할 일 맡기기','다른 구성원에게'],['할 일 삭제','다른 사람 것 포함']].map(([t,d],i)=>lrow(t,{ds:d,ic:false,trail:sw(i<3)})).join('')}</div>`,{title:'역할 편집 · 관리자'})}
+    ${card(`<table class="t"><tr><th>카테고리</th><th>공개 범위</th><th>열람</th><th>할 일 편집</th><th>삭제</th></tr>
+      ${[['개발','비공개'],['디자인','비공개'],['문서','구성원']].map(([c,v],i)=>`<tr><td><i class="cdot"></i> ${c}</td><td>${badge(v)}</td><td>${cb(true)}</td><td>${cb(i<2)}</td><td>${cb(false)}</td></tr>`).join('')}</table>`,{title:'카테고리 접근 '+n(4)})}
+    ${card(`<div class="row" style="flex-wrap:wrap">${rep(2,()=>tag(av(18)+' 이름 ✕',false,'',false))}${btn('＋ 구성원','sm dash')}</div>`,{title:'이 역할의 구성원 '+n(5)})}
+    <div class="row"><span class="sp"></span>${btn('역할 삭제','g')}${btn('저장','p')}</div></div>`)}`)}`),
+ m:()=>[['설정 메뉴',mscreen(`<div class="list" style="border-radius:0;border-left:0;border-right:0">${['일반','구성원','역할 · 권한','초대 · 가입 신청','블랙리스트','내 팀 프로필'].map(t=>lrow(t)).join('')}</div><div class="list" style="border-radius:0;border-left:0;border-right:0;margin-top:20px">${lrow('팀 나가기 · 소유자 위임 · 팀 삭제',{ic:false})}</div>`,{title:'팀 설정',back:1})],
+   ['역할 편집',mscreen(`<div class="mpad">${field('역할 이름','관리자','','lg')}<div class="row small" style="margin-top:12px">${cb(false)}기본 역할</div></div><div class="over mpad" style="margin:20px 0 8px">팀 권한</div><div class="list" style="border-radius:0;border-left:0;border-right:0">${['팀 관리','카테고리 관리','할 일 만들기 · 수정','할 일 맡기기','할 일 삭제'].map((t,i)=>lrow(t,{ic:false,trail:sw(i<3)})).join('')}</div>
+    <div class="list" style="border-radius:0;border-left:0;border-right:0;margin-top:20px">${lrow('카테고리 접근',{ic:false,val:'3개'})}${lrow('이 역할의 구성원',{ic:false,val:'2명'})}</div>`,{title:'역할 편집',back:1,right:btn('저장','p sm')})]],
+ notes:[['설정 메뉴','일반 PUT /api/teams/{uuid} · 구성원(추방·역할 교체) · 초대/가입 신청 · 블랙리스트 · 내 팀 프로필 · 위험 구역(소유자 위임, 팀 삭제)'],['역할 목록','GET /api/teams/{uuid}/roles · 순서 드래그 = priority 값 변경(PUT)'],['팀 권한 5종','MANAGE_TEAM · CREATE_CATEGORIES · EDIT_TODOS · ASSIGN_TODOS · DELETE_TODOS — 내가 없는 권한은 비활성'],['역할 × 카테고리 접근','GET .../roles/{id}/category-access (열람 · 편집 · 삭제)'],['역할 보유 구성원','GET .../roles/{id}/members']]},
+
+/* ---------------- 채팅 · 알림 ---------------- */
+{g:'채팅 · 알림',id:'chat',name:'개인 채팅 (말풍선)',path:'/chat/:roomUuid',
+ d:()=>shell('chat',`<div class="row chatwrap" style="align-items:stretch;height:740px;margin:-24px -40px -40px">
+   <div class="chat-list" style="width:316px;border-right:1px solid var(--b1);display:flex;flex-direction:column">
+    <div class="row" style="height:64px;padding:0 16px"><b class="h3 f1">채팅</b>${n(1)}${btn('＋ 새 대화','sm')}</div>
+    <div style="padding:0 16px 8px">${segc(['전체','개인','팀'],0,'full sm')}</div>
+    ${[['지민',2,0],['졸업 프로젝트 팀 · 개발',5,1],['스터디 모임 (4)',0,0],['알고리즘 스터디 · 공지',0,1],['민호',0,0]].map(([t,u,team],i)=>`<div class="row" ${team?'data-go="team-chat"':''} style="padding:10px 16px;gap:12px;${i===0?'background:var(--s2)':''}">${av(44)}<div class="f1"><div class="row"><b class="f1 small">${t}</b><span class="cap muted">오후 2:1${i}</span></div><div class="cap t2">${i===2?'전송 취소된 메시지':'마지막 메시지 미리보기…'}</div></div>${u?cnt(u):''}</div>`).join('')}
+   </div>
+   <div class="f1" style="display:flex;flex-direction:column">
+    <div class="row" style="height:64px;padding:0 20px;border-bottom:1px solid var(--b1)">${n(2)}${av(36)}<b>지민</b><span class="cap muted">1:1</span><span class="sp"></span>${ibtn('⋯')}</div>
+    <div class="f1 col" style="padding:20px;gap:6px;background:var(--s1)">${n(3)}
+     <div class="center cap muted">2026년 10월 22일</div>
+     <div class="row" style="align-items:flex-start">${av(32)}<div class="col" style="gap:4px;flex:1"><div class="cap muted">지민</div><div class="bubble" style="align-self:flex-start">${ln('180px')}</div><div class="row" style="align-items:flex-end;gap:6px"><div class="bubble">${ln('240px')}${ln('120px')}</div><span class="cap muted">오후 2:10</span></div></div></div>
+     <div class="col" style="gap:4px;align-items:flex-end;margin-top:8px"><div class="bubble me">${ln('150px')}</div><div class="row" style="gap:6px;align-items:flex-end"><span class="cap muted">오후 2:12</span><div class="bubble me" style="max-width:none">${ln('220px')}</div></div></div>
+     <div class="row" style="align-items:flex-start;margin-top:8px">${av(32)}<div class="bubble"><span class="small muted">전송 취소된 메시지예요</span></div></div>
+     <div class="row" style="justify-content:flex-end;margin-top:8px;position:relative"><div class="dialog" style="position:static;padding:6px;width:180px"><div class="small" style="padding:6px 10px">내 화면에서 삭제</div><div class="small" style="padding:6px 10px">전송 취소</div></div><div class="bubble me">${ln('120px')}</div></div>
+    </div>
+    <div class="row" style="padding:12px 20px;border-top:1px solid var(--b1)">${inp('메시지 입력','','flex:1')}${btn('전송','p')}</div>
+   </div>
+   <div class="tab-hide" style="width:316px;border-left:1px solid var(--b1);padding:20px">${n(4)}
+    <div class="col" style="align-items:center;gap:8px;padding:8px 0 16px">${av(72,9)}<b>지민</b>${btn('프로필 보기','sm')}</div>
+    <div class="col">${btn('차단','w')}${btn('사용자 신고','w')}${btn('대화방 나가기','w g')}</div>
+    <div class="cap muted" style="margin-top:12px">그룹 대화면 참여자 목록 + 초대</div>
+   </div>
+  </div>`),
+ m:()=>[['대화 목록',mscreen(`<div class="mpad" style="margin-bottom:8px">${segc(['전체','개인','팀'],0,'full sm')}</div>${[['지민',2,0],['졸업 프로젝트 팀 · 개발',5,1],['스터디 모임 (4)',0,0],['민호',0,0]].map(([t,u])=>`<div class="row" style="padding:10px 16px;gap:12px">${av(48)}<div class="f1"><div class="row"><b class="f1 small">${t}</b><span class="cap muted">오후 2:10</span></div><div class="cap t2">마지막 메시지…</div></div>${u?cnt(u):''}</div>`).join('')}`,{title:'채팅',lg:1,right:ibtn('＋'),tab:'chat'})],
+   ['1:1 대화',mscreen(`<div class="f1 col" style="padding:12px 16px;gap:6px;background:var(--s1)"><div class="center cap muted">10월 22일</div><div class="row" style="align-items:flex-start">${av(32)}<div class="col" style="gap:4px"><div class="bubble">${ln('160px')}</div><div class="row" style="gap:6px;align-items:flex-end"><div class="bubble">${ln('200px')}</div><span class="cap muted">2:10</span></div></div></div>
+    <div class="col" style="gap:4px;align-items:flex-end;margin-top:8px"><div class="row" style="gap:6px;align-items:flex-end"><span class="cap muted">2:12</span><div class="bubble me" style="max-width:none">${ln('180px')}</div></div></div></div>
+    <div class="row" style="padding:8px 12px 30px;border-top:1px solid var(--b1)">${inp('메시지','','flex:1')}${btn('전송','p')}</div>`,{title:'지민',back:1,right:ibtn('⋯')})]],
+ notes:[['대화방 목록 (개인 · 팀)','GET /api/chatrooms — lastMessage · unreadCount. 새 대화 = 1:1 / 그룹'],['방 헤더','GET /api/chatrooms/{uuid}'],['말풍선 (STOMP 실시간)','같은 사람 연속은 아바타·이름 생략, 시간은 묶음 끝에. 입장 시 PATCH .../read. 내 메시지 길게 누르기 = 내 화면에서 삭제 / 전송 취소'],['상대 패널 (1:1)','차단 · 사용자 신고(USER) · 나가기. 그룹이면 참여자 + 초대 (1:1에 초대하면 새 그룹이 생김)']],
+ q:['API에 없어서 뺀 것: 대화 검색 · 메시지별 읽음 표시 · 사진 전송 · 메시지 신고(DM 미지원) · 방 알림 끄기']},
+
+{g:'채팅 · 알림',id:'team-chat',name:'팀 채팅 (디스코드식)',path:'/teams/:uuid/chat/:roomUuid',
+ d:()=>shell('chat',`<div class="row chatwrap" style="align-items:stretch;height:740px;margin:-24px -40px -40px">
+   <div class="chat-list" style="width:220px;border-right:1px solid var(--b1);background:var(--s1);display:flex;flex-direction:column">
+    <div class="row" style="height:64px;padding:0 16px;border-bottom:1px solid var(--b1)">${n(1)}${av(28)}<b class="f1 small">졸업 프로젝트 팀</b>▾</div>
+    <div style="padding:12px 10px" class="col">
+     <div class="row over" style="padding:0 6px">채팅방<span class="sp"></span>＋</div>
+     ${[['공지',0],['개발',5],['디자인',0],['잡담',12]].map(([t,u],i)=>`<div class="chan ${i===1?'on':''}"># ${t}${u?cnt(u):''}</div>`).join('')}
+     <div class="row over" style="padding:12px 6px 0">1:1 대화<span class="sp"></span>＋</div>
+     ${['지민','서준'].map(t=>`<div class="chan">${av(20)} ${t}</div>`).join('')}
+    </div>
+   </div>
+   <div class="f1" style="display:flex;flex-direction:column;min-width:0">
+    <div class="row" style="height:64px;padding:0 20px;border-bottom:1px solid var(--b1)">${n(2)}<b style="font-size:17px"># 개발</b><span class="cap muted">6명</span><span class="sp"></span>${ibtn('⋯')}</div>
+    <div class="f1" style="padding:12px 0;overflow:hidden">${n(3)}
+     <div class="divider">2026년 10월 22일</div>
+     <div class="dmsg">${av(40)}<div class="f1"><div class="meta"><b>지민</b>${badge('관리자','sm')}<span class="cap muted">오후 2:10</span></div>${ln('70%')}</div></div>
+     <div class="dmsg cont"><div class="f1">${ln('45%')}</div></div>
+     <div class="dmsg" style="margin-top:8px">${av(40)}<div class="f1"><div class="meta"><b>나</b>${badge('멤버','sm')}<span class="cap muted">오후 2:12</span></div>${lns('55%')}</div></div>
+     <div class="dmsg cont"><div class="f1">${lns('80%','30%')}</div></div>
+     <div class="divider">하은 님이 들어왔어요</div>
+     <div class="dmsg">${av(40)}<div class="f1"><div class="meta"><b>서준</b>${badge('멤버','sm')}<span class="cap muted">오후 2:20</span></div><span class="small muted">전송 취소된 메시지예요</span></div></div>
+     <div class="dmsg" style="background:var(--s1);margin-top:4px">${av(40)}<div class="f1"><div class="meta"><b>나</b><span class="cap muted">오후 2:21</span><span class="sp"></span>${ibtn('⋯','sm o')}</div>${ln('60%')}</div></div>
+    </div>
+    <div style="padding:12px 20px 20px">${inp('# 개발 에 메시지 보내기','lg','background:var(--s1)')}</div>
+   </div>
+   <div class="tab-hide" style="width:220px;border-left:1px solid var(--b1);padding:16px;background:var(--s1)">${n(4)}
+    ${[['관리자',2],['디자이너',1],['멤버',3]].map(([r,c])=>`<div class="over" style="margin:12px 0 6px">${r} — ${c}</div>${rep(c,()=>`<div class="row" style="padding:4px 0">${av(32)}<div class="f1">${ln('60%','d')}</div></div>`)}`).join('')}
+    <div style="margin-top:12px">${btn('＋ 초대','w sm')}</div>
+   </div>
+  </div>`),
+ m:()=>[['팀 채팅방 목록',mscreen(`<div class="mpad row" style="gap:10px;margin-bottom:12px">${av(36)}<b class="f1">졸업 프로젝트 팀</b>${ibtn('▾','sm')}</div><div class="over mpad" style="margin-bottom:4px">채팅방</div>${[['공지',0],['개발',5],['디자인',0],['잡담',12]].map(([t,u])=>`<div class="lrow" style="min-height:48px;border:0"><span class="tt f1"># ${t}</span>${u?cnt(u):''}</div>`).join('')}<div class="over mpad" style="margin:12px 0 4px">1:1 대화</div>${['지민','서준'].map(t=>`<div class="lrow" style="min-height:48px;border:0">${av(28)}<span class="tt f1">${t}</span></div>`).join('')}`,{title:'팀 채팅',back:1,right:ibtn('＋'),tab:'chat'})],
+   ['# 개발',mscreen(`<div class="f1" style="padding:8px 0;overflow:hidden"><div class="divider">10월 22일</div><div class="dmsg" style="padding:4px 16px">${av(36)}<div class="f1"><div class="meta"><b>지민</b>${badge('관리자','sm')}<span class="cap muted">2:10</span></div>${ln('85%')}</div></div><div class="dmsg cont" style="padding-left:64px">${ln('60%')}</div><div class="dmsg" style="padding:4px 16px;margin-top:8px">${av(36)}<div class="f1"><div class="meta"><b>나</b><span class="cap muted">2:12</span></div>${lns('70%','40%')}</div></div></div><div class="row" style="padding:8px 12px 30px;border-top:1px solid var(--b1)">${inp('# 개발 에 메시지','','flex:1')}${btn('전송','p')}</div>`,{title:'# 개발',back:1,right:ibtn('')})]],
+ notes:[['팀별 채팅방 + 팀 1:1','teamUuid 있는 방을 팀별로 묶음. 생성 POST /api/teams/{uuid}/chatrooms (구성원 + 역할 선택) · 팀 1:1 POST .../chatrooms/direct'],['채팅방 헤더','이름(GROUP title) · 인원'],['디스코드식 메시지 (말풍선 없음)','모두 왼쪽 정렬 · 아바타 + 팀 프로필 이름 + 대표 역할 + 시간. 5분 안에 이어 쓰면 묶음. 내 메시지 ⋯ = 삭제 / 전송 취소'],['역할별 참여자','채팅방 참여자(GET .../members) + 팀 구성원의 대표 역할(topRoleName)로 묶기']],
+ q:['"답장" 기능은 API에 없어서 뺐어요']},
+
+{g:'채팅 · 알림',id:'notifications',name:'알림',path:'/notifications',
+ d:()=>`<div style="position:relative">${shell('notifications',G('',C('s8 ts6',`
+   ${pgh('알림',btn('모두 읽음','sm'),n(1))}
+   ${tabs(['전체',['안 읽음',3]],0)}
+   <div class="list" style="margin-top:16px">${[['캡스톤 회의 시작 10분 전이에요','리마인드',1,0],['<b>서준</b>님이 팔로우를 요청했어요','팔로우',1,1,btn('수락','sm p')+btn('거절','sm')],['<b>지민</b>님이 <b>헬스장</b>을 완료했어요','할 일 완료',1,1],['<b>하은</b>님이 <b>API 연동</b>을 맡겼어요 · 졸업 프로젝트 팀','할 일 배정',0,1],['<b>민호</b>님이 내 게시글에 댓글을 남겼어요','댓글',0,1],['출석 포인트 1P를 받았어요','포인트',0,0]].map(([t,k,u,actor,act])=>`<div class="lrow" style="align-items:flex-start;padding:12px 16px">${actor?av(40):ic(40)}<div class="f1"><div class="small">${t}</div><div class="cap muted">${k} · 2시간 전</div>${act?`<div class="row" style="margin-top:8px">${act}</div>`:''}</div>${u?'<i class="cdot" style="background:var(--act);border-radius:50%;margin-top:8px"></i>':''}${ibtn('✕','sm')}</div>`).join('')}</div>`)))}
+  <div class="dialog ndrop" style="left:244px;top:220px;width:360px;padding:12px">${n(2)}<b class="small">알림</b>
+   ${rep(3,()=>`<div class="row" style="padding:8px 0">${av(32)}<div class="f1">${lns('85%','40%')}</div></div>`)}
+   <div class="center cap muted" style="padding-top:6px">전체 보기 ›</div></div></div>`,
+ m:()=>[['알림',mscreen(`${tabs(['전체',['안 읽음',3]],0,[],'padding:0 16px')}${[['캡스톤 회의 시작 10분 전이에요','리마인드',0],['<b>서준</b>님이 팔로우를 요청했어요','팔로우',1],['<b>지민</b>님이 <b>헬스장</b>을 완료했어요','할 일 완료',1],['<b>민호</b>님이 댓글을 남겼어요','댓글',1]].map(([t,k,a])=>`<div class="row" style="padding:12px 16px;gap:12px;align-items:flex-start;border-bottom:1px solid var(--b1)">${a?av(40):ic(40)}<div class="f1"><div class="small">${t}</div><div class="cap muted">${k} · 2시간 전</div></div></div>`).join('')}`,{title:'알림',back:1,right:btn('모두 읽음','sm g')})]],
+ notes:[['알림 목록 (30일)','GET /api/notifications?unreadOnly= · read / read-all / delete. 클릭 → 대상(할 일 · 게시글 · 팀)으로 이동. 팔로우 요청은 바로 수락/거절'],['좌측 메뉴 "알림" 팝오버','SSE /api/notifications/subscribe + unread-count 배지. 모바일은 상단바 벨']],
+ q:['종류: 리마인드 · 팔로우 · 할 일 완료/취소/배정 · 반복 배정 · 새 글 · 댓글 · 좋아요 · 팀 가입/신청/거절/탈퇴/역할 변경 · 카테고리 공개 범위 변경 · 포인트 적립/회수']},
+
+/* ---------------- 꾸미기 ---------------- */
+{g:'꾸미기',id:'avatar',name:'아바타',path:'/avatar',
+ d:()=>shell('avatar',`${pgh('아바타',`<span data-go="shop">${btn('상점 가기','s')}</span>`)}${G('',`
+   ${C('s4 ts6',card(`${n(1)}${ph('아바타 미리보기 (부위별 레이어)',320)}<div style="margin-top:16px">${levelBadge()}</div><div class="row" style="margin-top:16px">${pbal('1,250',false)}</div>`))}
+   ${C('s8 ts6',`${n(2)}${tabs(['몸','머리카락','머리 장신구','얼굴','얼굴 장신구','옷','몸 장신구'],5,[],'overflow:hidden')}
+    ${G('n8 tn6',rep(8,i=>C('s2 ts2',`<div class="card" style="padding:8px;${i===1?'border-color:var(--act);box-shadow:inset 0 0 0 1px var(--act)':''}">${ph('',100)}<div class="row cap" style="margin-top:8px"><b class="f1">아이템 이름</b>${i===1?badge('착용 중','sm solid'):''}</div></div>`)),'margin-top:16px')}${n(3)}`)}`)}`),
+ m:()=>[['아바타',mscreen(`<div class="mpad">${ph('아바타 미리보기',260)}<div style="margin-top:12px">${levelBadge()}</div></div>${tabs(['몸','머리카락','머리 장신구','얼굴','옷'],4,[],'padding:0 16px;margin-top:12px;overflow:hidden')}
+    <div class="mpad" style="margin-top:12px">${G('',rep(8,i=>C('ms1',`<div class="card" style="padding:4px;${i===1?'border-color:var(--act);box-shadow:inset 0 0 0 1px var(--act)':''}">${ph('',64)}</div>`)))}</div>`,{title:'아바타',back:1,right:pbal('1,250',false)})]],
+ notes:[['미리보기 · 레벨 · 포인트','GET /api/avatars/me — equippedItems를 부위 순서대로 겹쳐 그림'],['부위 탭 7개','BODY · HAIR · HEAD_ACC · FACE · FACE_ACC · CLOTHES · BODY_ACC'],['보유 아이템 (ItemTile)','GET /api/avatars/me/items · 누르면 바로 equip, 다시 누르면 unequip']],
+ q:['"저장/초기화" 버튼은 뺐어요 (API가 누를 때마다 바로 반영)']},
+
+{g:'꾸미기',id:'shop',name:'상점',path:'/shop',
+ d:()=>`<div style="position:relative">${shell('shop',`${pgh('상점',`${n(1)}${pbal()}`)}${G('',`
+  ${C('s12',n(2)+tabs(['전체','몸','머리카락','머리 장신구','얼굴','얼굴 장신구','옷','몸 장신구'],0,[],'overflow:hidden'))}
+  ${C('s9 ts6',G('n9 tn6',rep(6,i=>C('s3 ts2',`<div class="card" style="padding:8px">${ph('',140)}<div style="padding:8px 4px 4px"><b class="small">아이템 이름</b><div class="row cap" style="margin-top:4px"><span class="row" style="gap:4px;font-weight:700"><i style="width:12px;height:12px;border-radius:50%;border:2px solid var(--t1)"></i>${(i+1)*150}</span><span class="sp"></span>${i===2?badge('보유','sm'):''}</div></div></div>`))))}
+  ${C('s3 tab-hide',card(`${n(3)}<b class="small">미리보기</b>${ph('내 아바타 + 고른 아이템',260,'margin-top:12px')}<div style="margin-top:12px">${btn('300P로 구매','p w')}</div>`))}`)}`)}
+  <div class="scrim"></div><div class="dialog cdlg" style="left:520px;top:280px;width:400px;padding:24px"><div class="row" style="align-items:flex-start;gap:12px">${ic(44)}<div class="f1"><b class="h3">줄무늬 티셔츠</b><div class="small t2" style="margin-top:6px">구매하면 바로 착용할 수 있어요. 지금 1,250P가 있어요.</div></div></div><div class="row" style="justify-content:flex-end;margin-top:20px">${btn('취소','g')}${btn('300P로 구매','p')}</div></div></div>`,
+ m:()=>[['상점',mscreen(`${tabs(['전체','몸','머리카락','옷','장신구'],0,[],'padding:0 16px;overflow:hidden')}<div class="mpad" style="margin-top:12px">${G('',rep(6,i=>C('ms2',`<div class="card" style="padding:8px">${ph('',130)}<div class="cap" style="margin-top:6px;font-weight:600">아이템</div><div class="cap muted">${i===2?'보유':(i+1)*150+'P'}</div></div>`)))}</div>`,{title:'상점',lg:1,back:1,right:pbal(),tab:'settings'})]],
+ notes:[['보유 포인트 + 충전','PointBalance ＋ → /points'],['부위 필터','GET /api/items (판매 중 · owned 포함)'],['미리보기 + 구매 다이얼로그','POST /api/items/{id}/purchase · 포인트 부족이면 충전으로']],
+ q:['미리보기는 FE에서 이미지 겹치기라 API 영향 없음. MVP에서 뺄 수도 있어요']},
+
+{g:'꾸미기',id:'points',name:'포인트',path:'/points',
+ d:()=>shell('points',`${pgh('포인트')}${G('',`
+  ${C('s4 ts6',card(`${n(1)}<div class="cap muted">보유 포인트</div><div style="font-size:28px;font-weight:800;margin:6px 0 16px">1,250P</div><div class="hr" style="margin:0 0 16px"></div><div class="row"><span class="f1 small">오늘 출석 <b>1P · 10 EXP</b></span>${btn('출석하기','p sm')}</div>`))}
+  ${C('s8 ts6',`<div class="row" style="margin-bottom:12px"><b>포인트 충전</b>${n(2)}</div>${G('n8 tn6',[['1,000원','1,000P'],['5,000원','5,000P'],['10,000원','10,000P'],['30,000원','30,000P']].map(([w,p])=>C('s2 ts3',card(`<b style="font-size:17px">${p}</b><div class="small muted" style="margin:4px 0 12px">${w}</div>${btn('결제','sm s w')}`,{st:'padding:16px;text-align:center'}))).join(''))}`)}
+  ${C('s12',`${tabs(['포인트 내역','결제 내역'],0)}${n(3)}
+   <table class="t" style="margin-top:12px"><tr><th>일시</th><th>종류</th><th>내용</th><th style="text-align:right">변동</th><th style="text-align:right">잔액</th></tr>
+   ${[['10/22 09:01','출석','출석 체크','+1','1,250'],['10/21 22:10','구매','줄무늬 티셔츠','-300','1,249'],['10/20 14:00','충전','10,000원 결제','+10,000','1,549']].map(r=>`<tr>${r.map((c,i)=>`<td style="${i>2?'text-align:right':''}">${c}</td>`).join('')}</tr>`).join('')}</table>
+   <div class="cap muted" style="margin-top:8px">결제 내역 탭: 주문 · 금액 · 상태 · 환불</div>`)}`)}`),
+ m:()=>[['포인트',mscreen(`<div class="mpad">${card(`<div class="cap muted">보유 포인트</div><div style="font-size:28px;font-weight:800;margin:4px 0 12px">1,250P</div>${btn('출석하기 · 1P','p w')}`,{k:'sub'})}</div>
+    <div class="over mpad" style="margin:20px 0 8px">충전</div><div class="list" style="border-radius:0;border-left:0;border-right:0">${[['1,000P','1,000원'],['5,000P','5,000원'],['10,000P','10,000원'],['30,000P','30,000원']].map(([p,w])=>lrow(p,{ic:false,trail:btn(w,'sm s')})).join('')}</div>
+    <div class="list" style="border-radius:0;border-left:0;border-right:0;margin-top:20px">${lrow('포인트 내역',{ic:false})}${lrow('결제 내역',{ic:false})}</div>`,{title:'포인트',lg:1,back:1,tab:'settings'})]],
+ notes:[['보유 포인트 + 출석','POST /api/points/attendance (1P · 10 EXP) · GET .../attendance/today'],['충전 4종 (1원 = 1P)','GET /api/payments/packages → POST /api/payments → (Mock PG) → POST /api/payments/confirm'],['내역','GET /api/points/transactions · GET /api/payments · 환불 POST /api/payments/{orderId}/refund']]},
+
+/* ---------------- 설정 ---------------- */
+{g:'설정',id:'settings',name:'설정 · 나',path:'/settings/*',
+ d:()=>shell('settings',`${pgh('설정')}${G('',`
+  ${C('s12 tab-only',tabs(['프로필','계정 · 보안','공개 · 대화','팔로우 알림','차단','신고'],0))}
+  ${C('s3 tab-hide',`<div class="col" style="gap:2px">${n(1)}${['프로필','계정 · 보안','공개 · 대화','팔로우 알림','차단 목록','신고 내역','회원 탈퇴'].map((t,i)=>`<div class="navi ${i===0?'on':''}">${t}</div>`).join('')}</div>`)}
+  ${C('s6 ts6',`<div class="col" style="gap:24px">
+    ${card(`<div class="row" style="gap:16px">${av(72)}<div class="col" style="gap:6px">${btn('사진 변경','sm')}${btn('기본 이미지로','sm g')}</div></div>${field('닉네임','홍길동','2~50자')}<div class="lbl">소개</div><div class="inp ta">한 줄 소개</div><div class="hnt">최대 100자</div><div class="row" style="margin-top:16px"><span class="sp"></span>${btn('저장','p')}</div>`,{title:'프로필 '+n(2)})}
+    ${card(`<div class="list">${lrow('이메일',{ds:'gil@example.com',ic:false,trail:btn('변경 · OTP','sm')})}${lrow('비밀번호',{ds:'소셜 전용 계정이면 "비밀번호 설정"',ic:false,trail:btn('변경','sm')})}${lrow('연결된 소셜 계정',{ds:'Google · 2026.09.01 연결',ic:false,trail:btn('연결 해제','sm')})}</div>`,{title:'계정 · 보안 '+n(3)})}
+    ${card(`<div class="list">${lrow('비공개 계정',{ds:'새 팔로우는 내 승인이 필요해요',ic:false,trail:sw(true)})}${lrow('팔로우하지 않은 사람의 대화 초대 허용',{ic:false,trail:sw(false)})}</div>`,{title:'공개 · 대화 '+n(4)})}</div>`)}`)}`),
+ m:()=>[['나',mscreen(`<div class="mpad row" style="gap:14px;margin-bottom:20px" data-go="profile">${av(64,7)}<div class="f1"><b style="font-size:17px">홍길동</b><div class="small muted">내 프로필 보기</div></div><span class="chev">›</span></div>
+    <div class="list" style="border-radius:0;border-left:0;border-right:0">${lrow('아바타',{go:'avatar'})}${lrow('상점',{go:'shop'})}${lrow('포인트',{val:'1,250P',go:'points'})}${lrow('카테고리 · 반복',{go:'categories'})}</div>
+    <div class="over mpad" style="margin:20px 0 8px">설정</div><div class="list" style="border-radius:0;border-left:0;border-right:0">${['프로필','계정 · 보안','공개 · 대화','팔로우 알림','차단 목록','신고 내역'].map(t=>lrow(t)).join('')}</div>`,{title:'나',lg:1,tab:'me'})],
+   ['공개 · 대화',mscreen(`<div class="list" style="border-radius:0;border-left:0;border-right:0">${lrow('비공개 계정',{ds:'새 팔로우는 내 승인이 필요해요',ic:false,trail:sw(true)})}${lrow('팔로우 안 한 사람의 대화 초대',{ic:false,trail:sw(false)})}</div>`,{title:'공개 · 대화',back:1})]],
+ notes:[['설정 메뉴','팔로우 알림 = 팔로잉 목록 + 사람별 토글(PATCH /api/follows/{uuid}/notification) · 차단 GET /api/blocks · 신고 내역 GET /api/reports/me · 탈퇴 DELETE /api/users/me'],['프로필','PATCH /api/users/me · PATCH/DELETE .../profile-image'],['계정 · 보안 (자체 로그인만)','PATCH .../email (OTP) · POST/PATCH .../password · DELETE .../oauth-accounts/{provider} (비밀번호 있을 때만)'],['공개 · 대화','isPrivate · allowNonFollowChatInvite']],
+ q:['모바일에서는 하단 탭 "나"가 이 화면 (아바타·상점·포인트·카테고리 진입점 포함)']},
+
+/* ---------------- 관리자 ---------------- */
+{g:'관리자',id:'admin-reports',name:'신고 · 정지',path:'/admin/reports',
+ d:()=>adminShell('reports',`${pgh('신고 관리',`${select('','상태: 접수','sm')}${select('','종류: 전체','sm')}`,n(1))}${G('',`
+  ${C('s8 ts6',`<table class="t"><tr><th>#</th><th>종류</th><th>대상</th><th>신고자</th><th>사유</th><th>상태</th><th>접수일</th></tr>
+    ${[['128','게시글','서준','지민','스팸','접수'],['127','댓글','민호','하은','욕설','위반 확인'],['126','사용자','x_user','서준','사칭','제재 완료'],['125','게시글','민호','지민','욕설','기각']].map((r,i)=>`<tr style="${i===0?'background:var(--s2)':''}">${r.map((c,j)=>`<td>${j===5?badge(c):c}</td>`).join('')}<td>10/2${i}</td></tr>`).join('')}</table>
+    <div class="center small muted" style="padding:12px">‹ 1 2 3 ›</div>`)}
+  ${C('s4 ts6',card(`${n(2)}<b class="h3">신고 #128</b>
+    <div class="lbl">신고된 콘텐츠</div>${ph('게시글 미리보기',110)}
+    <div class="lbl">사유</div>${lns('90%','60%')}
+    ${select('처리 상태','위반 확인')}
+    <div class="row" style="margin-top:16px">${n(3)}${btn('정지하기','s')}<span class="sp"></span>${btn('저장','p')}</div>`))}
+  ${C('s12',`<div class="hr" style="margin:4px 0 24px"></div>${pgh('정지 관리',`${inp('⌕ 사용자 검색','sm','width:200px')}${select('','진행 중','sm')}${btn('＋ 정지','p sm')}`,n(4))}
+  <table class="t"><tr><th>사용자</th><th>사유</th><th>기간</th><th>상태</th><th></th></tr>
+   ${rep(2,()=>`<tr><td>${ln('80px','d')}</td><td>${ln('140px')}</td><td>10/20 – 10/27</td><td>${badge('진행 중')}</td><td>${btn('수정','sm')} ${btn('해제','sm')}</td></tr>`)}</table>`)}`)}`),
+ m:deskOnly,
+ notes:[['신고 목록 (상태 · 종류)','GET /api/admin/reports — 종류 POST · COMMENT · USER (DM 미지원)'],['상세 + 상태 변경','RECEIVED → CONFIRMED·REJECTED, CONFIRMED → SANCTIONED·REJECTED'],['정지하기','POST /api/admin/suspensions — 정지 처리 시 SANCTIONED'],['정지 목록 · 수정 · 해제','GET /api/admin/suspensions · PATCH {id} · PATCH {id}/release']],
+ q:['관리자는 데스크톱 전용으로 둘지?']},
+
+{g:'관리자',id:'admin-items',name:'아이템 · 사용자 조회',path:'/admin/items',
+ d:()=>adminShell('items',`${pgh('아이템 관리',`${select('','부위: 전체','sm')}${select('','판매: 전체','sm')}${btn('＋ 아이템 등록','p sm')}`,n(1))}${G('',`
+  ${C('s8 ts6',`<table class="t"><tr><th>이미지</th><th>이름</th><th>부위</th><th>가격</th><th>판매</th><th></th></tr>
+    ${[['줄무늬 티셔츠','옷','300'],['빨간 모자','머리 장신구','450'],['동그란 안경','얼굴 장신구','200'],['단발 머리','머리카락','150']].map(([a,b,c],i)=>`<tr><td>${ph('',36,'width:36px')}</td><td>${a}</td><td>${b}</td><td>${c}P</td><td>${sw(i!==2)}</td><td>${btn('수정','sm')}</td></tr>`).join('')}</table>`)}
+  ${C('s4 ts6',card(`${n(2)}<b class="h3">아이템 등록</b><div class="lbl">이미지</div>${ph('PNG 업로드',140)}${field('이름','')}${select('부위','옷')}${field('가격 (P)','')}<div class="row" style="margin-top:16px;justify-content:flex-end">${btn('취소','g')}${btn('저장','p')}</div>`))}
+  ${C('s12',`<div class="hr" style="margin:4px 0 24px"></div>${pgh('사용자 조회',inp('사용자 UUID 입력','sm','width:280px')+btn('조회','sm'),n(3))}
+  ${card(`<div class="row" style="gap:16px">${av(56)}<div class="f1">${lns('30%','45%')}</div>${btn('포인트 내역','sm')}${btn('정지','sm s')}</div>`)}`)}`)}`),
+ m:deskOnly,
+ notes:[['아이템 목록 + 판매 토글','GET /api/admin/items · PATCH .../sale'],['등록 / 수정','POST /api/admin/items · PUT /api/admin/items/{id}'],['사용자 조회 (UUID로)','GET /api/admin/users/{uuid} · 포인트 내역 GET .../point-transactions · 출석 적립 회수']],
+ q:['사용자 이름 검색 API가 없어서 UUID 직접 입력. 신고·정지 화면에서 들어오는 게 주 경로']},
+];
+
+function adminShell(active,body){
+  const M=[['reports','신고 · 정지','admin-reports'],['items','아이템 · 사용자','admin-items'],['mon','모니터링 ↗','']];
+  return `<div class="app ${TAB()?'mini':''}"><aside class="side"><div class="logo"><i></i><span class="lt">OrbitFlow ${badge('관리자','sm')}</span></div>
+   ${M.map(([k,t,go])=>`<a class="navi ${k===active?'on':''}" ${go?`data-go="${go}"`:''}>${ic(20)}<span class="lt">${t}</span></a>`).join('')}
+   <div class="sp"></div><a class="navi" data-go="dashboard">${ic(20)}<span class="lt">서비스로 돌아가기</span></a></aside>
+   <div class="main"><div class="content">${body}</div></div></div>`;
+}
+
+/* ===== viewer ===== */
+const $=s=>document.querySelector(s);
+const idx=$('#index'),frame=$('#frame'),fit=$('#fit');
+let mode='d', grid=false;
+try{mode=localStorage.getItem('wf-mode')||'d';grid=localStorage.getItem('wf-grid')==='1'}catch(e){}
+const groups={};PAGES.forEach(p=>(groups[p.g]??=[]).push(p));
+idx.innerHTML=`<h1>OrbitFlow</h1><div class="sub">와이어프레임 v2 · ${PAGES.length}개 화면 · 데스크톱/태블릿/모바일</div>`+
+  Object.entries(groups).map(([g,ps])=>`<h2>${g}</h2>`+ps.map(p=>`<a data-id="${p.id}">${p.name}<small>${p.path}</small></a>`).join('')).join('');
+function scale(){
+  frame.style.transform='none';
+  const w=fit.clientWidth, s=Math.min(1,w/frame.scrollWidth);
+  frame.style.transform=`scale(${s})`;
+  fit.style.height=(frame.scrollHeight*s)+'px';
+}
+function show(id){
+  const p=PAGES.find(x=>x.id===id)||PAGES[0];
+  frame.className='frame '+({m:'mob',t:'tab',d:'desk'}[mode]);
+  frame.innerHTML=mode==='m'?p.m().map(([c,h])=>phone(c,h)).join(''):p.d();
+  $('#title').textContent=p.name; $('#path').textContent=p.path;
+  idx.querySelectorAll('a').forEach(a=>a.classList.toggle('on',a.dataset.id===p.id));
+  document.querySelectorAll('#mode span').forEach(s=>s.classList.toggle('on',s.dataset.mode===mode));
+  $('#notes').innerHTML=`<h4>구성 메모</h4><ol>${p.notes.filter(([t])=>t).map(([t,d])=>`<li><i class="n">${p.notes.findIndex(x=>x[0]===t)+1}</i><div>${t}${d?`<code>${d}</code>`:''}</div></li>`).join('')}</ol>`+
+    (p.q?`<div class="q"><b>확인할 것</b>${p.q.map(x=>`<p>· ${x}</p>`).join('')}</div>`:'');
+  if(location.hash.slice(1)!==p.id) history.replaceState(null,'','#'+p.id);
+  if(grid) addGrid();
+  $('#gridbtn').classList.toggle('p',grid);
+  requestAnimationFrame(scale);
+  $('.stage').scrollTop=0;
+}
+function addGrid(){
+  const ov=k=>`<div class="gridov">${'<i></i>'.repeat(k)}</div>`;
+  if(mode==='m'){frame.querySelectorAll('.phone').forEach(ph=>ph.insertAdjacentHTML('beforeend',ov(4)));return}
+  const c=frame.querySelector('.content');
+  (c||frame).insertAdjacentHTML('beforeend',ov(mode==='t'?6:12));
+}
+function toggleGrid(){grid=!grid;try{localStorage.setItem('wf-grid',grid?'1':'0')}catch(e){}show(location.hash.slice(1))}
+function setMode(m){mode=m;try{localStorage.setItem('wf-mode',m)}catch(e){}show(location.hash.slice(1))}
+idx.addEventListener('click',e=>{const a=e.target.closest('a[data-id]');if(a)show(a.dataset.id)});
+$('#gridbtn').addEventListener('click',toggleGrid);
+$('#mode').addEventListener('click',e=>{const s=e.target.closest('[data-mode]');if(s)setMode(s.dataset.mode)});
+frame.addEventListener('click',e=>{const a=e.target.closest('[data-go]');if(a&&PAGES.some(p=>p.id===a.dataset.go))show(a.dataset.go)});
+document.addEventListener('keydown',e=>{
+  const i=PAGES.findIndex(p=>p.id===location.hash.slice(1));
+  if(e.key==='ArrowRight')show(PAGES[Math.min(PAGES.length-1,i+1)].id);
+  if(e.key==='ArrowLeft')show(PAGES[Math.max(0,i-1)].id);
+  if(e.key==='d'||e.key==='D')setMode('d');
+  if(e.key==='m'||e.key==='M')setMode('m');
+  if(e.key==='t'||e.key==='T')setMode('t');
+  if(e.key==='g'||e.key==='G')toggleGrid();
+});
+window.addEventListener('resize',scale);
+document.fonts&&document.fonts.ready.then(scale);
+show(location.hash.slice(1)||'layout');
+</script>
+</body>
+</html>

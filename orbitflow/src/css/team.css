@@ -1,0 +1,1782 @@
+/* ───────── 공통: 글리프 버튼 · 역할 칩 · 팀 아이콘 ───────── */
+.glyph-button {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--text-2);
+  transition: background-color var(--dur-fast) var(--ease-standard);
+}
+
+.glyph-button:active:not(:disabled) {
+  background: var(--surface-hover);
+}
+
+@media (hover: hover) {
+  .glyph-button:hover:not(:disabled) {
+    background: var(--surface-hover);
+  }
+}
+
+/* 지우기 같은 위험한 동작: 빨간 아이콘, 옆 버튼과 같은 높이(40)의 정사각형 */
+.glyph-button.glyph-button--danger {
+  width: var(--control-md);
+  height: var(--control-md);
+  color: var(--danger-500);
+}
+
+.glyph-button.glyph-button--danger:active:not(:disabled) {
+  background: var(--danger-50);
+}
+
+@media (hover: hover) {
+  .glyph-button.glyph-button--danger:hover:not(:disabled) {
+    background: var(--danger-50);
+  }
+}
+
+.tag--caption {
+  font-size: var(--fs-caption);
+  color: var(--text-1);
+}
+
+/* 구성원 표: 대화 버튼(48) 자리 — 내 줄도 같은 높이로 */
+.team-members__action-space {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+}
+
+.role-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 역할(소유자) 칩은 표시용이라 위아래 여백 없이 낮게(Tag md 28 · lg 48 → 24) */
+.role-tag .tag {
+  gap: var(--space-1);
+  height: 24px;
+  padding: 0 var(--space-2);
+}
+
+.role-tag__extra,
+.role-tag__none {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.team-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--action-tint);
+  color: var(--text-link);
+  font-weight: var(--fw-bold);
+}
+
+.team-icon--sm {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  font-size: var(--fs-label);
+}
+
+.team-icon--md {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  font-size: 20px;
+}
+
+.team-icon--lg {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-lg);
+  font-size: 26px;
+  line-height: 34px;
+  letter-spacing: -0.26px;
+}
+
+.team-icon--xl {
+  width: 96px;
+  height: 96px;
+  border-radius: var(--radius-lg);
+  font-size: 40px;
+  line-height: 48px;
+}
+
+.team-icon__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ───────── 팀 목록 ───────── */
+.team-list-page {
+  --page-gap: var(--space-8);
+}
+
+.team-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.team-list {
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  overflow: hidden;
+}
+
+.team-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+}
+
+.team-row + .team-row {
+  border-top: 1px solid var(--border-1);
+}
+
+.team-row__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.team-row__name {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: var(--fw-bold);
+}
+
+.team-row__subtitle {
+  overflow: hidden;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-2);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.team-row__meta {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.team-row__requested {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-link);
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-6);
+}
+
+.team-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color var(--dur-fast) var(--ease-standard);
+}
+
+/* 카드 전체가 링크: 전역 a:hover 밑줄 대신 테두리를 브랜드 색으로 */
+.team-card:active {
+  border-color: var(--action-bg);
+  text-decoration: none;
+}
+
+@media (hover: hover) {
+  .team-card:hover {
+    border-color: var(--action-bg);
+    text-decoration: none;
+  }
+}
+
+.team-card__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.team-card__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.team-card__name {
+  overflow: hidden;
+  font-size: var(--fs-label);
+  line-height: 24px;
+  font-weight: var(--fw-bold);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.team-card__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-2);
+}
+
+.team-card__stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-1);
+}
+
+.team-card__stat dt {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.team-card__stat dd {
+  font-size: var(--fs-label);
+  line-height: 24px;
+  font-weight: var(--fw-bold);
+}
+
+.team-card__stat dd.team-card__stat--danger {
+  color: var(--danger-500);
+}
+
+/* ───────── 팀 메인: 머리 · 숫자 카드 ───────── */
+.team-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.team-header__info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.team-header__name-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.team-header__name {
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  letter-spacing: -0.26px;
+  font-weight: var(--fw-bold);
+}
+
+.team-header__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-2);
+}
+
+.team-header__desc {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-2);
+}
+
+.team-stats {
+  display: flex;
+  gap: var(--space-6);
+}
+
+.team-stat {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+}
+
+.team-stat__label {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-2);
+}
+
+.team-stat__value {
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  letter-spacing: -0.26px;
+  font-weight: var(--fw-bold);
+}
+
+.team-stat__value--danger {
+  color: var(--danger-500);
+}
+
+.team-tab {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* ───────── 팀 메인: 홈 ───────── */
+.team-home {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.team-home__side {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: var(--space-4);
+  width: 380px;
+}
+
+.team-progress {
+  gap: var(--space-3);
+}
+
+.team-progress__title {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.team-progress__row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.team-progress__labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+}
+
+.team-progress__name {
+  font-weight: var(--fw-bold);
+}
+
+.team-progress__value {
+  color: var(--text-2);
+}
+
+.task-item__assignee {
+  gap: var(--space-1);
+}
+
+.task-item__assignee .avatar-slot {
+  --avatar-size: 20px;
+}
+
+/* ───────── 팀 표(카테고리 · 구성원) ───────── */
+.team-categories,
+.team-members {
+  background: var(--surface-card);
+}
+
+.team-categories .data-table__head,
+.team-categories .data-table__row,
+.team-members .data-table__head,
+.team-members .data-table__row {
+  gap: var(--space-4);
+}
+
+.team-categories__name {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-1);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: var(--fw-bold);
+  text-align: left;
+}
+
+.team-categories__name:active {
+  color: var(--text-link);
+}
+
+@media (hover: hover) {
+  .team-categories__name:hover {
+    color: var(--text-link);
+  }
+}
+
+.team-categories__color {
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+.team-categories__visibility {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 6px;
+  width: 140px;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+}
+
+.team-categories__row .team-categories__visibility .icon {
+  color: var(--text-3);
+}
+
+.team-categories__progress {
+  flex-shrink: 0;
+  width: 280px;
+}
+
+.team-categories__count {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  width: 120px;
+  text-align: right;
+}
+
+.team-categories__count strong {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-1);
+}
+
+.team-categories__count span {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.team-categories__menu {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: flex-end;
+  width: 48px;
+}
+
+.team-categories .data-table__row {
+  min-height: 72px;
+}
+
+.team-members__person {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.team-members__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.team-members__name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.team-members__name {
+  color: var(--text-1);
+  font-weight: var(--fw-bold);
+  text-decoration: none;
+}
+
+.team-members__email {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.team-members__role {
+  flex-shrink: 0;
+  width: 220px;
+}
+
+.team-members__joined {
+  flex-shrink: 0;
+  width: 120px;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.team-members__actions {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: flex-end;
+  min-width: 48px;
+}
+
+/* ───────── 팀 메인: 채팅방 ───────── */
+.team-chat {
+  display: flex;
+  height: 720px;
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  overflow: hidden;
+}
+
+.team-chat__rooms {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: var(--space-2);
+  width: 360px;
+  padding: var(--space-3) var(--space-4);
+  border-right: 1px solid var(--border-1);
+  overflow-y: auto;
+}
+
+.team-chat__rooms-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: var(--space-2);
+}
+
+.team-chat__rooms-title {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  font-weight: var(--fw-bold);
+}
+
+.team-chat__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.team-chat__view {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.team-chat__placeholder {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-3);
+}
+
+.team-chat__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4) var(--space-2) var(--space-6);
+  border-bottom: 1px solid var(--border-1);
+}
+
+.team-chat__head-text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.team-chat__title {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  font-weight: var(--fw-bold);
+}
+
+.team-chat__subtitle {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.team-chat__avatars {
+  display: flex;
+  align-items: center;
+}
+
+.team-chat__avatars > * + * {
+  margin-left: -4px;
+}
+
+.team-chat__avatar-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  background: var(--neutral-200);
+  font-size: 10px;
+  font-weight: var(--fw-bold);
+  color: var(--text-2);
+}
+
+/* ───────── 모달 ───────── */
+.team-form-modal,
+.team-category-modal,
+.deleted-teams-modal {
+  width: 480px;
+}
+
+.member-roles-modal {
+  width: 440px;
+}
+
+.member-roles-modal__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.chatroom-create-modal {
+  width: 520px;
+}
+
+.chatroom-create-modal__form,
+.team-form-modal__form {
+  gap: var(--space-4);
+}
+
+/* 팀 만들기 아래 "내 팀 프로필": 위 팀 정보와 선으로 나눈다 */
+.team-form-modal__profile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-1);
+}
+
+.team-form-modal__profile-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.team-form-modal__profile-title {
+  font-size: var(--fs-label);
+  line-height: 24px;
+  font-weight: var(--fw-bold);
+}
+
+.chatroom-create-modal__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.chatroom-create-modal__group .field__label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.chatroom-create-modal__roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.chatroom-create-modal__members {
+  max-height: 232px;
+  overflow-y: auto;
+}
+
+.chatroom-create-modal__member {
+  padding-top: var(--space-1);
+  padding-bottom: var(--space-1);
+}
+
+/* 팀 만들기·설정 입력 */
+/* 사진 + 바꾸기 버튼 줄(설정 · 팀 내 프로필) */
+.team-fields__icon {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.team-fields__icon-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/* 왼쪽: 큰 아이콘(96) + 그 밑 이미지 버튼 / 오른쪽: 팀 이름 입력 */
+.team-fields__identity {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+/* 아이콘과 그 밑 버튼들을 같은 폭(120)으로 맞춘다 */
+.team-fields__icon-column {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-2);
+  width: 120px;
+}
+
+.team-fields__icon-column .team-icon--xl {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+}
+
+.team-fields__name {
+  flex: 1;
+  min-width: 0;
+}
+
+/* 소개와 공개 범위 사이는 다른 칸보다 한 단계 더 띄운다 */
+.team-fields__visibility.team-fields__scope {
+  margin-top: var(--space-2);
+}
+
+.team-fields__icon-buttons {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.team-fields__hint {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.team-fields__visibility {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* 입력칸 라벨(.field__label)과 같은 단계: 16px · 굵게 · 안쪽 8 */
+.team-fields__visibility legend {
+  margin-bottom: var(--space-2);
+  padding: 0 var(--space-2);
+  font-size: var(--fs-label);
+  line-height: 24px;
+  font-weight: var(--fw-bold);
+}
+
+.user-picker {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
+.user-picker__list {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  left: 0;
+  z-index: 20;
+  max-height: 280px;
+  padding: var(--space-1);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-md);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-pop);
+  overflow-y: auto;
+}
+
+.user-picker__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: 48px;
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  font-size: 14px;
+  text-align: left;
+}
+
+.user-picker__item:active {
+  background: var(--surface-hover);
+}
+
+@media (hover: hover) {
+  .user-picker__item:hover {
+    background: var(--surface-hover);
+  }
+}
+
+.user-picker__empty {
+  padding: var(--space-3);
+  font-size: var(--fs-caption);
+  color: var(--text-3);
+}
+
+/* ───────── 팀 설정 ───────── */
+.team-settings {
+  --page-gap: var(--space-8);
+}
+
+.team-settings__columns {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-6);
+}
+
+.settings-nav {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: var(--space-1);
+  width: 180px;
+}
+
+.settings-nav__item {
+  min-height: 36px;
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--text-2);
+  font-size: 14px;
+  line-height: 20px;
+  text-align: left;
+}
+
+.settings-nav__item:active {
+  background: var(--surface-hover);
+}
+
+@media (hover: hover) {
+  .settings-nav__item:hover {
+    background: var(--surface-hover);
+  }
+}
+
+.settings-nav__item--danger {
+  color: var(--danger-500);
+}
+
+.settings-nav__item--selected,
+.settings-nav__item--selected:hover,
+.settings-nav__item--selected:active {
+  background: var(--action-tint);
+  color: var(--text-link);
+  font-weight: var(--fw-bold);
+}
+
+.settings-nav__item--danger.settings-nav__item--selected {
+  color: var(--danger-600);
+}
+
+.team-settings__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.settings-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.settings-card {
+  gap: var(--space-4);
+}
+
+.settings-card__title {
+  font-size: var(--fs-label);
+  line-height: 24px;
+  font-weight: var(--fw-bold);
+}
+
+/* 보낸 초대 · 가입 신청이 비었을 때 안내: 카드 가운데 */
+.invites__empty {
+  padding: var(--space-4) 0;
+  text-align: center;
+}
+
+.invite-form {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: var(--space-2);
+}
+
+/* 블랙리스트 등록: 입력 칸(48)과 같은 높이의 빨간 + 정사각형 */
+.glyph-button.blacklist-form__add {
+  width: var(--control-lg);
+  height: var(--control-lg);
+  background: var(--danger-500);
+  color: var(--white);
+}
+
+.glyph-button.blacklist-form__add:active:not(:disabled) {
+  background: var(--danger-600);
+}
+
+@media (hover: hover) {
+  .glyph-button.blacklist-form__add:hover:not(:disabled) {
+    background: var(--danger-600);
+  }
+}
+
+.glyph-button.blacklist-form__add:disabled {
+  background: var(--surface-sunken);
+  color: var(--text-disabled);
+  cursor: not-allowed;
+}
+
+.danger-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  border: 1px solid var(--danger-500);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+}
+
+.danger-card__title {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: var(--fw-bold);
+}
+
+.danger-card__desc {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-2);
+}
+
+.danger-card__row {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+}
+
+.danger-card__grow {
+  flex: 1;
+}
+
+
+.danger-card__warning {
+  align-self: center;
+  font-size: var(--fs-caption);
+  color: var(--danger-600);
+}
+
+/* 역할 · 권한 */
+/* 역할 편집 저장: 이 역할의 구성원 아래, 오른쪽 끝 */
+.role-editor__actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.roles-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-6);
+}
+
+/* 줄마다 목록 폭을 꽉 채운다(제목 줄의 새 역할 만들기가 오른쪽 끝에 붙도록) */
+.roles-list {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: stretch;
+  gap: var(--space-3);
+  width: 260px;
+}
+
+/* 카드 상자 없이 줄 목록(위아래 구분선). 글자는 제목 줄과 같은 왼쪽에서 시작, 끌기 손잡이는 오른쪽 끝 */
+.roles-list__items {
+  align-self: stretch;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--border-1);
+  list-style: none;
+}
+
+.roles-list__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 56px;
+  border-bottom: 1px solid var(--border-1);
+}
+
+.roles-list__item > .roles-list__handle {
+  order: 1;
+}
+
+/* 고른 역할: 배경 대신 이름을 굵은 파란 글자로(왼쪽 여백 없이 제목 줄과 맞추려고) */
+.roles-list__item--selected .roles-list__name {
+  color: var(--text-link);
+}
+
+.roles-list__item--dragging {
+  opacity: 0.5;
+}
+
+.roles-list__handle {
+  display: inline-flex;
+  width: 16px;
+  color: var(--text-3);
+  cursor: grab;
+}
+
+.roles-list__select {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  min-height: 48px;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+}
+
+.roles-list__dot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-round);
+}
+
+.roles-list__name {
+  flex: 1;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.roles-list__item--selected .roles-list__name {
+  font-weight: var(--fw-bold);
+}
+
+.roles-list__count {
+  font-size: var(--fs-caption);
+  color: var(--text-3);
+}
+
+.role-editor {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.role-editor__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.role-permissions {
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.role-permissions__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+}
+
+.role-permissions__row + .role-permissions__row {
+  border-top: 1px solid var(--border-1);
+}
+
+.role-permissions__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.role-permissions__label {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: var(--fw-bold);
+}
+
+.role-permissions__desc {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.role-access__name {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-1);
+}
+
+.role-access__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-round);
+}
+
+.role-access__visibility {
+  flex-shrink: 0;
+  width: 96px;
+}
+
+.role-access__cell {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  width: 56px;
+}
+
+.role-access .data-table__row {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.role-members {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.role-members__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  height: var(--control-lg);
+  padding: 0 var(--space-1) 0 var(--space-3);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+}
+
+.role-members__remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-xs);
+  background: none;
+  color: var(--text-3);
+  font-size: 18px;
+}
+
+.role-members__remove:active:not(:disabled) {
+  background: var(--surface-hover);
+}
+
+@media (hover: hover) {
+  .role-members__remove:hover:not(:disabled) {
+    background: var(--surface-hover);
+  }
+}
+
+.role-members__add {
+  width: 180px;
+}
+
+/* ───────── 모바일(767px 이하) ─────────
+   팀 목록은 검색을 맨 위로, 내 팀은 한 줄 목록, 팀 만들기는 하단 탭 위 떠 있는 버튼.
+   팀 메인은 일정 밑에 백로그를 쌓고, 표는 줄마다 두세 줄짜리 칸으로. 채팅방은 목록 → 고르면 대화가 화면을 채운다.
+   팀 설정은 메뉴 목록 → 고른 항목(TeamSettingsPage의 team-settings--picked) */
+@media (max-width: 767px) {
+  .team-list-page,
+  .team-settings {
+    --page-gap: var(--space-6);
+  }
+
+  /* 머리 줄이 넘치면 안내 문구는 다음 줄로, 버튼은 제목 옆에 남긴다 */
+  .team-page .section-header,
+  .team-list-page .section-header,
+  .team-settings .section-header {
+    flex-wrap: wrap;
+  }
+
+  .team-page .section-header__hint,
+  .team-list-page .section-header__hint,
+  .team-settings .section-header__hint {
+    order: 1;
+    flex-basis: 100%;
+  }
+
+  /* 팀 목록: 검색 → 받은 초대 → 내 팀 */
+  .team-list-page .page__header {
+    order: -2;
+  }
+
+  .team-section--search {
+    order: -1;
+  }
+
+  /* 받은 초대 · 찾은 팀 · 삭제한 팀: 버튼은 이름 밑 줄 오른쪽으로 */
+  .team-row {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    row-gap: var(--space-2);
+  }
+
+  .team-row__text {
+    flex-basis: calc(100% - 52px);
+  }
+
+  .team-row__meta {
+    margin-right: auto;
+    padding-left: 52px;
+  }
+
+  /* 내 팀: 카드 대신 한 줄 목록, 숫자는 이름 밑에 한 줄로 */
+  .team-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    border: 1px solid var(--border-1);
+    border-radius: var(--radius-lg);
+    background: var(--surface-card);
+    overflow: hidden;
+  }
+
+  .team-card {
+    gap: var(--space-1);
+    padding: var(--space-3) var(--space-4);
+    border: 0;
+    border-radius: 0;
+  }
+
+  /* 한 줄 목록에서는 구분선만 있어 테두리 색 호버가 없다(구분선이 파랗게 남지 않게) */
+  .team-card:hover {
+    border-color: var(--border-1);
+  }
+
+  .team-card + .team-card {
+    border-top: 1px solid var(--border-1);
+  }
+
+  .team-card__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-3);
+    padding: 0 0 0 60px;
+    border-top: 0;
+  }
+
+  .team-card__stat {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-1);
+  }
+
+  .team-card__stat dd {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  /* 팀 메인 머리: 아이콘 56, 버튼은 다음 줄에 꽉 차게 */
+  .team-header {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: var(--space-3) var(--space-4);
+  }
+
+  .team-header .team-icon--lg {
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+    line-height: 28px;
+  }
+
+  .team-header__info {
+    flex-basis: calc(100% - 72px);
+  }
+
+  .team-header__name-row {
+    flex-wrap: wrap;
+  }
+
+  /* 팀 이름은 상단바 제목, 팀 채팅 · 설정은 상단바 오른쪽(MobileTopBar) */
+  .team-header__name,
+  .team-header__member-action {
+    display: none;
+  }
+
+  .team-header > .btn {
+    flex: 1;
+  }
+
+  /* 숫자 카드 2 × 2 */
+  .team-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2);
+  }
+
+  .team-stat {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .team-stat__value {
+    font-size: 22px;
+    line-height: 28px;
+  }
+
+  /* 홈: 일정 → 백로그 → 카테고리 완료율 순으로 쌓는다. 끝은 떠 있는 할 일 버튼 자리 */
+  .team-home .board {
+    flex-direction: column;
+    align-items: stretch;
+    padding-bottom: 72px;
+  }
+
+  .team-home__side,
+  .team-home .board-column--backlog {
+    width: auto;
+  }
+
+  .team-home .team-progress {
+    order: 1;
+  }
+
+  /* 카테고리 표: 이름·메뉴 / 완료율 막대 / 공개 범위·완료 수 */
+  .team-categories .data-table__head,
+  .team-members .data-table__head {
+    display: none;
+  }
+
+  .team-categories .data-table__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'name menu'
+      'progress progress'
+      'visibility count';
+    gap: var(--space-2) var(--space-3);
+    min-height: 0;
+  }
+
+  .team-categories__name {
+    grid-area: name;
+    min-height: 44px;
+  }
+
+  .team-categories__menu {
+    grid-area: menu;
+  }
+
+  .team-categories__progress {
+    grid-area: progress;
+    width: auto;
+  }
+
+  .team-categories__visibility {
+    grid-area: visibility;
+    width: auto;
+  }
+
+  .team-categories__count {
+    grid-area: count;
+    width: auto;
+  }
+
+  /* 구성원 표: 사진·이름 + 버튼 / 이름 밑에 역할 · 가입일 */
+  .team-members .data-table__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'person actions'
+      'role joined';
+    gap: var(--space-1) var(--space-3);
+  }
+
+  .team-members__person {
+    grid-area: person;
+  }
+
+  .team-members__actions {
+    grid-area: actions;
+  }
+
+  .team-members__role {
+    grid-area: role;
+    width: auto;
+    padding-left: 44px;
+  }
+
+  .team-members__joined {
+    grid-area: joined;
+    align-self: center;
+    width: auto;
+    text-align: right;
+  }
+
+  .team-members__email {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* 채팅방: 방을 고르기 전에는 목록만, 고르면 대화가 상단바 밑 화면을 채운다(하단 탭도 덮는다) */
+  .team-chat {
+    height: auto;
+  }
+
+  .team-chat__rooms {
+    flex: 1;
+    width: auto;
+    padding: var(--space-3) var(--space-2);
+    border-right: 0;
+    overflow-y: visible;
+  }
+
+  .team-chat__rooms-head {
+    padding-left: var(--space-3);
+  }
+
+  .team-chat__placeholder,
+  .team-chat--open .team-chat__rooms {
+    display: none;
+  }
+
+  .team-chat--open {
+    border: 0;
+  }
+
+  .team-chat--open .team-chat__view {
+    position: fixed;
+    top: 52px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 55;
+    padding-bottom: env(safe-area-inset-bottom);
+    background: var(--surface-card);
+  }
+
+  .team-chat__head {
+    padding: var(--space-1) var(--space-2) var(--space-1) var(--space-4);
+  }
+
+  /* 모달: 화면 안에 들어오게 */
+  .team-form-modal,
+  .team-category-modal,
+  .deleted-teams-modal,
+  .member-roles-modal,
+  .chatroom-create-modal {
+    max-height: calc(100dvh - 32px);
+    padding: var(--space-5);
+  }
+
+  /* 팀 아이콘은 위 가운데, 이름은 밑에 꽉 차게 */
+  .team-fields__identity {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .team-fields__icon-column {
+    align-self: center;
+  }
+
+  .team-fields__name {
+    flex: none;
+  }
+
+  .team-fields__icon-buttons {
+    flex-wrap: wrap;
+  }
+
+  /* 팀 설정: 상단바에 뒤로가 있으니 돌아가기 버튼은 뺀다 */
+  .team-settings .page__header > .btn {
+    display: none;
+  }
+
+  .team-settings__columns {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .team-settings--picked .settings-nav,
+  .team-settings:not(.team-settings--picked) .team-settings__body {
+    display: none;
+  }
+
+  /* 메뉴는 한 줄씩 목록으로, 위험 구역은 떼어서 따로 */
+  .settings-nav {
+    gap: 0;
+    width: auto;
+  }
+
+  .settings-nav__item,
+  .settings-nav__item--selected,
+  .settings-nav__item--selected:hover,
+  .settings-nav__item--selected:active {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 52px;
+    padding: 0 var(--space-3) 0 var(--space-4);
+    border: 1px solid var(--border-1);
+    border-top: 0;
+    border-radius: 0;
+    background: var(--surface-card);
+    color: var(--text-1);
+    font-size: var(--fs-label);
+    line-height: 24px;
+    font-weight: var(--fw-regular);
+  }
+
+  .settings-nav__item::after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background: var(--text-3);
+    -webkit-mask: url('../assets/icons/chevron-right.svg') center / contain no-repeat;
+    mask: url('../assets/icons/chevron-right.svg') center / contain no-repeat;
+  }
+
+  .settings-nav__item:first-child {
+    border-top: 1px solid var(--border-1);
+    border-top-left-radius: var(--radius-lg);
+    border-top-right-radius: var(--radius-lg);
+  }
+
+  .settings-nav__item:has(+ .settings-nav__item--danger) {
+    border-bottom-right-radius: var(--radius-lg);
+    border-bottom-left-radius: var(--radius-lg);
+  }
+
+  .settings-nav .settings-nav__item--danger {
+    margin-top: var(--space-5);
+    border-top: 1px solid var(--border-1);
+    border-radius: var(--radius-lg);
+    color: var(--danger-500);
+  }
+
+  /* 보낸 초대 · 가입 신청 · 블랙리스트: 버튼은 이름 밑 줄 오른쪽으로 */
+  .team-settings .person-row {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    row-gap: var(--space-2);
+  }
+
+  .team-settings .person-row__text {
+    flex-basis: calc(100% - 44px);
+  }
+
+  /* 역할: 목록 위 · 편집 아래 */
+  .roles-layout {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .roles-list {
+    width: auto;
+  }
+
+  .roles-list__item {
+    min-height: 56px;
+  }
+
+  /* 카테고리 접근: 이름 한 줄, 그 밑에 공개 범위 · 열람 · 편집 · 삭제 */
+  .role-access .data-table__head .data-table__grow {
+    display: none;
+  }
+
+  .role-access .data-table__row {
+    flex-wrap: wrap;
+    row-gap: 0;
+    padding-top: var(--space-3);
+  }
+
+  .role-access .role-access__name {
+    flex-basis: 100%;
+  }
+
+  .role-access__visibility {
+    flex: 1;
+    width: auto;
+  }
+
+  .role-access__cell {
+    width: 48px;
+  }
+
+  /* 위험 구역: 입력은 한 줄 다 쓰고 버튼은 그 밑 오른쪽 */
+  .danger-card__row {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .danger-card__grow {
+    flex-basis: 100%;
+  }
+}
+
+/* ───────── 모바일 상단바의 팀 제목(TeamMainPage) ─────────
+   아이콘 40 | 팀 이름 · 내 역할 / 공개 범위 · 구성원 수 */
+.team-top-title {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: var(--space-3);
+  align-items: center;
+}
+
+.team-top-title .team-icon {
+  grid-row: 1 / 3;
+}
+
+.team-top-title__main {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.team-top-title__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.team-top-title__meta {
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: var(--fw-regular);
+  color: var(--text-3);
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 767px) {
+  .team-header > .team-icon,
+  .team-header__name-row,
+  .team-header__meta {
+    display: none;
+  }
+
+  /* 좁은 화면에서는 한 단계 더 낮게(24 → 20) */
+  .role-tag .tag {
+    height: 20px;
+    padding: 0 6px;
+  }
+}
+
+/* ───────── 태블릿(768~1023px) ─────────
+   본문 폭 632~935. 내 팀 카드 2열, 숫자 카드 2 × 2, 홈은 일정 밑에 완료율 · 백로그를 쌓는다.
+   표는 칸 폭만 줄이고, 채팅방은 목록(240) + 대화를 나란히. 팀 설정은 위 탭(TeamSettingsPage) + 역할 목록 위 · 편집 아래 */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .team-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .team-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .team-home__side {
+    width: auto;
+  }
+
+  .team-categories__visibility {
+    width: 96px;
+  }
+
+  .team-categories__progress {
+    width: 140px;
+  }
+
+  .team-categories__count {
+    width: 96px;
+  }
+
+  .team-members__role {
+    width: 160px;
+  }
+
+  .team-members__joined {
+    width: 104px;
+  }
+
+  .team-members__email {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .team-chat__rooms {
+    width: 240px;
+    padding: var(--space-3);
+  }
+
+  .team-settings__columns {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .roles-layout {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .roles-list {
+    width: auto;
+  }
+}

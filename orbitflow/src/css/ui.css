@@ -1,0 +1,578 @@
+/* 공통 UI 2 — 탭·세그먼트·태그·셀렉트·스위치·라디오·대화상자·드로어·카드·표 (src/components/ui) */
+
+/* ───────── Button 추가 ───────── */
+.btn--dense {
+  padding: 0 var(--space-4);
+  font-size: var(--fs-label);
+}
+
+.btn--danger {
+  border-color: var(--danger-500);
+  background: var(--danger-500);
+  color: var(--white);
+}
+
+.btn--danger:active:not(:disabled) {
+  border-color: var(--danger-600);
+  background: var(--danger-600);
+}
+
+@media (hover: hover) {
+  .btn--danger:hover:not(:disabled) {
+    border-color: var(--danger-600);
+    background: var(--danger-600);
+  }
+}
+
+/* 회색 글자 보조 버튼(삭제 등) */
+.btn--muted {
+  padding-left: var(--space-3);
+  color: var(--text-2);
+}
+
+/* ───────── 지난 일정 점 ───────── */
+.overdue-dot {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--danger-500);
+}
+
+/* ───────── Tabs ───────── */
+.tabs {
+  position: relative;
+  display: flex;
+  gap: 20px;
+  border-bottom: 1px solid var(--border-1);
+}
+
+/* 고른 탭 밑 2px 선. Tabs가 고른 탭의 위치·폭(--tab-left·--tab-width)을 재서 넣고, 바뀌면 미끄러져 간다 */
+.tabs__indicator {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: var(--tab-width, 0);
+  height: 2px;
+  background: var(--neutral-900);
+  transform: translateX(var(--tab-left, 0));
+  transition: transform var(--dur-base) var(--ease-standard), width var(--dur-base) var(--ease-standard);
+}
+
+/* 탭이 많아 폭이 모자라도 글자가 세로로 꺾이거나 줄지 않게(넘치면 감싼 쪽에서 가로 스크롤) */
+.tabs__item {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  white-space: nowrap;
+  gap: 6px;
+  height: var(--control-lg);
+  padding: 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  font-size: var(--fs-label);
+  line-height: 20px;
+  font-weight: var(--fw-medium);
+  color: var(--text-3);
+  transition: color var(--dur-base) var(--ease-standard);
+}
+
+.tabs__item--selected {
+  font-weight: var(--fw-bold);
+  color: var(--text-1);
+}
+
+.tabs__count {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  font-weight: var(--fw-bold);
+}
+
+.tabs__item--selected .tabs__count {
+  color: var(--action-outline-fg);
+}
+
+/* ───────── SegmentedControl ───────── */
+.segmented {
+  position: relative;
+  display: inline-grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  gap: 2px;
+  padding: 2px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-sunken);
+}
+
+.segmented--full {
+  display: grid;
+}
+
+/* 선택 카드: 칸 하나 폭(전체 - 안쪽 여백 - 칸 사이)을 고른 칸 순서만큼 옮긴다 */
+.segmented__thumb {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  left: 2px;
+  width: calc((100% - 4px - (var(--segmented-count) - 1) * 2px) / var(--segmented-count));
+  border-radius: var(--radius-xs);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-xs);
+  transform: translateX(calc(var(--segmented-index) * (100% + 2px)));
+  transition: transform var(--dur-base) var(--ease-standard);
+}
+
+.segmented__item {
+  position: relative;
+  min-width: 60px;
+  height: var(--control-lg);
+  padding: 0 14px;
+  border: 0;
+  border-radius: var(--radius-xs);
+  background: none;
+  font-size: var(--fs-label);
+  line-height: 1;
+  font-weight: var(--fw-medium);
+  color: var(--text-2);
+  transition: color var(--dur-base) var(--ease-standard);
+}
+
+/* 바탕은 thumb가 그린다 */
+.segmented__item--selected {
+  font-weight: var(--fw-bold);
+  color: var(--text-1);
+}
+
+/* ───────── Tag ───────── */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 6px;
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-sm);
+  background: var(--surface-card);
+  font-size: var(--fs-label);
+  line-height: 1;
+  font-weight: var(--fw-medium);
+  color: var(--text-1);
+  white-space: nowrap;
+}
+
+.tag--lg {
+  height: var(--control-lg);
+}
+
+.tag--selected {
+  border-color: var(--blue-500);
+  background: var(--blue-50);
+  color: var(--blue-700);
+}
+
+.tag__color {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-xs);
+}
+
+/* ───────── Select ───────── */
+.select {
+  position: relative;
+}
+
+.select__control {
+  padding-right: 36px;
+  appearance: none;
+  cursor: pointer;
+}
+
+.select__chevron {
+  position: absolute;
+  top: 50%;
+  right: var(--space-3);
+  color: var(--text-3);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* ───────── Switch ───────── */
+.switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  cursor: pointer;
+}
+
+.switch__track {
+  position: relative;
+  flex-shrink: 0;
+  width: 44px;
+  height: 26px;
+  border-radius: var(--radius-sm);
+  background: var(--neutral-300);
+  transition: background-color var(--dur-fast) var(--ease-standard);
+}
+
+.switch__thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-xs);
+  background: var(--white);
+  box-shadow: var(--shadow-xs);
+  transition: left var(--dur-fast) var(--ease-standard);
+}
+
+.switch__input:checked + .switch__track {
+  background: var(--action-bg);
+}
+
+.switch__input:checked + .switch__track .switch__thumb {
+  left: 21px;
+}
+
+.switch__input:focus-visible + .switch__track {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.switch__input:disabled + .switch__track,
+.switch__input:disabled ~ .switch__label {
+  opacity: .45;
+}
+
+.switch__label {
+  font-size: var(--fs-label);
+  line-height: 24px;
+  color: var(--text-1);
+}
+
+/* ───────── Radio ───────── */
+.radio {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  cursor: pointer;
+}
+
+.radio__control {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid var(--neutral-400);
+  border-radius: 50%;
+  background: var(--surface-card);
+  transition: border var(--dur-fast) var(--ease-standard);
+}
+
+.radio__input:checked + .radio__control {
+  border: 6px solid var(--action-bg);
+}
+
+.radio__input:focus-visible + .radio__control {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.radio__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.radio__label {
+  font-size: var(--fs-label);
+  line-height: 20px;
+  color: var(--text-1);
+}
+
+.radio__desc {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-2);
+}
+
+/* ───────── Dialog ───────── */
+.dialog-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  background: var(--surface-scrim);
+}
+
+.dialog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 400px;
+  max-width: 100%;
+  padding: var(--space-6);
+  border-radius: var(--radius-md);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-dialog);
+}
+
+.dialog__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.dialog__title {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  letter-spacing: -0.1px;
+  font-weight: var(--fw-bold);
+}
+
+.dialog__desc {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-2);
+}
+
+.dialog__options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.dialog__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+/* ───────── Drawer ───────── */
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  width: 480px;
+  max-width: 100%;
+  background: var(--surface-card);
+  box-shadow: var(--shadow-dialog);
+}
+
+/* 가운데 창으로 띄울 때(새 할 일 등): 화면 가운데, 둥근 모서리, 내용만큼 높이(넘치면 본문만 스크롤) */
+.drawer--centered {
+  position: relative;
+  inset: auto;
+  z-index: auto;
+  width: 560px;
+  max-height: calc(100vh - 64px);
+  max-height: calc(100dvh - 64px);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.drawer__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-5) var(--space-4) var(--space-4) var(--space-6);
+}
+
+.drawer__title {
+  flex: 1;
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  letter-spacing: -0.1px;
+  font-weight: var(--fw-bold);
+}
+
+.drawer__body {
+  flex: 1;
+  min-height: 0;
+  padding: var(--space-2) var(--space-6) var(--space-6);
+  overflow-y: auto;
+}
+
+.drawer__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-6);
+  border-top: 1px solid var(--border-1);
+}
+
+.drawer__spacer {
+  flex: 1;
+}
+
+.drawer__delete {
+  color: var(--text-2);
+}
+
+/* ───────── 카드 · 구역 머리 · 표 ───────── */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.section-header__title {
+  font-size: var(--fs-label);
+  line-height: 24px;
+  font-weight: var(--fw-bold);
+}
+
+/* 머리 줄 오른쪽 끝 버튼(예: 내 팀 옆 "팀 만들기") */
+.section-header__action {
+  margin-left: auto;
+}
+
+.section-header__hint {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.data-table {
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.data-table__head,
+.data-table__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+}
+
+.data-table__head {
+  padding-top: var(--space-2);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--border-1);
+  background: var(--surface-subtle);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  font-weight: var(--fw-bold);
+  color: var(--text-3);
+}
+
+.data-table__row {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-2);
+}
+
+.data-table__row + .data-table__row {
+  border-top: 1px solid var(--border-1);
+}
+
+.data-table__grow {
+  flex: 1;
+  min-width: 0;
+}
+
+.data-table__strong {
+  font-weight: var(--fw-bold);
+  color: var(--text-1);
+}
+
+/* ───────── 페이지 머리(오른쪽 버튼) ───────── */
+/* 페이지 머리 높이는 힌트(부제)가 있든 없든 같게: 제목 줄(44) + 4 + 힌트 줄(20).
+   그래야 제목 위치와 본문이 시작하는 자리가 모든 화면에서 같다 */
+.page__header {
+  min-height: calc(var(--lh-h1) + var(--space-1) + 20px);
+  /* 머리 → 본문 거리는 화면의 구역 간격(--page-gap)과 상관없이 늘 32 */
+  margin-bottom: calc(var(--space-8) - var(--page-gap, var(--space-6)));
+}
+
+/* 오른쪽 버튼이 제목보다 커도 제목이 내려가지 않게 위로 맞춘다 */
+.page__header--row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.page__subtitle {
+  margin-top: var(--space-1);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-3);
+}
+
+/* ───────── 모바일(767px 이하): 옆 드로어는 아래에서 올라오는 시트로 ───────── */
+@media (max-width: 767px) {
+  .drawer:not(.drawer--centered) {
+    top: 48px;
+    left: 0;
+    width: 100%;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+}
+
+/* ───────── 저장 중 진행 막대 ───────── */
+/* 모달 · 확인창 · 드로어 · 인증 카드가 서버에 보내는 동안(busy) 위쪽 가장자리에 파란 막대가 왼쪽에서 오른쪽으로 흐른다.
+   막대는 틀 전체를 덮는 투명한 층의 배경으로 그려 틀의 둥근 모서리를 그대로 따른다. 누르기는 막지 않는다 */
+.modal.progress-top,
+.dialog.progress-top,
+.auth-modal.progress-top {
+  position: relative;
+}
+
+.progress-top::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--action-bg), var(--action-bg)) no-repeat,
+    linear-gradient(var(--action-tint), var(--action-tint)) no-repeat;
+  background-size: 40% 3px, 100% 3px;
+  background-position: -70% 0, 0 0;
+  animation: progress-top 1.2s ease-in-out infinite;
+}
+
+@keyframes progress-top {
+  from {
+    background-position: -70% 0, 0 0;
+  }
+  to {
+    background-position: 170% 0, 0 0;
+  }
+}
+
+/* 움직임을 줄인 설정이면 흐르지 않고 막대 전체를 채운 채로 둔다 */
+@media (prefers-reduced-motion: reduce) {
+  .progress-top::before {
+    animation: none;
+    background-size: 100% 3px, 100% 3px;
+    background-position: 0 0, 0 0;
+  }
+}

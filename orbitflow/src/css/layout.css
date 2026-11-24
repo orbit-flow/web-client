@@ -1,0 +1,535 @@
+/* 로그인 후 서비스 화면 틀 — src/components/layout */
+
+/* ───────── 틀 ───────── */
+/* 사이드바는 항상 화면 왼쪽 끝에 붙어 있고(sticky),
+   기기 폭이 1440 이상이면 본문만 더 늘지 않고(1440 - 사이드바 264 = 1176) 남은 자리 가운데에 놓인다 */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--surface-page);
+}
+
+.app-layout__main {
+  flex: 1;
+  min-width: 0;
+  /* 사이드바를 접고 펼치는 동안 본문 폭이 바뀌며 잠깐 삐져나오는 내용 때문에 화면에 가로 스크롤이 생기지 않게.
+     clip은 스크롤 상자를 만들지 않아 sticky·fixed(서랍·모달)는 그대로 */
+  overflow-x: clip;
+}
+
+.app-layout__main > * {
+  max-width: calc(var(--app-max-width) - 264px);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/* ───────── 사이드바 ───────── */
+.sidebar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-shrink: 0;
+  width: 264px;
+  height: 100vh;
+  /* 오른쪽 구분선을 테두리 대신 그림자로 — 메뉴 폭(232)을 피그마와 같게 유지 */
+  box-shadow: inset -1px 0 0 var(--border-1);
+  background: var(--surface-card);
+  /* 펼치는 중(폭 88 → 264)에는 로고·메뉴 글자가 폭보다 먼저 나타나므로 넘치는 부분은 잘라 낸다 */
+  overflow-x: clip;
+  white-space: nowrap;
+  transition: width var(--dur-base) var(--ease-standard);
+}
+
+.sidebar--collapsed {
+  width: 88px;
+}
+
+.sidebar__top {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.sidebar__brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  height: 104px;
+  padding: 0 var(--space-6) var(--space-4);
+}
+
+.sidebar--collapsed .sidebar__brand {
+  justify-content: center;
+  padding: 0 0 var(--space-4);
+}
+
+.sidebar__logo {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  letter-spacing: -0.1px;
+  font-weight: var(--fw-bold);
+  color: var(--text-1);
+}
+
+/* 접힘이면 화살표를 반대로(펼치기) */
+.sidebar--collapsed .sidebar__toggle img {
+  transform: rotate(180deg);
+}
+
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4) var(--space-4) 0;
+  /* 세로로만 스크롤. 펼치는 중(폭 88 → 264) 메뉴 글자가 폭보다 먼저 나타나도 가로 스크롤바가 생기지 않게 */
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.sidebar--collapsed .sidebar__nav {
+  padding: var(--space-4) var(--space-5) 0;
+}
+
+/* 링크(NavLink)와 버튼("알림" — 팝오버를 연다)이 똑같이 보이도록 버튼 기본 모양을 지운다 */
+.sidebar__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  height: var(--control-lg);
+  padding: 0 var(--space-4);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  text-align: left;
+  font-size: var(--fs-label);
+  line-height: 24px;
+  color: var(--text-2);
+  transition: background-color var(--dur-fast) var(--ease-standard);
+}
+
+.sidebar--collapsed .sidebar__item {
+  justify-content: center;
+  padding: 0;
+}
+
+.sidebar__item:active {
+  background: var(--surface-hover);
+  text-decoration: none;
+}
+
+@media (hover: hover) {
+  .sidebar__item:hover {
+    background: var(--surface-hover);
+    text-decoration: none;
+  }
+}
+
+.sidebar__item--active,
+.sidebar__item--active:hover,
+.sidebar__item--active:active {
+  background: var(--action-tint);
+  font-weight: var(--fw-bold);
+  color: var(--action-bg);
+}
+
+.sidebar__divider {
+  padding: var(--space-3) 0;
+}
+
+.sidebar__divider::before {
+  content: '';
+  display: block;
+  height: 1px;
+  background: var(--border-1);
+}
+
+.sidebar__profile {
+  flex-shrink: 0;
+  padding: 0 var(--space-4) var(--space-5);
+}
+
+.sidebar__profile::before {
+  content: '';
+  display: block;
+  height: 1px;
+  margin-bottom: var(--space-5);
+  background: var(--border-1);
+}
+
+.sidebar__profile-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  height: 60px;
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+}
+
+.sidebar--collapsed .sidebar__profile-card {
+  justify-content: center;
+}
+
+/* 내 프로필 카드는 메뉴를 여는 버튼: 기본 버튼 모양 없이 줄 전체 */
+button.sidebar__profile-card {
+  width: 100%;
+  border: 0;
+  background: none;
+  color: var(--text-1);
+  text-align: left;
+  cursor: pointer;
+}
+
+/* 위 배경 초기화보다 앞서도록 */
+button.sidebar__profile-card--active,
+button.sidebar__profile-card--active:hover,
+button.sidebar__profile-card--active:active {
+  background: var(--action-tint);
+}
+
+/* 내 프로필로 가는 링크 */
+a.sidebar__profile-card {
+  color: inherit;
+  text-decoration: none;
+  transition: background-color var(--dur-fast) var(--ease-standard);
+}
+
+a.sidebar__profile-card:active,
+button.sidebar__profile-card:active {
+  background: var(--surface-hover);
+  text-decoration: none;
+}
+
+@media (hover: hover) {
+  a.sidebar__profile-card:hover,
+  button.sidebar__profile-card:hover {
+    background: var(--surface-hover);
+    text-decoration: none;
+  }
+}
+
+.sidebar__profile-card--active,
+.sidebar__profile-card--active:hover,
+.sidebar__profile-card--active:active {
+  background: var(--action-tint);
+}
+
+.sidebar__identity {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.sidebar__name {
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: var(--fw-bold);
+  color: var(--text-1);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ───────── 본문 페이지 ───────── */
+.page {
+  display: flex;
+  flex-direction: column;
+  /* 구역 사이 간격. 화면마다 --page-gap으로 바꾼다(기본 24) */
+  --page-gap: var(--space-6);
+  gap: var(--page-gap);
+  padding: var(--space-8) var(--space-10);
+}
+
+/* 페이지 제목은 H1 단계(34) */
+.page__title {
+  font-size: var(--fs-h1);
+  line-height: var(--lh-h1);
+  letter-spacing: var(--ls-h1);
+  font-weight: var(--fw-bold);
+}
+
+.page__empty {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-3);
+}
+
+/* ───────── 태블릿 틀(768~1023px): 사이드바는 아이콘 레일(88)로 고정(Sidebar), 본문 여백 24 ───────── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .page {
+    padding: var(--space-6);
+  }
+
+  /* 나: 메뉴 줄이 너무 길게 늘어나지 않게 */
+  .me-page {
+    max-width: 640px;
+  }
+}
+
+/* ───────── 모바일 틀(767px 이하): 사이드바 대신 상단바 52 + 하단 탭 ───────── */
+.mobile-top-bar,
+.mobile-tab-bar {
+  display: none;
+}
+
+.mobile-top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 52px;
+  padding: 0 var(--space-2) 0 var(--space-4);
+  background: var(--surface-page);
+}
+
+.mobile-top-bar--back {
+  padding-left: var(--space-1);
+}
+
+/* 뒤로가 있는 화면 제목도 읽기 쉽게 20(소제목) */
+.mobile-top-bar__title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  font-weight: var(--fw-bold);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* 탭 첫 화면은 큰 제목 */
+.mobile-top-bar--root .mobile-top-bar__title {
+  font-size: 26px;
+  line-height: 34px;
+  letter-spacing: -0.01em;
+}
+
+.mobile-top-bar__actions {
+  display: flex;
+  align-items: center;
+}
+
+/* 알림 벨 · 화면이 꽂은 버튼(MobileTopBarActions). <button>이어도 브라우저 기본 모양 없이 */
+.mobile-top-bar__action {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--text-1);
+  cursor: pointer;
+}
+
+.mobile-top-bar__action:active {
+  background: var(--surface-hover);
+}
+
+@media (hover: hover) {
+  .mobile-top-bar__action:hover {
+    background: var(--surface-hover);
+  }
+}
+
+.mobile-top-bar__badge {
+  position: absolute;
+  top: 4px;
+  right: 2px;
+}
+
+.mobile-tab-bar {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+  height: calc(56px + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  border-top: 1px solid var(--border-1);
+  background: rgba(255, 255, 255, .92);
+  backdrop-filter: blur(12px);
+}
+
+.mobile-tab-bar__item {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: var(--fw-medium);
+  color: var(--text-3);
+}
+
+.mobile-tab-bar__item--active {
+  font-weight: var(--fw-bold);
+  color: var(--text-1);
+}
+
+.mobile-tab-bar__dot {
+  position: absolute;
+  top: 8px;
+  left: calc(50% + 8px);
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-round);
+  background: var(--danger-500);
+}
+
+@media (max-width: 767px) {
+  .sidebar {
+    display: none;
+  }
+
+  .mobile-top-bar {
+    display: flex;
+  }
+
+  .mobile-tab-bar {
+    display: flex;
+  }
+
+  /* 하단 탭에 본문 끝이 가리지 않게 */
+  .app-layout__main {
+    padding-bottom: calc(56px + env(safe-area-inset-bottom));
+  }
+
+  /* 4열 · 마진 16. 제목은 상단바가 맡는다 */
+  .page {
+    padding: var(--space-4) var(--space-4) var(--space-6);
+  }
+
+  .page__header {
+    min-height: 0;
+  }
+
+  .page__header--row {
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .app-layout__main:has(.mobile-top-bar--titled, .mobile-top-bar__title-slot:not(:empty)) .page__header .page__title,
+  .app-layout__main:has(.mobile-top-bar--titled, .mobile-top-bar__title-slot:not(:empty)) .page__header .page__subtitle {
+    display: none;
+  }
+}
+
+/* ───────── 나(모바일 하단 탭) ───────── */
+.me-profile {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  color: var(--text-1);
+}
+
+.me-profile__identity {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.me-profile__name {
+  overflow: hidden;
+  font-size: 17px;
+  line-height: 24px;
+  font-weight: var(--fw-bold);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.me-profile__link {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.me-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.me-section__title {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  font-weight: var(--fw-bold);
+  color: var(--text-3);
+}
+
+.me-menu {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  overflow: hidden;
+}
+
+.me-menu__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 52px;
+  padding: 0 var(--space-3) 0 var(--space-4);
+  color: var(--text-1);
+}
+
+.me-menu__row + .me-menu__row {
+  border-top: 1px solid var(--border-1);
+}
+
+/* 줄 전체가 링크: 전역 a:hover 밑줄 대신 배경색으로 */
+.me-menu__row:active {
+  background: var(--surface-hover);
+  text-decoration: none;
+}
+
+@media (hover: hover) {
+  .me-menu__row:hover {
+    background: var(--surface-hover);
+    text-decoration: none;
+  }
+}
+
+.me-profile:active {
+  text-decoration: none;
+}
+
+@media (hover: hover) {
+  .me-profile:hover {
+    text-decoration: none;
+  }
+}
+
+.me-menu__label {
+  flex: 1;
+  font-size: 15px;
+  line-height: 24px;
+}
+
+.me-menu__value {
+  font-size: 14px;
+  font-weight: var(--fw-bold);
+  color: var(--text-2);
+}
+
+.me-menu__chevron {
+  color: var(--text-3);
+}

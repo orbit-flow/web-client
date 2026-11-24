@@ -1,0 +1,369 @@
+/* OrbitFlow 전역 스타일 — docs/orbitflow-design-system.html 토큰 기준 */
+
+/* Figtree = 라틴·숫자, Noto Sans KR = 한글, JetBrains Mono = 코드 */
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap');
+
+/* ───────── 토큰 ───────── */
+:root {
+  --white: #FFFFFF;
+  --neutral-50: #F7F8FA;
+  --neutral-100: #EFF1F4;
+  --neutral-200: #E2E5EA;
+  --neutral-300: #C7CBD2;
+  --neutral-400: #9CA1AB;
+  --neutral-500: #737884;
+  --neutral-600: #555A65;
+  --neutral-700: #3A3E47;
+  --neutral-800: #23262D;
+  --neutral-900: #15171C;
+
+  --blue-50: #EEF4FE;
+  --blue-100: #DCE8FD;
+  --blue-200: #B6CEFA;
+  --blue-300: #86AEF6;
+  --blue-400: #5B94F2;
+  --blue-500: #1F6FEB;
+  --blue-600: #1A5ED0;
+  --blue-700: #164CA8;
+  --blue-on-dark: #6AA3FF;
+
+  /* 색상 · 상태 */
+  --success-50: #E6F4EC;
+  --success-500: #1E8E5A;
+  --success-700: #12663F;
+  --warning-50: #FDF2E1;
+  --warning-500: #C77700;
+  --warning-700: #8A5200;
+  --danger-50: #FCEBEB;
+  --danger-500: #D93A3A;
+  --danger-600: #BE2F2F;
+  --danger-700: #9E2424;
+
+  /* 색상 · 다크 원본값 (다크 테마 매핑은 아직 없음) */
+  --dark-canvas: #0E1014;
+  --dark-surface: #181B21;
+  --dark-surface-2: #22262E;
+  --dark-border: #2E333C;
+  --dark-text-1: #F3F4F6;
+  --dark-text-2: #A3A9B4;
+
+  /* 역할 · 텍스트 */
+  --text-1: var(--neutral-900);
+  --text-2: var(--neutral-600);
+  --text-3: var(--neutral-500);
+  --text-disabled: var(--neutral-400);
+  --text-link: var(--blue-600);
+  --text-link-on-dark: var(--blue-on-dark);
+  --text-on-action: var(--white);
+
+  /* 역할 · 표면 */
+  --surface-page: var(--white);
+  /* 피그마 화면 폭. 이보다 넓은 기기에서는 본문이 더 늘지 않고 남은 자리 가운데에 놓인다(사이드바는 왼쪽 끝 그대로) */
+  --app-max-width: 1440px;
+  --surface-card: var(--white);
+  --surface-subtle: var(--neutral-50);
+  --surface-sunken: var(--neutral-100);
+  --surface-disabled: var(--neutral-100);
+  --surface-hover: rgba(21, 23, 28, .05);
+  --surface-pressed: rgba(21, 23, 28, .09);
+  --surface-scrim: rgba(14, 16, 20, .48);
+  --surface-inverse: var(--dark-canvas);
+
+  /* 역할 · 테두리 */
+  --border-1: var(--neutral-200);
+  --border-2: var(--neutral-300);
+  --border-strong: var(--neutral-900);
+
+  /* 역할 · 액션 */
+  --action-bg: var(--blue-500);
+  --action-bg-hover: var(--blue-600);
+  --action-bg-pressed: var(--blue-700);
+  --action-fg: var(--white);
+  --action-outline-border: var(--blue-500);
+  --action-outline-fg: var(--blue-600);
+  --action-tint: var(--blue-50);
+  --action-tint-strong: var(--blue-100);
+
+  /* 역할 · 레벨 / 포인트 */
+  --level-50: var(--blue-50);
+  --level-100: var(--blue-100);
+  --level-500: var(--blue-500);
+  --level-700: var(--blue-700);
+  --point-50: var(--neutral-100);
+  --point-100: var(--neutral-200);
+  --point-500: var(--neutral-900);
+  --point-700: var(--neutral-900);
+
+  --focus-ring: var(--blue-400);
+  --focus-halo: rgba(31, 111, 235, .18);
+
+  --glass-light: rgba(255, 255, 255, .72);
+  --glass-light-strong: rgba(255, 255, 255, .86);
+  --glass-dark: rgba(21, 23, 28, .76);
+  --glass-border-light: rgba(21, 23, 28, .08);
+  --glass-border-dark: rgba(255, 255, 255, .10);
+  --glass-blur: saturate(180%) blur(20px);
+
+  --font-sans: "Figtree", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-heavy: 800;
+
+  /* 타이포 · 크기 / 행간 / 자간 */
+  --fs-display: 48px;  --lh-display: 58px;  --ls-display: -0.02em;
+  --fs-h1: 34px;       --lh-h1: 44px;       --ls-h1: -0.015em;
+  --fs-h2: 26px;       --lh-h2: 34px;       --ls-h2: -0.01em;
+  --fs-h3: 20px;       --lh-h3: 28px;       --ls-h3: -0.005em;
+  --fs-body-lg: 17px;  --lh-body-lg: 27px;
+  --fs-body: 15px;     --lh-body: 24px;
+  --fs-body-sm: 13px;  --lh-body-sm: 20px;
+  --fs-caption: 12px;  --lh-caption: 16px;
+  --fs-overline: 11px; --lh-overline: 16px; --ls-overline: 0.08em;
+  --fs-code: 13px;     --lh-code: 20px;
+  /* 라벨 · 버튼 · 제목 줄처럼 16px로 쓰던 글자(모바일은 14px) */
+  --fs-label: 16px;
+  --fs-num-lg: 28px;
+
+  /* 간격 (4px 그리드) */
+  --space-0-5: 2px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-14: 56px;
+  --space-20: 80px;
+
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-round: 999px;
+
+  --shadow-none: none;
+  --shadow-xs: 0 1px 2px rgba(21, 23, 28, .08);
+  --shadow-pop: 0 1px 2px rgba(21, 23, 28, .06), 0 6px 16px rgba(21, 23, 28, .10);
+  --shadow-dialog: 0 2px 6px rgba(21, 23, 28, .08), 0 16px 40px rgba(21, 23, 28, .18);
+
+  /* 모션 */
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 320ms;
+  --ease-standard: cubic-bezier(.2, 0, 0, 1);
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+
+  /* 크기 · 레이아웃 */
+  --control-sm: 32px;
+  --control-md: 40px;
+  --control-lg: 48px;
+  --tap-min: 44px;
+  --content-max: 1120px;
+  --mobile-width: 390px;
+}
+
+/* 모바일: 글자를 한 단계씩 줄인다(본문·라벨 14px). 글자 칸(input)은 iOS 확대를 막으려고 16px 그대로 */
+@media (max-width: 767px) {
+  :root {
+    --fs-label: 14px;
+    --fs-display: 32px; --lh-display: 40px;
+    --fs-h1: 26px;      --lh-h1: 34px;
+    --fs-h2: 22px;      --lh-h2: 30px;
+    --fs-h3: 18px;      --lh-h3: 26px;
+    --fs-body-lg: 15px; --lh-body-lg: 24px;
+    --fs-body: 14px;    --lh-body: 22px;
+  }
+}
+
+/* ───────── 리셋 ───────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* 누를 수 있는 것은 호버·누름에서 색이 짧게 페이드된다(따로 transition을 정한 부품은 그 값을 따른다) */
+button,
+a,
+[role='button'] {
+  transition:
+    background-color var(--dur-fast) var(--ease-standard),
+    border-color var(--dur-fast) var(--ease-standard),
+    color var(--dur-fast) var(--ease-standard);
+}
+
+/* ───────── 기본 스타일 ───────── */
+html {
+  -webkit-text-size-adjust: 100%;
+  /* 모바일에서 누를 때 시스템이 칠하는 반투명 상자를 없앤다(눌림 표시는 각 부품의 :hover·:active로) */
+  -webkit-tap-highlight-color: transparent;
+  /* 내용 길이가 바뀌어(일간·주간·월간 전환 등) 세로 스크롤바가 생겼다 사라져도 화면 폭이 흔들리지 않게 자리를 늘 비워 둔다 */
+  scrollbar-gutter: stable;
+}
+
+/* 모달이 열려 있으면 뒤 페이지는 멈춘다(Modal.jsx) */
+html.modal-open {
+  overflow: hidden;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-2) transparent;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-weight: var(--fw-regular);
+  color: var(--text-1);
+  background: var(--surface-page);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1 {
+  font-size: var(--fs-h1);
+  line-height: var(--lh-h1);
+  letter-spacing: var(--ls-h1);
+  font-weight: var(--fw-bold);
+}
+
+h2 {
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  letter-spacing: var(--ls-h2);
+  font-weight: var(--fw-bold);
+}
+
+h3 {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  letter-spacing: var(--ls-h3);
+  font-weight: var(--fw-semibold);
+}
+
+a {
+  color: var(--text-link);
+  text-decoration: none;
+}
+
+a:active {
+  text-decoration: underline;
+}
+
+@media (hover: hover) {
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+code,
+kbd,
+pre {
+  font-family: var(--font-mono);
+  font-size: var(--fs-code);
+  line-height: var(--lh-code);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--focus-halo);
+}
+
+::selection {
+  background: var(--action-tint-strong);
+}
+
+/* ───────── 유틸 ───────── */
+.text-display {
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-display);
+  font-weight: var(--fw-heavy);
+}
+
+.text-body-lg {
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body-lg);
+}
+
+.text-body-sm {
+  font-size: var(--fs-body-sm);
+  line-height: var(--lh-body-sm);
+}
+
+.text-caption {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-2);
+}
+
+.text-overline {
+  font-size: var(--fs-overline);
+  line-height: var(--lh-overline);
+  letter-spacing: var(--ls-overline);
+  font-weight: var(--fw-semibold);
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

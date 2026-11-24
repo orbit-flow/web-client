@@ -1,0 +1,1978 @@
+/* 대시보드 부품 — src/components/dashboard (랜딩 미리보기에서도 쓴다) */
+
+/* ───────── 출석 줄 ───────── */
+/* 7칸 × 최소 48px + 간격 6 */
+.attendance {
+  display: flex;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.attendance__cell {
+  display: flex;
+  flex: 1 1 0;
+  min-width: 48px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--text-3);
+}
+
+.attendance__cell,
+.attendance__check {
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) 0;
+}
+
+.attendance__check {
+  display: flex;
+  flex: 1;
+  margin: -1px;
+  border: 0;
+  border-radius: inherit;
+  background: none;
+  color: inherit;
+}
+
+.attendance__cell--checked {
+  background: var(--point-50);
+}
+
+.attendance__cell--today {
+  border-color: var(--point-500);
+  background: var(--surface-card);
+  color: var(--point-700);
+}
+
+.attendance__cell--upcoming {
+  border-color: var(--border-1);
+  background: var(--surface-card);
+}
+
+.attendance__day,
+.attendance__reward {
+  font-size: var(--fs-caption);
+  line-height: 14px;
+}
+
+.attendance__day {
+  font-weight: var(--fw-bold);
+}
+
+.attendance__reward {
+  font-weight: var(--fw-heavy);
+}
+
+.attendance__cell--checked .attendance__reward {
+  color: var(--point-700);
+}
+
+/* ───────── 할 일 한 줄 ───────── */
+.task-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--border-1);
+  background: var(--surface-card);
+}
+
+/* 누르면 할 일 창이 열리는 줄 */
+.task-item--clickable {
+  cursor: pointer;
+}
+
+.task-item--clickable:active .task-item__title {
+  text-decoration: underline;
+}
+
+@media (hover: hover) {
+  .task-item--clickable:hover .task-item__title {
+    text-decoration: underline;
+  }
+}
+
+.task-item--schedule {
+  padding-left: var(--space-4);
+}
+
+.task-item__time {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  width: 44px;
+}
+
+.task-item__start {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.task-item__end {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: var(--fw-bold);
+  color: var(--text-1);
+}
+
+.task-item__bar {
+  flex-shrink: 0;
+  align-self: stretch;
+  width: 4px;
+  border-radius: var(--radius-xs);
+}
+
+.task-item__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+  /* 체크박스 ↔ 제목은 줄 간격(space-3)보다 한 단계 좁게(space-2) */
+  margin-left: calc(var(--space-2) - var(--space-3));
+  padding-top: var(--space-3);
+}
+
+.task-item__title-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.task-item__title {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--fs-label);
+  line-height: 22px;
+  font-weight: var(--fw-medium);
+  color: var(--text-1);
+}
+
+.task-item__repeat {
+  display: flex;
+  color: var(--text-3);
+}
+
+.task-item__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+}
+
+.task-item__meta-item,
+.task-item__subtasks {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-2);
+}
+
+.task-item__subtasks {
+  font-weight: var(--fw-bold);
+}
+
+.task-item__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-xs);
+}
+
+/* 완료: 취소선 + 흐리게(시각·색 막대도) */
+.task-item--done .task-item__title {
+  color: var(--text-3);
+  text-decoration: line-through;
+}
+
+.task-item--done .task-item__end {
+  color: var(--text-3);
+}
+
+.task-item--done .task-item__bar {
+  opacity: .4;
+}
+
+.task-item__end {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.task-item__icon {
+  display: flex;
+  color: var(--text-3);
+}
+
+.task-item__meta-item--danger {
+  color: var(--danger-600);
+}
+
+.task-item__subtasks {
+  align-self: flex-start;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+/* 아직 생성되지 않은 반복 회차 */
+.task-item--preview {
+  opacity: .6;
+}
+
+/* ───────── 하위 할 일 ───────── */
+.subtasks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.subtasks--guide {
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--border-1);
+}
+
+.subtask {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  border-radius: var(--radius-sm);
+  background: var(--surface-card);
+}
+
+/* 하위 줄 높이는 한 단계 낮게(48 → 40) */
+.subtask .checkbox {
+  min-height: var(--control-md);
+}
+
+/* 글자는 부모 할 일 제목(.task-item__title)과 같은 단계 */
+.subtask__name {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--fs-label);
+  line-height: 22px;
+  font-weight: var(--fw-medium);
+  color: var(--text-1);
+}
+
+.subtask--done .subtask__name {
+  color: var(--text-3);
+  text-decoration: line-through;
+}
+
+.subtask__date {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-2);
+}
+
+.subtask__date--overdue {
+  color: var(--danger-600);
+}
+
+/* 하위 할 일: 체크박스 네모(20)의 왼쪽 끝을 부모 제목 글자 시작에 맞춘다
+   (체크박스 터치 영역 48 안에서 네모가 가운데라 그 여백 14만큼 당김) */
+.task-item .subtasks {
+  margin-left: calc((20px - 48px) / 2);
+}
+
+/* 안내선이 있는 마감형은 선(2)을 그 여백 안쪽에 두어 네모 위치는 같게 */
+.task-item .subtasks--guide {
+  margin-left: calc((20px - 48px) / 2 - 2px);
+  padding-left: 0;
+}
+
+/* 손잡이: 아이콘은 16이지만 잡는 곳은 32. 터치로 끌 때 화면이 스크롤되지 않게 */
+.subtask__handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: var(--text-3);
+  cursor: grab;
+  touch-action: none;
+}
+
+/* 끄는 동안 나머지 줄은 부드럽게 비켜선다 */
+.subtasks--sorting .subtask {
+  transition: translate var(--dur-base) var(--ease-standard);
+}
+
+/* 잡은 줄: 떠오름(살짝 커지고 그림자) — 손가락을 따라가는 이동(translate)에는 전환을 걸지 않는다 */
+.subtasks--sorting .subtask--lifted {
+  position: relative;
+  z-index: 1;
+  scale: 1.02;
+  box-shadow: var(--shadow-dialog);
+  cursor: grabbing;
+  transition: scale var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.subtask--lifted .subtask__handle {
+  cursor: grabbing;
+}
+
+/* 놓은 줄: 빈자리로 내려앉으며 그림자가 걷힌다(SubtaskList SETTLE_MS와 같은 시간) */
+.subtasks--sorting .subtask--settling {
+  position: relative;
+  z-index: 1;
+  box-shadow: var(--shadow-xs);
+  transition: translate var(--dur-base) var(--ease-standard), scale var(--dur-base) var(--ease-standard),
+    box-shadow var(--dur-base) var(--ease-standard);
+}
+
+/* 내려앉은 뒤 그 자리를 잠깐 물들였다 지운다 */
+.subtask--landed {
+  animation: subtask-landed var(--dur-slow) var(--ease-out);
+}
+
+@keyframes subtask-landed {
+  from {
+    background: var(--action-tint);
+  }
+}
+
+/* ───────── 대시보드 위쪽 ───────── */
+.dashboard__top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: var(--space-6);
+}
+
+/* 카드 상자 없이 아바타(200)를 크게 + 오른쪽에 정보 */
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+/* 내 아바타 그림(정사각형). avatar.css의 .avatar-preview(폭 100%)보다 앞서도록 두 클래스로 */
+.profile-card .profile-card__avatar {
+  flex-shrink: 0;
+  width: 200px;
+  border-radius: var(--radius-lg);
+}
+
+.profile-card__info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.profile-card__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  /* 정보 칸이 좁아지면 버튼이 다음 줄로(옆으로 넘치지 않게) */
+  flex-wrap: wrap;
+}
+
+.profile-card__name {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  letter-spacing: -0.1px;
+  font-weight: var(--fw-bold);
+}
+
+.profile-card__divider {
+  height: 1px;
+  margin: 0;
+  border: 0;
+  background: var(--border-1);
+}
+
+.profile-card__progress {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.profile-card__progress-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-2);
+}
+
+.profile-card__progress-labels span:first-child {
+  font-weight: var(--fw-bold);
+  color: var(--text-1);
+}
+
+.mini-calendar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+}
+
+.mini-calendar__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.mini-calendar__month {
+  flex: 1;
+  font-size: var(--fs-label);
+  line-height: 24px;
+  font-weight: var(--fw-bold);
+}
+
+.mini-calendar__grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mini-calendar__week {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mini-calendar__weekday {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 20px;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.mini-calendar__day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  width: 48px;
+  height: 48px;
+  padding: 6px 0 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-1);
+}
+
+.mini-calendar__day:active {
+  background: var(--surface-hover);
+}
+
+@media (hover: hover) {
+  .mini-calendar__day:hover {
+    background: var(--surface-hover);
+  }
+}
+
+.mini-calendar__day--outside {
+  color: var(--text-disabled);
+}
+
+.mini-calendar__day--today {
+  box-shadow: inset 0 0 0 1px var(--action-bg);
+}
+
+.mini-calendar__day--selected,
+.mini-calendar__day--selected:hover,
+.mini-calendar__day--selected:active {
+  background: var(--action-bg);
+  font-weight: var(--fw-bold);
+  color: var(--text-on-action);
+}
+
+.mini-calendar__dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: .6;
+}
+
+.mini-calendar__day--selected .mini-calendar__dot {
+  opacity: 1;
+}
+
+/* ───────── 툴바 · 카테고리 필터 ───────── */
+/* 일·주·월 전환은 줄의 정가운데에 고정 — 왼쪽 날짜 글자 길이가 바뀌어도 움직이지 않게 양옆 칸을 같은 폭(1fr)으로
+   폭이 좁아 양옆 칸이 내용보다 작아지면 칸을 내용만큼 넓혀(max-content) 전환이 조금 비켜나게 한다 — 날짜 이동 · 오늘 버튼이 전환 밑에 깔리지 않게 */
+.dashboard-toolbar {
+  display: grid;
+  grid-template-columns: minmax(max-content, 1fr) auto minmax(max-content, 1fr);
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.dashboard-toolbar__range,
+.dashboard-toolbar__end {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.dashboard-toolbar__end {
+  justify-content: flex-end;
+}
+
+/* "오늘" 글자는 한 단계 낮은 색(text-1 → text-2) */
+/* 오늘 버튼(도구줄 · 미니 달력): 테두리 버튼, 글자는 한 단계 작게(16 → 14) · 굵기는 살짝(500) */
+.today-button {
+  font-size: 14px;
+  font-weight: var(--fw-medium);
+  color: var(--text-2);
+}
+
+.dashboard-toolbar__title {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  letter-spacing: -0.1px;
+  font-weight: var(--fw-bold);
+  white-space: nowrap;
+}
+
+/* 아래 보드(일정·백로그)와는 구분선으로 나눈다: 줄 아래 24 + 선 + 보드까지 32 */
+.category-filter {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--border-1);
+}
+
+.category-filter ~ .board {
+  margin-top: var(--space-2);
+}
+
+/* "카테고리" 글자와 칩 사이: 양옆 16씩 띄운 세로 구분선 */
+.category-filter__divider {
+  flex-shrink: 0;
+  width: 1px;
+  height: 24px;
+  margin: 0 var(--space-2);
+  background: var(--border-1);
+}
+
+.category-filter__label {
+  flex-shrink: 0;
+  font-size: var(--fs-label);
+  line-height: 24px;
+  font-weight: var(--fw-bold);
+  color: var(--text-1);
+}
+
+/* 고르지 않은 카테고리는 굵게 하지 않는다(고른 것만 기본 굵기 500) */
+.category-filter .tag:not(.tag--selected) {
+  font-weight: var(--fw-regular);
+}
+
+/* 카테고리가 많으면 칩 칸만 가로로 넘긴다(끌기 · 밀기, 스크롤바 없음). 앞의 "카테고리" 글자 · 뒤 톱니는 제자리 */
+.category-filter__tags {
+  display: flex;
+  flex: 1;
+  gap: var(--space-2);
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  touch-action: pan-x;
+  cursor: grab;
+}
+
+.category-filter__tags:active {
+  cursor: grabbing;
+}
+
+.category-filter__tags::-webkit-scrollbar {
+  display: none;
+}
+
+/* 카테고리 칩은 한 단계 낮게(48 → 40) */
+.category-filter__tags .tag--lg {
+  height: var(--control-md);
+}
+
+/* ───────── 보드 ───────── */
+.board {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-6);
+}
+
+.board-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.board-column--wide {
+  flex: 1;
+}
+
+.board-column--backlog {
+  flex-shrink: 0;
+  width: 380px;
+}
+
+/* 펼치고 접는 동안: 폭이 52 ↔ 380으로 바뀌고, 안의 내용은 380 그대로 두어 글자가 줄바꿈되며 흔들리지 않게 잘라 보인다 */
+.board-column--opening,
+.board-column--closing {
+  overflow: hidden;
+}
+
+.board-column--opening > *,
+.board-column--closing > * {
+  flex-shrink: 0;
+  min-width: 380px;
+}
+
+.board-column--opening {
+  animation: backlog-open var(--dur-slow) var(--ease-out);
+}
+
+.board-column--closing {
+  pointer-events: none;
+  animation: backlog-close var(--dur-base) var(--ease-standard) forwards;
+}
+
+@keyframes backlog-open {
+  from {
+    width: 52px;
+    opacity: 0;
+  }
+}
+
+@keyframes backlog-close {
+  to {
+    width: 52px;
+    opacity: 0;
+  }
+}
+
+/* 접힌 막대는 살짝 나타난다 */
+.backlog-rail {
+  animation: backlog-rail-in var(--dur-base) var(--ease-out);
+}
+
+@keyframes backlog-rail-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.board-column__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 24px;
+  padding: 0 var(--space-2);
+}
+
+.board-column__title {
+  font-size: var(--fs-label);
+  line-height: 24px;
+  font-weight: var(--fw-bold);
+}
+
+.board-column__spacer {
+  flex: 1;
+}
+
+.board-column__hint {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.board-empty {
+  padding: var(--space-6) var(--space-2);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-3);
+}
+
+/* 접힌 백로그 */
+.backlog-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  gap: var(--space-3);
+  width: 52px;
+  padding: var(--space-3) 0;
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+}
+
+.backlog-rail__label {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: var(--fw-bold);
+  writing-mode: vertical-rl;
+}
+
+.week-board {
+  display: flex;
+  gap: 6px;
+}
+
+.week-board__day {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  min-height: 480px;
+  padding: var(--space-2) var(--space-1);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-md);
+  background: var(--surface-subtle);
+}
+
+.week-board__day--selected {
+  border: 1.5px solid var(--action-bg);
+}
+
+/* 칸을 눌러 날짜를 고르고 두 번 눌러 일간으로 간다. 두 번 누를 때 날짜 글자가 선택되지 않게 */
+.week-board__day {
+  cursor: pointer;
+  user-select: none;
+}
+
+.week-card {
+  cursor: default;
+  user-select: text;
+}
+
+.week-board__head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  padding: 0 var(--space-1) var(--space-1);
+  border: 0;
+  background: none;
+  text-align: left;
+}
+
+.week-board__weekday {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.week-board__date {
+  font-size: var(--fs-label);
+  line-height: 24px;
+  font-weight: var(--fw-bold);
+  color: var(--text-1);
+}
+
+.week-board__day--selected .week-board__weekday,
+.week-board__day--selected .week-board__date {
+  color: var(--text-link);
+}
+
+/* 주간 카드: 본문(왼쪽 체크 상자 20 칸 + 오른쪽 이름 → 시간·카테고리) 아래에 하위 일정 탭이 붙는다 */
+.week-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-sm);
+  background: var(--surface-card);
+}
+
+.week-card__main {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-1) var(--space-2);
+  padding: var(--space-2);
+}
+
+.week-card__main > * {
+  grid-column: 2;
+}
+
+/* 체크 상자는 이름 첫 줄에 맞춘다. 터치 영역 48은 카드 높이를 늘리지 않게 바깥으로만 넘친다 */
+.week-card__main > .checkbox {
+  grid-column: 1;
+  grid-row: 1;
+  margin: -14px;
+}
+
+.week-card__title {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: var(--fw-bold);
+  color: var(--text-1);
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.week-card__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-2);
+}
+
+.week-card__time {
+  flex-shrink: 0;
+}
+
+.week-card__color {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  margin-left: var(--space-1);
+  border-radius: 2px;
+}
+
+.week-card__category {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.week-card--done .week-card__title,
+.week-card--done .week-card__time {
+  color: var(--text-3);
+}
+
+.week-card--done .week-card__title {
+  text-decoration: line-through;
+}
+
+/* 하위 일정 탭: 카드 아래 칸 전체 폭. 왼쪽 아이콘 + 하위 n/m, 오른쪽 꺾쇠(펼치면 위로) */
+.week-card__sub {
+  border-top: 1px solid var(--border-1);
+  border-radius: 0 0 calc(var(--radius-sm) - 1px) calc(var(--radius-sm) - 1px);
+  background: var(--surface-subtle);
+}
+
+.week-card__tab {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  width: 100%;
+  padding: 6px var(--space-2);
+  border: 0;
+  border-radius: inherit;
+  background: none;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-2);
+  text-align: left;
+}
+
+.week-card__tab[aria-expanded='true'] {
+  border-radius: 0;
+}
+
+.week-card__tab:active {
+  background: var(--surface-hover);
+}
+
+@media (hover: hover) {
+  .week-card__tab:hover {
+    background: var(--surface-hover);
+  }
+}
+
+.week-card__tab-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.week-card__chevron {
+  flex-shrink: 0;
+  transition: transform var(--dur-base) var(--ease-standard);
+}
+
+.week-card__chevron--open {
+  transform: rotate(180deg);
+}
+
+/* 펼친 하위 일정: 체크 상자 + 이름만. 상자를 본문 체크 상자와 같은 세로선에 둔다(터치 영역 48 안 여백 14만큼 당김).
+   줄 높이는 카드에 맞게 낮춘다 */
+.week-card .subtasks {
+  padding: 0 var(--space-2) var(--space-1);
+  margin-left: -14px;
+}
+
+.week-card .subtask {
+  gap: 0;
+  background: transparent;
+}
+
+.week-card .subtask .checkbox {
+  min-height: 28px;
+  margin-right: -6px;
+}
+
+.week-card .subtask__name {
+  font-size: 14px;
+  line-height: 20px;
+  overflow-wrap: anywhere;
+}
+
+.month-board {
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  overflow: hidden;
+}
+
+.month-board__weekdays,
+.month-board__cells {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.month-board__weekdays {
+  border-bottom: 1px solid var(--border-1);
+  background: var(--surface-subtle);
+}
+
+.month-board__weekdays span {
+  padding: var(--space-1) 0;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+  text-align: center;
+}
+
+.month-board__cell {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
+  min-width: 0;
+  min-height: 124px;
+  padding: var(--space-1);
+  border: 0;
+  border-right: 1px solid var(--border-1);
+  border-bottom: 1px solid var(--border-1);
+  background: var(--surface-card);
+  text-align: left;
+}
+
+.month-board__cell:nth-child(7n) {
+  border-right: 0;
+}
+
+.month-board__cell--past {
+  background: var(--surface-subtle);
+}
+
+.month-board__cell--selected {
+  box-shadow: inset 0 0 0 1.5px var(--action-bg);
+}
+
+.month-board__date {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  font-weight: var(--fw-bold);
+  color: var(--text-1);
+}
+
+.month-board__cell--outside .month-board__date {
+  color: var(--text-disabled);
+}
+
+.month-board__cell--selected .month-board__date {
+  background: var(--action-bg);
+  color: var(--text-on-action);
+}
+
+/* 일정 줄: 카테고리 색(--event-color, MonthBoard) 왼쪽 막대 + 그 색을 옅게 깐 바탕. 끝낸 일정은 바탕 없이 막대만 흐리게 */
+.month-event {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px var(--space-1);
+  border-left: 3px solid var(--event-color, var(--neutral-400));
+  border-radius: var(--radius-xs);
+  background: color-mix(in srgb, var(--event-color, var(--neutral-400)) 14%, var(--surface-card));
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-1);
+}
+
+.month-event--done {
+  border-left-color: color-mix(in srgb, var(--event-color, var(--neutral-400)) 40%, var(--surface-card));
+  background: none;
+  color: var(--text-3);
+}
+
+.month-event__label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.month-board__more {
+  padding: 0 var(--space-1);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+/* ───────── 할 일 드로어 폼 ───────── */
+.todo-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.todo-form__when,
+.todo-form__cycle {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.todo-form__grow {
+  flex: 1;
+  min-width: 0;
+}
+
+/* 피그마는 96이지만 브라우저 시간 입력이 "오전 10:00"처럼 길게 나와 넓힌다 */
+.todo-form__time {
+  flex-shrink: 0;
+  width: 136px;
+}
+
+.todo-form__interval {
+  flex-shrink: 0;
+  width: 120px;
+}
+
+.todo-form__repeat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--surface-subtle);
+}
+
+.todo-form__weekdays {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.todo-form__remind {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.todo-form__remind-select {
+  width: 140px;
+}
+
+/* 반복 일정 만들기 창(RoutineModal) 맨 아래: 지금 입력대로 어떻게 반복되는지 한 줄 */
+.routine-form__summary {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--action-tint);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: var(--fw-semibold);
+  color: var(--action-outline-fg);
+}
+
+.todo-form__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.todo-form__section-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.todo-form__section-title {
+  font-size: var(--fs-label);
+  line-height: 24px;
+  font-weight: var(--fw-bold);
+}
+
+.todo-form__section-hint {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.todo-form__add-subtask {
+  align-self: flex-start;
+}
+
+/* 게시글이 없을 때: 위아래 여백을 두고 가운데 */
+.todo-posts__empty {
+  padding: var(--space-6) 0;
+  text-align: center;
+}
+
+.todo-form__new-subtask {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+}
+
+/* ───────── 카테고리 · 반복 화면 ───────── */
+.category-page__columns {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-6);
+}
+
+.category-page__list {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: var(--space-3);
+  width: 320px;
+}
+
+/* "+ 새 카테고리": 높이(40)는 그대로, 글자만 14px · 한 단계 낮은 색(text-1 → text-2) */
+.category-page__new {
+  font-size: 14px;
+  color: var(--text-2);
+}
+
+.category-page__detail {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+.category-list {
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  list-style: none;
+  overflow: hidden;
+}
+
+.category-list li + li {
+  border-top: 1px solid var(--border-1);
+}
+
+.category-list__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 0;
+  background: none;
+  text-align: left;
+}
+
+.category-list__item:active {
+  background: var(--surface-hover);
+}
+
+@media (hover: hover) {
+  .category-list__item:hover {
+    background: var(--surface-hover);
+  }
+}
+
+.category-list__item--selected,
+.category-list__item--selected:hover,
+.category-list__item--selected:active {
+  background: var(--action-tint);
+}
+
+.category-list__color {
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.category-list__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.category-list__name {
+  font-size: var(--fs-label);
+  line-height: 24px;
+  color: var(--text-1);
+}
+
+.category-list__item--selected .category-list__name {
+  font-weight: var(--fw-bold);
+}
+
+.category-list__visibility,
+.category-list__count {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-3);
+}
+
+.category-list__empty {
+  list-style: none;
+}
+
+.category-edit__row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.category-edit__name {
+  flex: 1;
+  min-width: 0;
+}
+
+.category-edit__color {
+  flex-shrink: 0;
+  width: 180px;
+}
+
+/* 공개 범위는 이름·색과 다른 묶음이라 위(추천 색)와 한 단계 더 띄운다(카드 간격 16 + 16) */
+.category-edit__visibility {
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  border: 0;
+}
+
+/* 공개 범위 라벨은 다른 칸 라벨(.field__label)과 같은 16px */
+.category-edit__visibility legend {
+  margin-bottom: var(--space-2);
+  padding: 0;
+  font-size: var(--fs-label);
+  line-height: 24px;
+  font-weight: var(--fw-bold);
+}
+
+/* 추천 색은 바로 위 색상 칸에 딸린 것이라 카드 간격(16)보다 붙인다 */
+.category-edit .swatches {
+  margin-top: calc(var(--space-2) * -1);
+}
+
+.category-edit__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+}
+
+.category-edit__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
+
+/* 반복 일정 이름: 굵게 하지 않고 색만 본문색 */
+.routine-col--name { color: var(--text-1); }
+
+.category-page .task-item__title { font-weight: var(--fw-regular); }
+
+/* 반복 표 칸 폭: 편집 칸 옆이라 표가 좁으므로(약 540) 종류 · 시간은 내용 폭만큼, 반복은 좁아지면 줄어들고,
+   이름은 남는 자리를 갖되 최소 120은 남긴다(고정 칸이 자리를 다 가져가 이름이 한 글자씩 세로로 꺾이지 않게) */
+.data-table__grow.routine-col--name { min-width: 120px; overflow-wrap: anywhere; }
+.routine-col--type { flex-shrink: 0; width: 56px; }
+.routine-col--cycle { flex-shrink: 1; width: 112px; min-width: 72px; }
+.routine-col--time { flex-shrink: 0; width: 96px; }
+.routine-col--more { display: flex; flex-shrink: 0; width: 48px; }
+
+/* ───────── 좁은 화면 ───────── */
+/* 데스크톱에서 본문 폭(사이드바 펼침 · 접힘에 따라 다름)이 좁으면 프로필의 포인트 · 출석 줄이 옆 달력 위로 넘친다.
+   위아래로 쌓지 않고 나란히 둔 채, 본문 폭으로 판단해 프로필을 작게(사진 120 옆에 이름 · 레벨, 나머지는 그 아래) · 달력 칸을 줄인다.
+   프로필 · 달력 기본 규칙을 덮어쓰도록 그 뒤에 둔다 */
+@media (min-width: 1024px) {
+  .dashboard {
+    container-type: inline-size;
+  }
+
+  /* PC에서 백로그 칸을 펼쳐 주간 칸이 좁아지면 일정 이름은 줄을 바꾸지 않고 한 줄로 잘라 카드가 아래로 늘지 않게 */
+  .board:has(> .board-column--backlog) .week-card__title,
+  .board:has(> .board-column--backlog) .week-card .subtask__name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-wrap: normal;
+  }
+
+  @container (max-width: 959px) {
+    .dashboard__top {
+      grid-template-columns: minmax(0, 1fr) 300px;
+      align-items: center;
+    }
+
+    .profile-card {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr);
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .profile-card .profile-card__avatar {
+      width: 120px;
+      grid-row: 1 / 3;
+    }
+
+    .profile-card__info {
+      display: contents;
+    }
+
+    .profile-card__info > * {
+      grid-column: 1 / -1;
+    }
+
+    .profile-card__info > .profile-card__row:first-child,
+    .profile-card__info > .level-progress {
+      grid-column: 2;
+    }
+
+    .mini-calendar {
+      padding: var(--space-4);
+    }
+
+    .mini-calendar__weekday,
+    .mini-calendar__day {
+      flex: 1 1 0;
+      width: auto;
+      min-width: 0;
+    }
+
+    .mini-calendar__day {
+      height: var(--control-md);
+      padding-top: var(--space-1);
+    }
+  }
+}
+
+@media (max-width: 1199px) {
+
+  .board,
+  .category-page__columns {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .board-column--backlog,
+  .category-page__list {
+    width: auto;
+  }
+
+  .backlog-rail {
+    flex-direction: row;
+    width: auto;
+    padding: 0 var(--space-3);
+  }
+
+  .backlog-rail__label {
+    writing-mode: horizontal-tb;
+  }
+
+  .week-board {
+    overflow-x: auto;
+  }
+
+  .week-board__day {
+    min-width: 132px;
+  }
+}
+
+/* 카테고리 화면은 구역 사이 32px(피그마) */
+.category-page {
+  --page-gap: var(--space-8);
+}
+
+/* ───────── 모바일(767px 이하) ─────────
+   일간이면 미니 달력 대신 카테고리 줄 아래 한 주 날짜 줄(WeekStrip) · 백로그는 탭으로(DashboardPage).
+   할 일 추가는 하단 탭 위 떠 있는 버튼, 주간은 요일별 세로 목록, 월간은 점 달력(칸을 누르면 그날 일간) */
+.week-strip {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.week-strip__days {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: var(--space-1);
+}
+
+.week-strip__day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  font-size: 11px;
+  line-height: 14px;
+  color: var(--text-3);
+}
+
+.week-strip__date {
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: var(--fw-bold);
+  color: var(--text-1);
+}
+
+.week-strip__day--today .week-strip__date {
+  color: var(--text-link);
+}
+
+.week-strip__dot {
+  width: 4px;
+  height: 4px;
+  border-radius: var(--radius-round);
+}
+
+.week-strip__dot--on {
+  background: var(--text-3);
+}
+
+.week-strip__day--selected {
+  background: var(--action-bg);
+  color: var(--text-on-action);
+}
+
+.week-strip__day--selected .week-strip__date {
+  color: var(--text-on-action);
+}
+
+.week-strip__day--selected .week-strip__dot--on {
+  background: var(--text-on-action);
+}
+
+/* 모바일 할 일 창: 날짜 · 시작 · 종료가 한 줄이면 날짜가 눌려 깨진다 → 날짜는 한 줄 전체, 시작 · 종료는 그 아래 반씩 */
+@media (max-width: 767px) {
+  .todo-form__when:has(.todo-form__time) {
+    flex-wrap: wrap;
+  }
+
+  .todo-form__when:has(.todo-form__time) .todo-form__grow {
+    flex-basis: 100%;
+  }
+
+  .todo-form__when .todo-form__time {
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  /* 모바일은 미니 달력 대신 날짜 줄이라 위쪽은 프로필 한 칸 */
+  .dashboard__top {
+    grid-template-columns: 1fr;
+  }
+
+  /* 프로필: 사진 120 옆에 이름 · 레벨, 포인트 · 출석과 오늘 진행은 그 아래 전체 폭 */
+  .profile-card {
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .profile-card .profile-card__avatar {
+    width: 120px;
+    grid-row: 1 / 3;
+  }
+
+  .profile-card__info {
+    display: contents;
+  }
+
+  .profile-card__info > * {
+    grid-column: 1 / -1;
+  }
+
+  .profile-card__info > .profile-card__row:first-child,
+  .profile-card__info > .level-progress {
+    grid-column: 2;
+  }
+
+  .profile-card__row {
+    flex-wrap: wrap;
+  }
+
+  .dashboard-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .dashboard-toolbar__range {
+    width: 100%;
+  }
+
+  .dashboard-toolbar__title {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    font-size: 17px;
+    line-height: 24px;
+    text-overflow: ellipsis;
+  }
+
+  .dashboard-toolbar > .segmented {
+    display: grid;
+    width: 100%;
+  }
+
+  .dashboard-toolbar__end {
+    position: fixed;
+    right: var(--space-4);
+    bottom: calc(56px + env(safe-area-inset-bottom) + var(--space-4));
+    z-index: 45;
+  }
+
+  .dashboard-toolbar__end .btn {
+    box-shadow: 0 1px 2px rgba(21, 23, 28, .06), 0 6px 16px rgba(21, 23, 28, .18);
+  }
+
+  /* 떠 있는 추가 버튼에 마지막 할 일이 가리지 않게 */
+  .dashboard .board {
+    padding-bottom: 72px;
+  }
+
+  /* 일정 · 백로그를 탭으로 나눈 보드: 탭에 이름 · 개수가 있으므로 칸 머리의 제목 · 개수는 숨기고 안내 문구 · 버튼만 남긴다.
+     제목 · 개수뿐인 머리(일간 일정)는 통째로 숨긴다 */
+  .board--tabbed .board-column__title,
+  .board--tabbed .board-column__header > .badge {
+    display: none;
+  }
+
+  .board--tabbed .board-column__header:has(> .board-column__spacer:last-child) {
+    display: none;
+  }
+
+  .category-filter {
+    padding-bottom: var(--space-4);
+  }
+
+  /* "카테고리" 글자는 그대로 두고 칩과의 사이만 좁힌다 */
+  .category-filter__divider {
+    margin: 0 var(--space-1);
+  }
+
+  /* 주간: 요일별로 묶은 세로 목록 */
+  .week-board {
+    flex-direction: column;
+    overflow-x: visible;
+  }
+
+  .week-board__day {
+    flex: none;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  /* 월간: 칸마다 일정 점, 지난 일정은 빨간 점 */
+  .month-board__cell {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: center;
+    gap: 3px;
+    min-height: 52px;
+    padding: var(--space-1) 0;
+  }
+
+  .month-board__date {
+    margin: 0 calc(50% - 12px) 2px;
+  }
+
+  .month-event {
+    width: 6px;
+    height: 6px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-round);
+    background: var(--event-color, var(--text-3));
+  }
+
+  .month-event--done {
+    background: color-mix(in srgb, var(--event-color, var(--text-3)) 35%, var(--surface-card));
+  }
+
+  .month-event--overdue {
+    background: var(--danger-500);
+  }
+
+  .month-event .overdue-dot,
+  .month-board__more {
+    display: none;
+  }
+
+  /* 글자는 화면에서만 숨기고 읽어 주기는 그대로 */
+  .month-event__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+
+/* ───────── 카테고리 화면 · 모바일(767px 이하) ─────────
+   목록(카테고리 + 모든 반복 일정)과 카테고리 편집을 한 화면씩(CategoryManagePage). 추가는 상단바 ＋ */
+@media (max-width: 767px) {
+  .category-page {
+    --page-gap: var(--space-6);
+  }
+
+  /* 제목·부제는 상단바가 맡아 머리가 비므로 자리째 뺀다 */
+  .category-page > .page__header {
+    display: none;
+  }
+
+  .category-page__new,
+  .category-page__todo-add {
+    display: none;
+  }
+
+  .category-list__item {
+    min-height: 56px;
+    padding-right: var(--space-3);
+  }
+
+  .category-list__chevron {
+    flex-shrink: 0;
+    color: var(--text-3);
+  }
+
+  .category-page__routines {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .category-page__routines .data-table {
+    background: var(--surface-card);
+  }
+
+  /* 반복 일정은 카테고리별로 묶는다: 머리(색 · 이름 · 개수) 아래에 그 카테고리의 표 */
+  .routine-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .routine-group + .routine-group {
+    margin-top: var(--space-2);
+  }
+
+  .routine-group__title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: var(--fw-semibold);
+    color: var(--text-1);
+  }
+
+  .routine-group__count {
+    font-weight: var(--fw-regular);
+    color: var(--text-3);
+  }
+
+  /* 반복 표는 줄마다 이름 / 종류 · 반복 · 시간, 메뉴는 오른쪽 가운데 */
+  .category-page .data-table__head {
+    display: none;
+  }
+
+  .category-page .data-table__row {
+    position: relative;
+    flex-wrap: wrap;
+    align-content: center;
+    gap: 0 var(--space-1);
+    min-height: 64px;
+    padding-right: 56px;
+    font-size: var(--fs-caption);
+    line-height: var(--lh-caption);
+    color: var(--text-3);
+  }
+
+  .category-page .data-table__row .data-table__grow {
+    flex-basis: 100%;
+    font-size: var(--fs-label);
+    line-height: 24px;
+    overflow-wrap: anywhere;
+  }
+
+  .category-page .routine-col--type,
+  .category-page .routine-col--cycle,
+  .category-page .routine-col--time {
+    width: auto;
+    min-width: 0;
+  }
+
+  .category-page .routine-col--cycle::before,
+  .category-page .routine-col--time::before {
+    content: '·';
+    margin-right: var(--space-1);
+  }
+
+  /* 백로그 반복은 시간이 없어 "—" 대신 칸째 뺀다 */
+  .category-page .routine-col--blank {
+    display: none;
+  }
+
+  .category-page .routine-col--more {
+    position: absolute;
+    top: 50%;
+    right: var(--space-1);
+    width: auto;
+    transform: translateY(-50%);
+  }
+
+  /* 편집: 이름 · 색을 위아래로 */
+  .category-edit__row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .category-edit__color {
+    width: auto;
+  }
+
+  /* 추천 색: 라벨은 한 줄 따로, 동그라미는 32(누르는 곳 44) */
+  .category-edit .swatches {
+    gap: var(--space-3);
+  }
+
+  .category-edit .swatches__label {
+    width: 100%;
+  }
+
+  .category-edit .swatches__item {
+    width: 32px;
+    height: 32px;
+  }
+
+  .category-edit .swatches__item::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+  }
+
+  /* 공개 범위는 한 줄에 하나씩, 동그라미는 오른쪽 */
+  .category-edit__options {
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border-1);
+    border-radius: var(--radius-md);
+  }
+
+  .category-edit__options .radio {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    padding: 0 var(--space-4);
+  }
+
+  .category-edit__options .radio + .radio {
+    border-top: 1px solid var(--border-1);
+  }
+
+  /* 삭제는 글자 길이만큼, 저장이 남은 폭을 채운다 */
+  .category-edit__actions > .btn:last-child {
+    flex: 1;
+  }
+}
+
+/* ───────── 태블릿(768~1023px) ─────────
+   6열 · 마진 24. 프로필 옆에 작은 달력, 일·주·월 전환은 한 줄 따로.
+   백로그는 일간까지 오른쪽 접힌 막대로 두고, 펼치면 보드 위에 겹쳐 뜬다(DashboardPage) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .dashboard .dashboard__top {
+    grid-template-columns: minmax(0, 1fr) 288px;
+    align-items: center;
+  }
+
+  /* 프로필: 사진 96 옆에 이름 · 레벨, 포인트 · 출석과 오늘 진행은 그 아래 전체 폭 */
+  .dashboard .profile-card {
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .dashboard .profile-card .profile-card__avatar {
+    width: 96px;
+    grid-row: 1 / 3;
+  }
+
+  .dashboard .profile-card__info {
+    display: contents;
+  }
+
+  .dashboard .profile-card__info > * {
+    grid-column: 1 / -1;
+  }
+
+  .dashboard .profile-card__info > .profile-card__row:first-child,
+  .dashboard .profile-card__info > .level-progress {
+    grid-column: 2;
+  }
+
+  .dashboard .profile-card__row {
+    flex-wrap: wrap;
+  }
+
+  /* 달력 칸은 폭을 나눠 갖고 높이는 40 */
+  .dashboard .mini-calendar {
+    padding: var(--space-4);
+  }
+
+  .dashboard .mini-calendar__weekday,
+  .dashboard .mini-calendar__day {
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+  }
+
+  .dashboard .mini-calendar__day {
+    height: var(--control-md);
+    padding-top: var(--space-1);
+  }
+
+  /* 일·주·월 전환은 위 가운데, 그 아래 왼쪽 기간 이동 · 오른쪽 할 일 추가 */
+  /* 팀 홈(TeamHomeTab) · 프로필 대시보드도 같은 도구줄이라 함께 */
+  .dashboard .dashboard-toolbar,
+  .team-home .dashboard-toolbar,
+  .profile-dashboard .dashboard-toolbar {
+    grid-template-columns: minmax(0, 1fr) auto;
+    row-gap: var(--space-4);
+  }
+
+  .dashboard .dashboard-toolbar > .segmented,
+  .team-home .dashboard-toolbar > .segmented,
+  .profile-dashboard .dashboard-toolbar > .segmented {
+    grid-row: 1;
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
+
+  .dashboard .dashboard-toolbar__title,
+  .team-home .dashboard-toolbar__title,
+  .profile-dashboard .dashboard-toolbar__title {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* 보드 오른쪽에 접힌 막대(52) */
+  .dashboard .board {
+    position: relative;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .dashboard .backlog-rail {
+    flex-direction: column;
+    width: 52px;
+    padding: var(--space-3) 0;
+  }
+
+  .dashboard .backlog-rail__label {
+    writing-mode: vertical-rl;
+  }
+
+  /* 펼친 백로그는 막대 자리에서 왼쪽으로 380만큼 겹쳐 뜨고, 아래 보드는 막대가 있을 때 폭 그대로 */
+  .dashboard .board:has(> .board-column--backlog) {
+    padding-right: calc(52px + var(--space-6));
+  }
+
+  .dashboard .board-column--backlog {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 20;
+    width: 380px;
+    max-width: 100%;
+    padding: var(--space-4);
+    border: 1px solid var(--border-1);
+    border-radius: var(--radius-lg);
+    background: var(--surface-card);
+    box-shadow: var(--shadow-dialog);
+  }
+
+  .dashboard .board-column--opening > *,
+  .dashboard .board-column--closing > * {
+    min-width: calc(380px - var(--space-4) * 2 - 2px);
+  }
+
+  /* 주간: 칸이 100보다 좁아지면 가로 스크롤 */
+  .dashboard .week-board__day {
+    min-width: 100px;
+  }
+
+  /* 월간: 칸이 좁아 일정은 두 줄까지 */
+  .dashboard .month-event__label {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  /* 카테고리 화면: 목록 아래 편집(넓은 화면 규칙), 반복 표는 이름 칸이 남게 좁힌다 */
+  .category-page .routine-col--type { width: 56px; }
+  .category-page .routine-col--cycle { width: 120px; }
+  .category-page .routine-col--time { width: 112px; }
+}
